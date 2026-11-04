@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
-<title>RIFAT88 Sports</title>
+<title>RIFAT88 Sports & Games</title>
 <style>
 :root{--bg:#0b1220;--panel:#172235;--panel2:#101a2b;--line:#2c3b52;--gold:#f5b942;--blue:#2563eb;--green:#10b981;--red:#ef4444;--muted:#a9b7ca}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font-family:Arial,"Noto Sans Bengali",sans-serif}
@@ -14,27 +14,35 @@ header{position:sticky;top:0;z-index:10;background:#111d30;border-bottom:1px sol
 button,.btn{border:0;border-radius:7px;padding:9px 12px;font-weight:bold;cursor:pointer;color:#fff;background:#334155}
 button:active{transform:scale(.98)}.primary{background:var(--blue)}.gold{background:var(--gold);color:#111}.green{background:var(--green)}.red{background:var(--red)}
 .container{max-width:1050px;margin:18px auto;padding:0 12px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:15px}
-h2,h3{margin:0 0 12px;color:var(--gold)}.tabs{display:flex;gap:8px;overflow:auto;margin-bottom:14px}.tab{white-space:nowrap;background:#0c1728;color:#dbeafe;border:1px solid var(--line)}
+h2,h3{margin:0 0 12px;color:var(--gold)}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.games{grid-template-columns:repeat(2,minmax(0,1fr))}
-.tile{min-height:82px;background:#0c1728;border:1px solid var(--line);border-radius:10px;padding:10px 5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.tile{min-height:82px;background:#0c1728;border:1px solid var(--line);border-radius:10px;padding:10px 5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer}
 .tile .ico{font-size:25px}.tile small{color:#b8c6d8;font-size:11px}
 .tile.active{border-color:var(--gold);background:#253149}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
 .match{background:#0d192a;border:1px solid var(--line);border-radius:9px;padding:12px;margin:9px 0}
 .match-head{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:12px;margin-bottom:8px}
-.teams{font-size:16px;font-weight:bold;margin-bottom:10px}.score{color:#6ee7b7;margin:6px 0}
-.odds{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.odd{background:#29374c;border:1px solid #d99d28;color:#fff;padding:9px 4px;font-size:12px}
+.teams{font-size:16px;font-weight:bold;margin-bottom:10px}
+.odds{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.odd{background:#29374c;border:1px solid #d99d28;color:#fff;padding:8px 4px;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;border-radius:6px}
+.odd:hover{background:#3b4d68}
 .empty{color:var(--muted);font-size:13px;padding:12px;text-align:center;border:1px dashed var(--line);border-radius:8px}
 .modal{display:none;position:fixed;inset:0;background:#000b;z-index:30;align-items:center;justify-content:center;padding:15px}.modal.show{display:flex}
 .modal-box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;width:100%;max-width:420px;max-height:90vh;overflow:auto}
 label{display:block;font-size:13px;margin:10px 0 5px;color:#dbeafe}input,select{width:100%;padding:11px;border-radius:7px;border:1px solid #52627a;background:#0c1728;color:#fff}
 .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}.hint{font-size:12px;color:var(--muted);line-height:1.5}
-.status{font-size:12px;color:#86efac;margin-top:8px}.warn{color:#fca5a5}
 footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
 .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .req-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
 .req-table th, .req-table td { border: 1px solid var(--line); padding: 8px; text-align: left; }
 .req-table th { background: #101a2b; color: var(--gold); }
+.admin-box { background: #101a2b; border: 1px solid var(--line); padding: 12px; border-radius: 8px; margin-top: 15px; }
+
+/* অ্যাডমিন স্ট্যাটস কার্ড */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 15px; }
+.stat-card { background: #0c1728; border: 1px solid var(--line); border-radius: 8px; padding: 10px; text-align: center; }
+.stat-card small { color: var(--muted); font-size: 11px; display: block; }
+.stat-card .amt { font-size: 16px; font-weight: bold; color: var(--gold); margin-top: 4px; }
 
 /* ক্যালকুলেটর স্টাইল */
 .calc-card { background:#0a1322; border:1px solid #3b82f6; border-radius:10px; padding:15px; margin-top:15px; }
@@ -47,7 +55,7 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
 @media(min-width:700px){.grid{grid-template-columns:repeat(6,minmax(0,1fr))}.games{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style>
 
-<!-- Firebase SDK স্ক্রিপ্ট যুক্ত করা হলো -->
+<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -64,7 +72,7 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
       <span id="memberPhone" style="background:#1e293b; padding:6px 10px; border-radius:6px; font-weight:bold; color:#f5b942; border:1px solid var(--line); font-size:13px;"></span>
       <button class="red" onclick="logout()" style="padding:6px 10px; font-size:12px;">লগ আউট</button>
     </div>
-    <div class="balance">ডেমো ব্যালেন্স: ৳<span id="balance">500.00</span></div>
+    <div class="balance">ব্যালেন্স: ৳<span id="balance">500.00</span></div>
     
     <button class="green" onclick="openDepositModal()" style="padding: 7px 12px; font-size: 13px;">Deposit (+)</button>
     <button class="red" onclick="openWithdrawModal()" style="padding: 7px 12px; font-size: 13px;">Withdraw (-)</button>
@@ -75,127 +83,143 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
   <!-- এডমিন প্যানেল -->
   <section class="panel" id="adminMainPanel" style="border: 2px dashed var(--gold); display: none;">
     <div class="section-head">
-      <h2>🛠️ লাইভ এডমিন এডিটর ও রিকোয়েস্ট ম্যানেজমেন্ট</h2>
+      <h2>🛠️ ফুল এডমিন কন্ট্রোল ও গেম ম্যানেজার</h2>
       <button class="red" onclick="adminLogout()">এডমিন লগআউট</button>
     </div>
-    <div id="adminControls">
-      <p class="hint">এখানে আপনি ম্যাচের পয়েন্ট, অডস এবং ইউজারের ডিপোজিট/উইথড্র রিকোয়েস্টগুলো অনুমোদন করতে পারবেন।</p>
+
+    <!-- মোট বাজির হিসাব ও ক্যাটাগরি রিপোর্ট -->
+    <div class="admin-box">
+      <h3 style="color:var(--gold); margin-top:0;">📊 মোট বাজি ও ক্যাটাগরি ভিত্তিক সামারি</h3>
+      <div class="stats-grid">
+        <div class="stat-card" style="border-color:var(--gold);"><small>সর্বমোট ধরা বাজি</small><div class="amt" id="statTotalBets">৳0.00</div></div>
+        <div class="stat-card"><small>🏏 ক্রিকেট বাজি</small><div class="amt" id="statCricketBets">৳0.00</div></div>
+        <div class="stat-card"><small>⚽ ফুটবল বাজি</small><div class="amt" id="statFootballBets">৳0.00</div></div>
+        <div class="stat-card"><small>🎰 স্লট গেম</small><div class="amt" id="statSlotBets">৳0.00</div></div>
+        <div class="stat-card"><small>✈️ ক্র্যাশ গেম</small><div class="amt" id="statCrashBets">৳0.00</div></div>
+        <div class="stat-card"><small>🃏 ক্যাসিনো গেম</small><div class="amt" id="statCasinoBets">৳0.00</div></div>
+      </div>
+    </div>
+    
+    <!-- ১. নতুন ম্যাচ যোগ করার ফরম -->
+    <div class="admin-box">
+      <h3 style="color:var(--green); margin-top:0;">➕ ১. নতুন ম্যাচ যোগ করুন (Sports Match)</h3>
+      <label>খেলার ক্যাটাগরি:</label>
+      <select id="newMatchCategory">
+        <option value="football">ফুটবল (Football)</option>
+        <option value="cricket">ক্রিকেট (Cricket)</option>
+        <option value="tennis">টেনিস (Tennis)</option>
+        <option value="basketball">বাস্কেটবল (Basketball)</option>
+      </select>
+
+      <label style="margin-top:8px;">লিগ/টুর্নামেন্টের নাম:</label>
+      <input type="text" id="newMatchLeague" placeholder="যেমন: Premier League, IPL 2026">
+      
+      <div class="admin-grid" style="margin-top:10px;">
+        <div><label>হোম টিম:</label><input type="text" id="newHomeTeam" placeholder="Team A"></div>
+        <div><label>অ্যাওয়ে টিম:</label><input type="text" id="newAwayTeam" placeholder="Team B"></div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-top:10px;">
+        <div><label>হোম জয় অডস</label><input type="number" step="0.01" id="newHomeOdds" placeholder="1.85"></div>
+        <div><label>ড্র অডস</label><input type="number" step="0.01" id="newDrawOdds" placeholder="3.20"></div>
+        <div><label>অ্যাওয়ে জয় অডস</label><input type="number" step="0.01" id="newAwayOdds" placeholder="4.10"></div>
+      </div>
+      
+      <button class="green" style="width:100%; margin-top:12px; padding:10px;" onclick="createNewMatch()">➕ ম্যাচ পাবলিশ করুন</button>
+    </div>
+
+    <!-- ২. নতুন গেম (স্লট, ক্র্যাশ, ক্যাসিনো) যোগ করার ফরম -->
+    <div class="admin-box">
+      <h3 style="color:var(--gold); margin-top:0;">🎰 ২. নতুন গেম যোগ করুন (Slot, Crash, Casino)</h3>
+      <label>গেম ক্যাটাগরি নির্বাচন করুন:</label>
+      <select id="newGameCategory">
+        <option value="crash">ক্র্যাশ গেম (Crash)</option>
+        <option value="slot">স্লট গেম (Slot)</option>
+        <option value="casino">ক্যাসিনো গেম (Casino)</option>
+      </select>
+
+      <div class="admin-grid" style="margin-top:8px;">
+        <div><label>গেমের নাম:</label><input type="text" id="newGameName" placeholder="যেমন: Aviator Pro, Fortune Ox"></div>
+        <div><label>ইমোজি আইকন:</label><input type="text" id="newGameIco" placeholder="যেমন: 🚀, 🎰, 💎"></div>
+      </div>
+      <button class="primary" style="width:100%; margin-top:12px; padding:10px;" onclick="createNewGame()">🎰 গেম যুক্ত করুন</button>
+    </div>
+
+    <!-- ৩. ম্যাচ এডিট ও বিজয়ী ঘোষণা -->
+    <div class="admin-box">
+      <h3 style="color:var(--gold); margin-top:0;">✏️ ৩. ম্যাচ এডিট ও রেজাল্ট ঘোষণা</h3>
       <label>সম্পাদনার জন্য ম্যাচ সিলেক্ট করুন:</label>
       <select id="adminMatchSelect" onchange="loadMatchToAdmin()"></select>
       
       <div class="admin-grid" style="margin-top:10px;">
-        <div>
-          <label>হোম টিম (পয়েন্ট সহ)</label>
-          <input type="text" id="adminHomeTeam" placeholder="Team A (Pts: 15)">
-        </div>
-        <div>
-          <label>অ্যাওয়ে টিম (পয়েন্ট সহ)</label>
-          <input type="text" id="adminAwayTeam" placeholder="Team B (Pts: 12)">
-        </div>
+        <div><label>হোম টিম</label><input type="text" id="adminHomeTeam"></div>
+        <div><label>অ্যাওয়ে টিম</label><input type="text" id="adminAwayTeam"></div>
       </div>
 
       <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-top:10px;">
-        <div>
-          <label>হোম জয় অডস</label>
-          <input type="number" step="0.01" id="adminHomeOdds" placeholder="1.95">
-        </div>
-        <div>
-          <label>ড্র অডস</label>
-          <input type="number" step="0.01" id="adminDrawOdds" placeholder="3.40">
-        </div>
-        <div>
-          <label>অ্যাওয়ে জয় অডস</label>
-          <input type="number" step="0.01" id="adminAwayOdds" placeholder="3.80">
-        </div>
+        <div><label>হোম জয় অডস</label><input type="number" step="0.01" id="adminHomeOdds"></div>
+        <div><label>ড্র অডস</label><input type="number" step="0.01" id="adminDrawOdds"></div>
+        <div><label>অ্যাওয়ে জয় অডস</label><input type="number" step="0.01" id="adminAwayOdds"></div>
       </div>
 
       <div style="margin-top:12px; padding:10px; background:#0c1728; border-radius:8px; border:1px solid var(--line);">
-        <label style="color:var(--gold);">🏆 বিজয়ী টিম নির্ধারণ করুন (অটোমেটিক বেট ফিনিশ):</label>
-        <select id="adminWinnerSelect" style="margin-top:5px;">
-          <option value="">ম্যাচ এখনো চলমান (Pending)</option>
+        <label style="color:var(--gold);">🏆 বিজয়ী টিম নির্ধারণ:</label>
+        <select id="adminWinnerSelect">
+          <option value="">ম্যাচ চলমান (Pending)</option>
           <option value="Home">হোম জয় (Home Win)</option>
           <option value="Draw">ড্র (Draw)</option>
           <option value="Away">অ্যাওয়ে জয় (Away Win)</option>
         </select>
       </div>
 
-      <button class="green" style="width:100%; margin-top:15px; padding:12px;" onclick="saveMatchChanges()">পরিবর্তন সেভ করুন ও রেজাল্ট প্রকাশ করুন</button>
-      
-      <!-- এডমিন ডিপোজিট রিকোয়েস্ট ম্যানেজমেন্ট টেবিল -->
-      <h3 style="margin-top:20px; color:var(--gold);">📥 ইউজারের ডিপোজিট রিকোয়েস্ট লিস্ট</h3>
-      <div style="overflow-x:auto;">
-        <table class="req-table">
-          <thead>
-            <tr>
-              <th>নম্বর</th>
-              <th>মেথড</th>
-              <th>টাকা</th>
-              <th>ট্রানজেকশন আইডি</th>
-              <th>অ্যাকশন</th>
-            </tr>
-          </thead>
-          <tbody id="adminDepositTable">
-            <tr><td colspan="5" style="text-align:center; color:var(--muted);">কোনো নতুন ডিপোজিট রিকোয়েস্ট নেই।</td></tr>
-          </tbody>
-        </table>
+      <div style="display:flex; gap:10px; margin-top:15px;">
+        <button class="green" style="flex:2; padding:12px;" onclick="saveMatchChanges()">পরিবর্তন সেভ করুন</button>
+        <button class="red" style="flex:1; padding:12px;" onclick="deleteSelectedMatch()">🗑️ ম্যাচটি মুছুন</button>
       </div>
+    </div>
 
-      <!-- এডমিন উইথড্র রিকোয়েস্ট ম্যানেজমেন্ট টেবিল -->
-      <h3 style="margin-top:20px; color:var(--gold);">📤 ইউজারের উইথড্র রিকোয়েস্ট লিস্ট</h3>
-      <div style="overflow-x:auto;">
-        <table class="req-table">
-          <thead>
-            <tr>
-              <th>নম্বর</th>
-              <th>মেথড</th>
-              <th>টাকা</th>
-              <th>অ্যাকশন</th>
-            </tr>
-          </thead>
-          <tbody id="adminWithdrawTable">
-            <tr><td colspan="4" style="text-align:center; color:var(--muted);">কোনো নতুন উইথড্র রিকোয়েস্ট নেই।</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <!-- ৪. ডিপোজিট রিকোয়েস্ট টেবিল -->
+    <div class="admin-box">
+      <h3 style="color:var(--green); margin-top:0;">📥 ৪. ইউজারের ডিপোজিট (Deposit) রিকোয়েস্ট</h3>
+      <table class="req-table">
+        <thead><tr><th>নম্বর / TrxID</th><th>মেথড</th><th>টাকা</th><th>অ্যাকশন</th></tr></thead>
+        <tbody id="adminDepositTable"></tbody>
+      </table>
+    </div>
 
+    <!-- ৫. উইথড্র রিকোয়েস্ট টেবিল -->
+    <div class="admin-box">
+      <h3 style="color:var(--red); margin-top:0;">📤 ৫. ইউজারের উত্তোলন (Withdraw) রিকোয়েস্ট</h3>
+      <table class="req-table">
+        <thead><tr><th>নম্বর / অ্যাকাউন্ট</th><th>মেথড</th><th>টাকা</th><th>অ্যাকশন</th></tr></thead>
+        <tbody id="adminWithdrawTable"></tbody>
+      </table>
     </div>
   </section>
 
-  <!-- গোপন এডমিন লগইন বাটন -->
+  <!-- এডমিন লগইন বাটন -->
   <div style="text-align: right; margin-bottom: 10px;">
-    <button class="primary" style="font-size: 11px; padding: 5px 10px; opacity: 0.7;" onclick="requestAdminAccess()">🔒 এডমিন লগইন</button>
+    <button class="primary" style="font-size: 11px; padding: 5px 10px; opacity: 0.8;" onclick="requestAdminAccess()">🔒 এডমিন প্যানেল</button>
   </div>
 
-  <!-- মাল্টি অডস ও বেট ক্যালকুলেটর প্যানেল -->
+  <!-- বেট ক্যালকুলেটর -->
   <section class="panel calc-card">
     <h2>📊 মাল্টি অডস & বেট ক্যালকুলেটর</h2>
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-      <div>
-        <label>অডস (Odds Multiplier):</label>
-        <input type="number" step="0.01" id="calcOdds" value="1.85" oninput="calculateBet()">
-      </div>
-      <div>
-        <label>বাজির পরিমাণ (৳):</label>
-        <input type="number" id="calcAmount" value="100" oninput="calculateBet()">
-      </div>
+      <div><label>অডস (Odds):</label><input type="number" step="0.01" id="calcOdds" value="1.85" oninput="calculateBet()"></div>
+      <div><label>বাজির পরিমাণ (৳):</label><input type="number" id="calcAmount" value="100" oninput="calculateBet()"></div>
     </div>
     
     <div class="quick-btn-grid">
       <button class="quick-btn" onclick="addAmount(50)">+৫০</button>
       <button class="quick-btn" onclick="addAmount(100)">+১০০</button>
       <button class="quick-btn" onclick="addAmount(500)">+৫০০</button>
-      <button class="quick-btn" onclick="addAmount(1000)">+১০-০০</button>
+      <button class="quick-btn" onclick="addAmount(1000)">+১০০০</button>
     </div>
 
     <div class="calc-res-grid">
-      <div class="calc-res-box">
-        <small style="color:var(--muted)">সম্ভাব্য রিটার্ন</small>
-        <div class="val" id="resReturn">৳185.00</div>
-      </div>
-      <div class="calc-res-box">
-        <small style="color:var(--muted)">খাঁটি লাভ (Profit)</small>
-        <div class="val" style="color:#6ee7b7" id="resProfit">৳85.00</div>
-      </div>
+      <div class="calc-res-box"><small style="color:var(--muted)">সম্ভাব্য রিটার্ন</small><div class="val" id="resReturn">৳185.00</div></div>
+      <div class="calc-res-box"><small style="color:var(--muted)">খাঁটি লাভ (Profit)</small><div class="val" style="color:#6ee7b7" id="resProfit">৳85.00</div></div>
     </div>
 
     <button class="green" style="width:100%; padding:12px; font-size:16px;" onclick="placeCalculatedBet()">
@@ -203,318 +227,361 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
     </button>
   </section>
 
+  <!-- খেলার বিভাগ (Sports Tabs) -->
   <section class="panel">
-    <div class="section-head"><h2>খেলার বিভাগ</h2><button class="gold" onclick="document.getElementById('allFiles').click()">সব খেলার JSON ফাইল লোড</button></div>
-    <input id="allFiles" type="file" accept=".json,application/json" multiple hidden onchange="loadMultipleFiles(this.files)">
-    <p class="hint">প্রতিটি খেলার বাটনে চাপ দিয়ে ফোনের মেমোরি থেকে সেই খেলার JSON ফাইল নির্বাচন করুন। একসাথে একাধিক JSON ফাইলও লোড করতে পারবেন।</p>
+    <div class="section-head"><h2>খেলার বিভাগ (Sports)</h2></div>
     <div class="grid" id="sportsGrid"></div>
   </section>
 
+  <!-- গেম বিভাগ (Games / Slots / Crash) -->
   <section class="panel">
-    <div class="section-head"><h2>গেম বিভাগ</h2><span class="hint">এখানেও নিজস্ব JSON ডেটা লোড করা যাবে</span></div>
+    <div class="section-head"><h2>গেম বিভাগ (Casino & Slots)</h2></div>
     <div class="grid games" id="gamesGrid"></div>
   </section>
 
+  <!-- ম্যাচ ও গেম লিস্ট ডিসপ্লে -->
   <section class="panel">
-    <div class="section-head"><h2 id="listTitle">লাইভ ম্যাচ ও আপলোড করা ডেটা</h2><button onclick="clearCurrent()" class="red">এই বিভাগের ডেটা মুছুন</button></div>
-    <div id="matchList"><div class="empty">এখনো কোনো JSON ফাইল লোড করা হয়নি। খেলার বাটনে চাপ দিয়ে ফাইল নির্বাচন করুন।</div></div>
-    <p id="loadStatus" class="status"></p>
+    <div class="section-head"><h2 id="listTitle">লাইভ ম্যাচ ও গেম তালিকা</h2></div>
+    <div id="matchList"><div class="empty">কোনো ডাটা পাওয়া যায়নি।</div></div>
   </section>
 </main>
 
-<footer>© 2026 RIFAT88 Sports — Demo interface. Real-money deposit, withdrawal or betting is not enabled.</footer>
+<footer>© 2026 RIFAT88 Sports — User Portal</footer>
 
-<!-- অ্যাকাউন্ট মোডাল -->
+<!-- Modals -->
 <div class="modal" id="authModal">
  <div class="modal-box">
   <h2 id="authTitle">নতুন অ্যাকাউন্ট</h2>
   <form id="authForm">
    <label>মোবাইল নম্বর</label><input id="phone" type="tel" placeholder="01XXXXXXXXX" required>
-   <label>পাসওয়ার্ড</label><input id="pass1" type="password" minlength="6" placeholder="কমপক্ষে ৬ অক্ষর" required>
-   <div id="confirmWrap"><label>পাসওয়ার্ড আবার লিখুন</label><input id="pass2" type="password" minlength="6" placeholder="একই পাসওয়ার্ড আবার লিখুন"></div>
+   <label>পাসওয়ার্ড</label><input id="pass1" type="password" minlength="6" required>
+   <div id="confirmWrap"><label>পাসওয়ার্ড আবার লিখুন</label><input id="pass2" type="password" minlength="6"></div>
    <p id="authMessage" class="hint" style="color:#fca5a5; margin-top:5px;"></p>
    <div class="actions"><button type="button" onclick="closeAuth()">বাতিল</button><button class="green" type="submit">সাবমিট</button></div>
   </form>
-  <p class="hint" style="margin-top:12px; text-align:center;">
-    <a href="#" onclick="switchMode();return false" style="color:#f5b942" id="switchText">আগে থেকেই অ্যাকাউন্ট আছে? লগইন করুন</a>
-  </p>
  </div>
 </div>
 
-<!-- বেট সফল মোডাল -->
-<div class="modal" id="successModal">
- <div class="modal-box" style="text-align: center;">
-  <div style="font-size: 50px; margin-bottom: 10px;">✅</div>
-  <h2 style="color:#10b981; margin-bottom:5px;">বেট সফল হয়েছে!</h2>
-  <p class="hint" id="successDetails" style="font-size: 14px; color: #fff; margin-bottom: 15px;"></p>
-  <button class="primary" onclick="closeSuccessModal()" style="width: 100%; padding: 10px;">ঠিক আছে</button>
- </div>
-</div>
-
-<!-- ডিপোজিট পপ-আপ মোডাল -->
 <div class="modal" id="depositModal">
-  <div class="modal-box" style="background: #1a1a1a; color: #fff; border: 1px solid var(--line);">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-      <h3 style="margin: 0; color: #28a745;">Deposit Money</h3>
-      <span onclick="closeDepositModal()" style="font-size: 24px; cursor: pointer; color: #aaa;">&times;</span>
-    </div>
+  <div class="modal-box" style="background: #1a1a1a; color: #fff;">
+    <h3>Deposit Money</h3>
     
-    <div style="background: #2c2c2c; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-size: 14px; text-align: center;">
-      <p style="margin: 0 0 5px 0; color: #ffc107;">বিকাশ বা নগদে <b>Send Money</b> করুন:</p>
-      <p style="margin: 0; font-size: 18px; font-weight: bold; color: #fff;">📱 01791424381</p>
-      <p style="margin: 5px 0 0 0; font-size: 12px; color: #aaa;">(Personal Number)</p>
+    <!-- বিকাশ/নগদ সেন্ড মানি নাম্বার নির্দেশিকা -->
+    <div style="background: #253149; padding: 10px; border-radius: 6px; margin-bottom: 10px; font-size: 13px; border: 1px dashed var(--gold);">
+      <span style="color: var(--gold); font-weight: bold;">⚠️ নিয়মাবলী:</span><br>
+      আমাদের বিকাশ/নগদ (Personal) নাম্বারে টাকা **Send Money** করুন:<br>
+      <strong style="color: #6ee7b7; font-size: 15px;">📞 01791424381 (Bkash / Nagad)</strong><br>
+      টাকা পাঠিয়ে নিচের ছকে আপনার নাম্বার ও TrxID দিন।
     </div>
 
     <form id="depositForm" onsubmit="submitDeposit(event)">
-      <label>Select Method:</label>
+      <label>Method:</label>
       <select id="depMethod">
         <option value="Bkash">Bkash</option>
         <option value="Nagad">Nagad</option>
       </select>
-
-      <label>Your Account Number:</label>
-      <input type="text" id="userAccNo" placeholder="যে নম্বর থেকে টাকা পাঠিয়েছেন" required>
-
+      
+      <label>Account Number:</label>
+      <input type="text" id="userAccNo" placeholder="01XXXXXXXXX" required>
+      
       <label>Amount (BDT):</label>
-      <input type="number" id="depAmount" placeholder="টাকার পরিমাণ লিখুন" required>
-
-      <label>Transaction ID (TrxID):</label>
-      <input type="text" id="depTrxId" placeholder="ট্রানজেকশন আইডি দিন" required>
-
-      <button type="submit" class="green" style="width: 100%; margin-top: 15px; padding: 12px;">Submit Request</button>
+      <input type="number" id="depAmount" placeholder="যেমন: 500" required>
+      
+      <label>TrxID:</label>
+      <input type="text" id="depTrxId" placeholder="যেমন: 9N7X..." required>
+      
+      <button type="submit" class="green" style="width: 100%; margin-top: 15px; padding: 12px;">Submit Deposit</button>
+      <button type="button" onclick="closeDepositModal()" style="width: 100%; margin-top: 8px; background: #334155; padding: 8px;">বাতিল</button>
     </form>
   </div>
 </div>
 
-<!-- উইথড্র পপ-আপ মোডাল -->
 <div class="modal" id="withdrawModal">
-  <div class="modal-box" style="background: #1a1a1a; color: #fff; border: 1px solid var(--line);">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-      <h3 style="margin: 0; color: #dc3545;">Withdraw Money</h3>
-      <span onclick="closeWithdrawModal()" style="font-size: 24px; cursor: pointer; color: #aaa;">&times;</span>
-    </div>
-
+  <div class="modal-box" style="background: #1a1a1a; color: #fff;">
+    <h3>Withdraw Money</h3>
     <form id="withdrawForm" onsubmit="submitWithdraw(event)">
-      <label>Select Method:</label>
-      <select id="witMethod">
-        <option value="Bkash">Bkash</option>
-        <option value="Nagad">Nagad</option>
-      </select>
-
-      <label>Receiver Account Number:</label>
-      <input type="text" id="witAccNo" placeholder="যে নম্বরে টাকা নিতে চান" required>
-
-      <label>Amount (BDT):</label>
-      <input type="number" id="witAmount" placeholder="উত্তোলনের পরিমাণ লিখুন" required>
-
-      <button type="submit" class="red" style="width: 100%; margin-top: 15px; padding: 12px;">Submit Withdraw Request</button>
+      <label>Method:</label><select id="witMethod"><option value="Bkash">Bkash</option><option value="Nagad">Nagad</option></select>
+      <label>Account Number:</label><input type="text" id="witAccNo" required>
+      <label>Amount (BDT):</label><input type="number" id="witAmount" required>
+      <button type="submit" class="red" style="width: 100%; margin-top: 15px; padding: 12px;">Submit Withdraw</button>
+      <button type="button" onclick="closeWithdrawModal()" style="width: 100%; margin-top: 8px; background: #334155; padding: 8px;">বাতিল</button>
     </form>
   </div>
 </div>
 
 <script>
-// --- ফায়ারবেস কনফিগারেশন ---
 const firebaseConfig = {
   apiKey: "AIzaSyAf2CLmxMf_eIzXuYqPbAlU_...",
   authDomain: "refat88.firebaseapp.com",
   projectId: "refat88",
   storageBucket: "refat88.appspot.com",
   messagingSenderId: "363226112698",
-  appId: "1:363226112698:web:b31f3eb29827ebf725d883",
-  measurementId: "G-HQKJZTPXXY"
+  appId: "1:363226112698:web:b31f3eb29827ebf725d883"
 };
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
-const sports=[
- ['all','📋','সবগুলো'],['football','⚽','ফুটবল'],['cricket','🏏','ক্রিকেট'],
- ['tennis','🎾','টেনিস'],['basketball','🏀','বাস্কেটবল'],['hockey','🏒','আইস হকি']
+const sportsCats = [
+  ['all', '📋', 'সবগুলো'],
+  ['football', '⚽', 'ফুটবল'],
+  ['cricket', '🏏', 'ক্রিকেট'],
+  ['tennis', '🎾', 'টেনিস'],
+  ['basketball', '🏀', 'বাস্কেটবল']
 ];
-const games=[['all-games','🎲','সকল গেম'],['crash','✈️','Crash'],['casino','🃏','ক্যাসিনো']];
-let dataByCategory={},activeCategory='all',balance=500,authMode='signup',currentPhone=null;
-let selectedOption = { label: 'হোম জয়', type: 'Home' };
+
+const gamesCats = [
+  ['all-games', '🎲', 'সকল গেম'],
+  ['crash', '✈️', 'Crash'],
+  ['slot', '🎰', 'Slot'],
+  ['casino', '🃏', 'ক্যাসিনো']
+];
+
+let cachedMatches = [];
+let cachedGames = [];
+let selectedMatchCategory = 'football';
+let currentFilter = 'all';
+let balance = 500, currentPhone = localStorage.getItem('rifat_active') || null;
 const ADMIN_PASS = "123456";
 
 const $=id=>document.getElementById(id);
 
-function openDepositModal() {
-  if(!currentPhone) {
-    alert("অনুগ্রহ করে আগে লগইন বা অ্যাকাউন্ট খুলুন!");
-    openAuth('login');
-    return;
-  }
-  $('depositModal').classList.add('show');
+if(currentPhone) {
+  setTimeout(() => {
+    $('authArea').style.display = 'none';
+    $('memberArea').style.display = 'flex';
+    $('memberPhone').textContent = '📞 ' + currentPhone;
+  }, 500);
 }
-function closeDepositModal() { $('depositModal').classList.remove('show'); }
 
-function openWithdrawModal() {
-  if(!currentPhone) {
-    alert("অনুগ্রহ করে আগে লগইন বা অ্যাকাউন্ট খুলুন!");
-    openAuth('login');
-    return;
-  }
-  $('withdrawModal').classList.add('show');
-}
-function closeWithdrawModal() { $('withdrawModal').classList.remove('show'); }
-
-function submitDeposit(event) {
-  event.preventDefault();
-  let method = $('depMethod').value;
-  let accNo = $('userAccNo').value;
-  let amount = parseFloat($('depAmount').value);
-  let trxId = $('depTrxId').value;
-
-  db.ref('depositRequests').push({
-      phone: currentPhone,
-      method: method,
-      accountNumber: accNo,
-      amount: amount,
-      trxId: trxId,
-      status: 'Pending',
-      timestamp: Date.now()
+function renderTiles() {
+  const sGrid = $('sportsGrid'); sGrid.innerHTML = '';
+  sportsCats.forEach(([id, ico, name]) => {
+    const b = document.createElement('button');
+    b.className = 'tile' + (currentFilter === id ? ' active' : '');
+    b.innerHTML = `<span class="ico">${ico}</span><b>${name}</b><small>ম্যাচ দেখুন</small>`;
+    b.onclick = () => { currentFilter = id; renderTiles(); filterAndRender(); };
+    sGrid.appendChild(b);
   });
 
-  alert("আপনার ডিপোজিট রিকোয়েস্ট সফলভাবে জমা হয়েছে! অ্যাডমিন চেক করার পর ব্যালেন্স যোগ করে দেওয়া হবে।");
-  $('depositForm').reset();
-  closeDepositModal();
+  const gGrid = $('gamesGrid'); gGrid.innerHTML = '';
+  gamesCats.forEach(([id, ico, name]) => {
+    const b = document.createElement('button');
+    b.className = 'tile' + (currentFilter === id ? ' active' : '');
+    b.innerHTML = `<span class="ico">${ico}</span><b>${name}</b><small>গেম দেখুন</small>`;
+    b.onclick = () => { currentFilter = id; renderTiles(); filterAndRender(); };
+    gGrid.appendChild(b);
+  });
 }
 
-function submitWithdraw(event) {
-  event.preventDefault();
-  let method = $('witMethod').value;
-  let accNo = $('witAccNo').value;
-  let amount = parseFloat($('witAmount').value);
+function createNewMatch() {
+  const cat = $('newMatchCategory').value;
+  const league = $('newMatchLeague').value.trim();
+  const home = $('newHomeTeam').value.trim();
+  const away = $('newAwayTeam').value.trim();
+  const hOdds = parseFloat($('newHomeOdds').value) || 1.85;
+  const dOdds = parseFloat($('newDrawOdds').value) || 3.20;
+  const aOdds = parseFloat($('newAwayOdds').value) || 4.10;
 
-  if(amount > balance) {
-    alert("আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!");
-    return;
-  }
+  if(!league || !home || !away) { alert("সব তথ্য পূরণ করুন!"); return; }
 
-  db.ref('withdrawRequests').push({
-      phone: currentPhone,
-      method: method,
-      accountNumber: accNo,
-      amount: amount,
-      status: 'Pending',
-      timestamp: Date.now()
+  db.ref('matches').push({
+    category: cat,
+    league: league,
+    homeTeam: home,
+    awayTeam: away,
+    odds: { home: hOdds, draw: dOdds, away: aOdds },
+    winner: ""
   });
-
-  alert("আপনার উত্তোলনের রিকোয়েস্ট সফলভাবে জমা হয়েছে!");
-  $('withdrawForm').reset();
-  closeWithdrawModal();
+  alert("সফলভাবে ম্যাচ যোগ করা হয়েছে!");
+  $('newMatchLeague').value = ''; $('newHomeTeam').value = ''; $('newAwayTeam').value = '';
 }
 
-// --- এডমিন রিকোয়েস্ট ম্যানেজমেন্ট ও ব্যালেন্স অ্যাপ্রুভাল সিস্টেম ---
-db.ref('depositRequests').on('value', (snapshot) => {
-  const reqs = snapshot.val();
-  const table = $('adminDepositTable');
-  table.innerHTML = '';
-  
-  if(!reqs) {
-    table.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--muted);">কোনো নতুন ডিপোজিট রিকোয়েস্ট নেই।</td></tr>`;
-    return;
-  }
+function createNewGame() {
+  const cat = $('newGameCategory').value;
+  const name = $('newGameName').value.trim();
+  const ico = $('newGameIco').value.trim() || '🎰';
 
-  Object.keys(reqs).forEach(key => {
-    const r = reqs[key];
-    if(r.status === 'Pending') {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${r.phone}<br><small>${r.accountNumber}</small></td>
-        <td>${r.method}</td>
-        <td>৳${r.amount}</td>
-        <td>${r.trxId}</td>
-        <td><button class="green" style="padding:5px 8px; font-size:11px;" onclick="approveDeposit('${key}', '${r.phone}', ${r.amount})">Approve</button></td>
-      `;
-      table.appendChild(tr);
-    }
-  });
-  if(table.innerHTML === '') {
-    table.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--muted);">কোনো পেন্ডিং রিকোয়েস্ট নেই।</td></tr>`;
+  if(!name) { alert("গেমের নাম দিন!"); return; }
+
+  db.ref('customGames').push({ category: cat, name: name, ico: ico });
+  alert("সফলভাবে গেম যুক্ত করা হয়েছে!");
+  $('newGameName').value = ''; $('newGameIco').value = '';
+}
+
+db.ref('matches').on('value', snap => {
+  const data = snap.val();
+  cachedMatches = [];
+  const select = $('adminMatchSelect'); if(select) select.innerHTML = '';
+
+  if(data) {
+    Object.keys(data).forEach((key) => {
+      const m = data[key];
+      m.firebaseKey = key;
+      cachedMatches.push(m);
+      if(select) {
+        const opt = document.createElement('option');
+        opt.value = key;
+        opt.textContent = `${m.homeTeam} vs ${m.awayTeam}`;
+        select.appendChild(opt);
+      }
+    });
   }
+  filterAndRender();
 });
 
-function approveDeposit(reqKey, userPhone, amount) {
-  // ডাটাবেসে রিকোয়েস্ট স্ট্যাটাস অ্যাপ্রুভড করা
-  db.ref('depositRequests/' + reqKey).update({ status: 'Approved' });
-
-  // যদি ইউজার এই ডিভাইসে লগইন করা থাকে তবে ব্যালেন্স সাথে সাথে আপডেট হবে
-  if(currentPhone === userPhone) {
-    balance += amount;
-    $('balance').textContent = balance.toFixed(2);
+db.ref('customGames').on('value', snap => {
+  const data = snap.val();
+  cachedGames = [];
+  if(data) {
+    Object.keys(data).forEach(key => {
+      const g = data[key];
+      g.firebaseKey = key;
+      cachedGames.push(g);
+    });
   }
-
-  // ফায়ারবেস বা লোকাল স্টোরেজে ইউজারের ব্যালেন্স আপডেট করার লজিক
-  const saved = localStorage.getItem('rifat_user_' + userPhone);
-  if(saved) {
-    const u = JSON.parse(saved);
-    u.balance = (Number(u.balance) || 0) + amount;
-    localStorage.setItem('rifat_user_' + userPhone, JSON.stringify(u));
-  }
-
-  alert(`সফলভাবে ৳${amount} ব্যালেন্স ${userPhone} নম্বরের অ্যাকাউন্টে যোগ করা হয়েছে!`);
-}
-
-db.ref('withdrawRequests').on('value', (snapshot) => {
-  const reqs = snapshot.val();
-  const table = $('adminWithdrawTable');
-  table.innerHTML = '';
-  
-  if(!reqs) {
-    table.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--muted);">কোনো নতুন উইথড্র রিকোয়েস্ট নেই।</td></tr>`;
-    return;
-  }
-
-  Object.keys(reqs).forEach(key => {
-    const r = reqs[key];
-    if(r.status === 'Pending') {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${r.phone}<br><small>${r.accountNumber}</small></td>
-        <td>${r.method}</td>
-        <td>৳${r.amount}</td>
-        <td><button class="green" style="padding:5px 8px; font-size:11px;" onclick="approveWithdraw('${key}', '${r.phone}', ${r.amount})">Approve</button></td>
-      `;
-      table.appendChild(tr);
-    }
-  });
-  if(table.innerHTML === '') {
-    table.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--muted);">কোনো পেন্ডিং উইথড্র নেই।</td></tr>`;
-  }
+  filterAndRender();
 });
 
-function approveWithdraw(reqKey, userPhone, amount) {
-  db.ref('withdrawRequests/' + reqKey).update({ status: 'Approved' });
-
-  if(currentPhone === userPhone) {
-    if(balance >= amount) {
-      balance -= amount;
-      $('balance').textContent = balance.toFixed(2);
-    }
+function loadMatchToAdmin() {
+  const selectedKey = $('adminMatchSelect').value;
+  const match = cachedMatches.find(m => m.firebaseKey === selectedKey);
+  if(match) {
+    $('adminHomeTeam').value = match.homeTeam || '';
+    $('adminAwayTeam').value = match.awayTeam || '';
+    $('adminHomeOdds').value = match.odds?.home || '';
+    $('adminDrawOdds').value = match.odds?.draw || '';
+    $('adminAwayOdds').value = match.odds?.away || '';
+    $('adminWinnerSelect').value = match.winner || '';
   }
-
-  const saved = localStorage.getItem('rifat_user_' + userPhone);
-  if(saved) {
-    const u = JSON.parse(saved);
-    u.balance = Math.max(0, (Number(u.balance) || 0) - amount);
-    localStorage.setItem('rifat_user_' + userPhone, JSON.stringify(u));
-  }
-
-  alert(`উইথড্র রিকোয়েস্ট অ্যাপ্রুভ করা হয়েছে (${userPhone} - ৳${amount})!`);
 }
 
-// --- বেট ক্যালকুলেটর ও অ্যালগরিদম ---
+function saveMatchChanges() {
+  const selectedKey = $('adminMatchSelect').value;
+  if(!selectedKey) { alert("সম্পাদনার জন্য কোনো ম্যাচ সিলেক্ট করা হয়নি!"); return; }
+
+  const home = $('adminHomeTeam').value.trim();
+  const away = $('adminAwayTeam').value.trim();
+  const hOdds = parseFloat($('adminHomeOdds').value) || 1.85;
+  const dOdds = parseFloat($('adminDrawOdds').value) || 3.20;
+  const aOdds = parseFloat($('adminAwayOdds').value) || 4.10;
+  const winner = $('adminWinnerSelect').value;
+
+  db.ref('matches/' + selectedKey).update({
+    homeTeam: home,
+    awayTeam: away,
+    odds: { home: hOdds, draw: dOdds, away: aOdds },
+    winner: winner
+  });
+  alert("ম্যাচের তথ্য সফলভাবে আপডেট করা হয়েছে!");
+}
+
+function deleteSelectedMatch() {
+  const selectedKey = $('adminMatchSelect').value;
+  if(!selectedKey) { alert("ডিলিট করার জন্য কোনো ম্যাচ সিলেক্ট করা হয়নি!"); return; }
+
+  if(confirm("আপনি কি নিশ্চিতভাবে এই ম্যাচটি মুছে ফেলতে চান?")) {
+    db.ref('matches/' + selectedKey).remove()
+      .then(() => {
+        alert("ম্যাচটি সফলভাবে মুছে ফেলা হয়েছে!");
+        $('adminMatchSelect').value = '';
+        $('adminHomeTeam').value = '';
+        $('adminAwayTeam').value = '';
+        $('adminHomeOdds').value = '';
+        $('adminDrawOdds').value = '';
+        $('adminAwayOdds').value = '';
+        $('adminWinnerSelect').value = '';
+      })
+      .catch(error => {
+        alert("ম্যাচ ডিলিট করতে সমস্যা হয়েছে: " + error.message);
+      });
+  }
+}
+
+function filterAndRender() {
+  const box = $('matchList');
+  box.innerHTML = '';
+  let htmlContent = '';
+
+  const currentStake = parseFloat($('calcAmount').value) || 100;
+
+  let filteredMatches = cachedMatches.filter(m => currentFilter === 'all' || m.category === currentFilter);
+  
+  if(filteredMatches.length > 0 && currentFilter !== 'crash' && currentFilter !== 'slot' && currentFilter !== 'casino' && currentFilter !== 'all-games') {
+    filteredMatches.forEach((m) => {
+      const hOdds = m.odds?.home || 1.00;
+      const dOdds = m.odds?.draw || 1.00;
+      const aOdds = m.odds?.away || 1.00;
+
+      const hProf = (currentStake * hOdds - currentStake).toFixed(1);
+      const dProf = (currentStake * dOdds - currentStake).toFixed(1);
+      const aProf = (currentStake * aOdds - currentStake).toFixed(1);
+
+      htmlContent += `
+        <div class="match">
+          <div class="match-head">${m.league || 'Sports Match'}</div>
+          <div class="teams">${m.homeTeam} VS ${m.awayTeam}</div>
+          <div class="odds">
+            <button class="odd" onclick="selectOddsForCalc('হোম জয়', 'Home', ${hOdds}, '${m.category}')">
+              <span>হোম: ${hOdds}</span>
+              <small style="color:#6ee7b7">+৳${hProf}</small>
+            </button>
+            <button class="odd" onclick="selectOddsForCalc('ড্র', 'Draw', ${dOdds}, '${m.category}')">
+              <span>ড্র: ${dOdds}</span>
+              <small style="color:#6ee7b7">+৳${dProf}</small>
+            </button>
+            <button class="odd" onclick="selectOddsForCalc('অ্যাওয়ে জয়', 'Away', ${aOdds}, '${m.category}')">
+              <span>অ্যাওয়ে: ${aOdds}</span>
+              <small style="color:#6ee7b7">+৳${aProf}</small>
+            </button>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  let filteredGames = cachedGames.filter(g => currentFilter === 'all-games' || g.category === currentFilter);
+  
+  if((filteredGames.length > 0 && (currentFilter === 'crash' || currentFilter === 'slot' || currentFilter === 'casino' || currentFilter === 'all-games')) || (filteredGames.length > 0 && currentFilter === 'all')) {
+    filteredGames.forEach(g => {
+      htmlContent += `
+        <div class="match" style="display:flex; align-items:center; justify-content:space-between; background:#16243b;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-size:30px;">${g.ico}</span>
+            <div>
+              <b style="font-size:16px; color:var(--gold);">${g.name}</b>
+              <div style="font-size:12px; color:var(--muted); text-transform:uppercase;">ক্যাটাগরি: ${g.category}</div>
+            </div>
+          </div>
+          <button class="green" onclick="playGameDirectly('${g.name}', '${g.category}')">খেলুন</button>
+        </div>
+      `;
+    });
+  }
+
+  if(!htmlContent) {
+    box.innerHTML = '<div class="empty">এই ক্যাটাগরিতে এই মুহূর্তে কোনো ম্যাচ বা গেম উপলব্ধ নেই।</div>';
+  } else {
+    box.innerHTML = htmlContent;
+  }
+}
+
+function playGameDirectly(gName, gCat) {
+  selectOddsForCalc(gName, 'Game', 1.95, gCat);
+  alert(`${gName} গেমের বেটিং বেট ক্যালকুলেটরে লোড করা হয়েছে!`);
+}
+
 function calculateBet() {
   const odds = parseFloat($('calcOdds').value) || 0;
   const amount = parseFloat($('calcAmount').value) || 0;
-  
   const returnVal = amount * odds;
   const profitVal = returnVal - amount;
   
   $('resReturn').textContent = '৳' + (returnVal > 0 ? returnVal.toFixed(2) : '0.00');
   $('resProfit').textContent = '৳' + (profitVal > 0 ? profitVal.toFixed(2) : '0.00');
   $('btnAmountText').textContent = amount;
+
+  filterAndRender();
 }
 
 function addAmount(val) {
@@ -523,378 +590,226 @@ function addAmount(val) {
   calculateBet();
 }
 
+function selectOddsForCalc(label, type, oddsVal, cat = 'football') {
+  $('calcOdds').value = oddsVal;
+  selectedMatchCategory = cat;
+  calculateBet();
+  
+  const calcCard = document.querySelector('.calc-card');
+  if (calcCard) {
+    calcCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
 function placeCalculatedBet() {
-  if (!currentPhone) {
-    alert("বাজি ধরার জন্য অনুগ্রহ করে আগে লগইন করুন!");
-    openAuth('login');
-    return;
-  }
-
+  if (!currentPhone) { alert("প্রথমে লগইন করুন!"); openAuth('login'); return; }
   const amount = parseFloat($('calcAmount').value) || 0;
-  const odds = parseFloat($('calcOdds').value) || 0;
-
-  if (amount <= 0) {
-    alert("অনুগ্রহ করে বাজির সঠিক পরিমাণ বসান!");
-    return;
-  }
-  if (amount > balance) {
-    alert("আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!");
-    return;
-  }
+  if (amount > balance) { alert("অপর্যাপ্ত ব্যালেন্স!"); return; }
 
   balance -= amount;
   $('balance').textContent = balance.toFixed(2);
-  
-  const returnVal = (amount * odds);
-  const selectedMatchIdx = $('adminMatchSelect').value || 0;
 
-  const betData = {
-    id: Date.now(),
+  db.ref('bets').push({
     phone: currentPhone,
-    matchIndex: selectedMatchIdx,
-    optionType: selectedOption.type,
-    optionLabel: selectedOption.label,
-    odds: odds,
     amount: amount,
-    winAmount: returnVal,
-    status: 'Pending',
+    category: selectedMatchCategory,
+    odds: parseFloat($('calcOdds').value) || 1.85,
     timestamp: Date.now()
-  };
+  });
 
-  db.ref('userBets').push(betData);
+  alert("বাজি সফলভাবে প্লে করা হয়েছে!");
+}
 
-  const saved = localStorage.getItem('rifat_user_' + currentPhone);
-  if(saved) {
-    const u = JSON.parse(saved);
-    u.balance = balance;
-    localStorage.setItem('rifat_user_' + currentPhone, JSON.stringify(u));
+db.ref('bets').on('value', snap => {
+  const data = snap.val();
+  let total = 0, cricket = 0, football = 0, slot = 0, crash = 0, casino = 0;
+
+  if(data) {
+    Object.keys(data).forEach(key => {
+      const b = data[key];
+      const amt = parseFloat(b.amount) || 0;
+      total += amt;
+      if(b.category === 'cricket') cricket += amt;
+      else if(b.category === 'football') football += amt;
+      else if(b.category === 'slot') slot += amt;
+      else if(b.category === 'crash') crash += amt;
+      else if(b.category === 'casino') casino += amt;
+    });
   }
 
-  $('successDetails').innerHTML = `আপনি <b>৳${amount}</b> দিয়ে (<b>${selectedOption.label}</b>) <b>${odds}</b> অডসে বাজি ধরেছেন。<br>সম্ভাব্য জয়ী রিটার্ন: <b>৳${returnVal.toFixed(2)}</b>`;
-  $('successModal').classList.add('show');
-}
+  $('statTotalBets').textContent = '৳' + total.toFixed(2);
+  $('statCricketBets').textContent = '৳' + cricket.toFixed(2);
+  $('statFootballBets').textContent = '৳' + football.toFixed(2);
+  $('statSlotBets').textContent = '৳' + slot.toFixed(2);
+  $('statCrashBets').textContent = '৳' + crash.toFixed(2);
+  $('statCasinoBets').textContent = '৳' + casino.toFixed(2);
+});
 
-function closeSuccessModal() {
-  $('successModal').classList.remove('show');
-}
-
-function selectOddsForCalc(label, type, oddsVal) {
-  selectedOption = { label: label, type: type };
-  $('calcOdds').value = oddsVal;
-  calculateBet();
-  window.scrollTo({ top: $('calcOdds').offsetTop - 100, behavior: 'smooth' });
-}
-
-function checkBetResults(matchIndex, winnerType) {
-  if (!currentPhone || !winnerType) return;
-
-  db.ref('userBets').orderByChild('phone').equalTo(currentPhone).once('value', (snapshot) => {
-    const bets = snapshot.val();
-    if (!bets) return;
-
-    Object.keys(bets).forEach((key) => {
-      const b = bets[key];
-      if (b.matchIndex == matchIndex && b.status === 'Pending') {
-        let isWon = (b.optionType === winnerType);
-        let newStatus = isWon ? 'Won' : 'Lost';
-
-        db.ref('userBets/' + key).update({ status: newStatus });
-
-        if (isWon) {
-          balance += b.winAmount;
-          $('balance').textContent = balance.toFixed(2);
-          
-          const saved = localStorage.getItem('rifat_user_' + currentPhone);
-          if(saved) {
-            const u = JSON.parse(saved);
-            u.balance = balance;
-            localStorage.setItem('rifat_user_' + currentPhone, JSON.stringify(u));
-          }
-          showWinLossAlert(true, b.winAmount, b.optionLabel);
-        } else {
-          showWinLossAlert(false, b.amount, b.optionLabel);
-        }
-      }
-    });
-  });
-}
-
-function showWinLossAlert(isWin, amount, label) {
-  const modalBox = document.createElement('div');
-  modalBox.className = 'modal show';
-  modalBox.innerHTML = `
-    <div class="modal-box" style="text-align: center; border: 2px solid ${isWin ? '#10b981' : '#ef4444'}; background: #111d30;">
-      <div style="font-size: 50px; margin-bottom: 8px;">${isWin ? '🏆' : '❌'}</div>
-      <h2 style="color: ${isWin ? '#10b981' : '#ef4444'}; margin-bottom: 8px;">
-        ${isWin ? 'অভিনন্দন! আপনি বাজি জিতেছেন!' : 'You Lost / আপনি হেরে গেছেন!'}
-      </h2>
-      <p class="hint" style="font-size: 15px; color: #fff; margin-bottom: 15px;">
-        বেটের ধরণ: <b>${label}</b><br>
-        ${isWin ? `অ্যাকাউন্টে যোগ হয়েছে: <b style="color:#10b981; font-size:18px;">৳${amount.toFixed(2)}</b>` : `কাটা গেছে: <b style="color:#ef4444; font-size:18px;">৳${amount.toFixed(2)}</b>`}
-      </p>
-      <button class="primary" onclick="this.closest('.modal').remove()" style="width: 100%; padding: 10px;">ঠিক আছে</button>
-    </div>
-  `;
-  document.body.appendChild(modalBox);
-}
-
-function makeTile(item,isGame=false){
- const [id,ico,name]=item;
- const b=document.createElement('button');b.className='tile';b.innerHTML=`<span class="ico">${ico}</span><b>${name}</b><small>JSON ফাইল লোড</small>`;
- b.onclick=()=>{if(id==='all'||id==='all-games'){ $('allFiles').click();return;} chooseFile(id,name);};
- return b;
-}
-sports.forEach(x=>$('sportsGrid').appendChild(makeTile(x)));
-games.forEach(x=>$('gamesGrid').appendChild(makeTile(x,true)));
-
-function chooseFile(id,name){
- const input=document.createElement('input');input.type='file';input.accept='.json,application/json';
- input.onchange=()=>{if(input.files[0])readJsonFile(input.files[0],id,name);};input.click();
-}
-async function loadMultipleFiles(files){
- for(const file of Array.from(files)){const key=file.name.replace(/\.json$/i,'').toLowerCase();await readJsonFile(file,key,file.name);}
- $('allFiles').value='';
-}
-async function readJsonFile(file,id,name){
- try{
-  const text=await file.text();const json=JSON.parse(text);
-  dataByCategory[id]={name,file:file.name,data:json};
-  activeCategory=id;
-  renderData(id);
-  populateAdminDropdown();
-  $('loadStatus').textContent=`সফল: ${file.name} লোড হয়েছে।`;
- }catch(err){$('loadStatus').textContent='JSON ফাইল পড়া যায়নি। সঠিক JSON ফাইল নির্বাচন করুন।';$('loadStatus').className='status warn';}
-}
-
-function first(obj,keys){for(const k of keys){if(obj&&obj[k]!==undefined&&obj[k]!==null&&obj[k]!=='')return obj[k];}return '';}
-function findMatches(root){
- if(Array.isArray(root))return root;
- if(!root||typeof root!=='object')return [];
- for(const k of ['matches','match','events','data','fixtures'])if(Array.isArray(root[k]))return root[k];
- return [root];
-}
-function textVal(v){if(v===undefined||v===null||v==='')return '';if(typeof v==='object')return first(v,['name','value','label'])||JSON.stringify(v);return String(v);}
-
-function renderData(id){
- const item=dataByCategory[id];$('listTitle').textContent=(item?.name||id)+' — ম্যাচ ও ডেটা';
- const matches=findMatches(item?.data);const box=$('matchList');box.innerHTML='';
- if(!matches.length){box.innerHTML='<div class="empty">এই ফাইলে ম্যাচের তালিকা পাওয়া যায়নি।</div>';return;}
- 
- matches.forEach((m,i)=>{
-  if(!m||typeof m!=='object')return;
-  const league=textVal(first(m,['league','competition','tournament']));
-  const home=textVal(first(m,['home','homeTeam','team1','home_team']))||'হোম দল';
-  const away=textVal(first(m,['away','awayTeam','team2','away_team']))||'অ্যাওয়ে দল';
-  const card=document.createElement('div');card.className='match';
-  const head=document.createElement('div');head.className='match-head';head.textContent=league||`ম্যাচ ${i+1}`;
-  const teams=document.createElement('div');teams.className='teams';teams.textContent=`${home} VS ${away}`;
-  card.append(head,teams);
-
-  const oddsObj=m.odds||{};
-  const oddsBox=document.createElement('div');oddsBox.className='odds';
-  const hOdds=oddsObj.home||1.00;
-  const dOdds=oddsObj.draw||1.00;
-  const aOdds=oddsObj.away||1.00;
-
-  [['হোম জয়','Home',hOdds],['ড্র','Draw',dOdds],['অ্যাওয়ে জয়','Away',aOdds]].forEach(([label,type,val])=>{
-    const b=document.createElement('button');b.className='odd';b.textContent=`${label}: ${val}`;
-    b.onclick=()=>selectOddsForCalc(label, type, val);
-    oddsBox.appendChild(b);
-  });
-  card.append(oddsBox);
-  box.appendChild(card);
- });
-}
-
-function openAuth(mode){
- authMode = mode;
- updateAuthForm();
- $('authMessage').textContent = '';
- $('phone').value = '';
- $('pass1').value = '';
- if($('pass2')) $('pass2').value = '';
- $('authModal').classList.add('show');
-}
+function openAuth(m){ $('authModal').classList.add('show'); }
 function closeAuth(){ $('authModal').classList.remove('show'); }
 
-function switchMode(){
- authMode = authMode === 'signup' ? 'login' : 'signup';
- updateAuthForm();
+function openDepositModal(){ 
+  if(!currentPhone) {
+    const saved = localStorage.getItem('rifat_active');
+    if(saved) currentPhone = saved;
+    else { alert("প্রথমে লগইন করুন!"); openAuth('login'); return; }
+  }
+  $('depositModal').classList.add('show'); 
+}
+function closeDepositModal(){ $('depositModal').classList.remove('show'); }
+
+function openWithdrawModal(){ 
+  if(!currentPhone) {
+    const saved = localStorage.getItem('rifat_active');
+    if(saved) currentPhone = saved;
+    else { alert("প্রথমে লগইন করুন!"); openAuth('login'); return; }
+  }
+  $('withdrawModal').classList.add('show'); 
+}
+function closeWithdrawModal(){ $('withdrawModal').classList.remove('show'); }
+
+function submitDeposit(e) {
+  e.preventDefault();
+  const method = $('depMethod').value;
+  const acc = $('userAccNo').value;
+  const amt = $('depAmount').value;
+  const trx = $('depTrxId').value;
+  
+  if(!acc || !amt || !trx) { alert("সব তথ্য পূরণ করুন!"); return; }
+  
+  db.ref('deposits').push({
+    phone: currentPhone,
+    method: method,
+    account: acc,
+    amount: amt,
+    trxId: trx,
+    status: 'Pending'
+  });
+  alert("ডিপোজিট রিকোয়েস্ট সফলভাবে জমা হয়েছে!");
+  closeDepositModal();
+  $('depositForm').reset();
 }
 
-function updateAuthForm(){
- if(authMode === 'signup'){
-  $('authTitle').textContent = 'নতুন অ্যাকাউন্ট খুলুন';
-  $('confirmWrap').style.display = 'block';
-  $('pass2').required = true;
-  $('switchText').textContent = 'আগে থেকেই অ্যাকাউন্ট আছে? লগইন করুন';
- } else {
-  $('authTitle').textContent = 'লগ ইন করুন';
-  $('confirmWrap').style.display = 'none';
-  $('pass2').required = false;
-  $('switchText').textContent = 'নতুন অ্যাকাউন্ট খুলতে এখানে চাপ দিন';
- }
+function submitWithdraw(e) {
+  e.preventDefault();
+  const method = $('witMethod').value;
+  const acc = $('witAccNo').value;
+  const amt = parseFloat($('witAmount').value) || 0;
+  
+  if(!acc || !amt) { alert("সব তথ্য পূরণ করুন!"); return; }
+  
+  if(amt > balance) {
+    alert("আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!");
+    return;
+  }
+  
+  balance -= amt;
+  $('balance').textContent = balance.toFixed(2);
+  
+  db.ref('withdraws').push({
+    phone: currentPhone,
+    method: method,
+    account: acc,
+    amount: amt,
+    status: 'Pending'
+  });
+  alert("উইথড্র রিকোয়েস্ট জমা হয়েছে এবং আপনার মেইন ব্যালেন্স থেকে টাকা কেটে নেওয়া হয়েছে!");
+  closeWithdrawModal();
+  $('withdrawForm').reset();
 }
 
-$('authForm').addEventListener('submit', e=>{
- e.preventDefault();
- const phone = $('phone').value.trim();
- const p1 = $('pass1').value;
- const p2 = $('pass2').value;
-
- if(p1.length < 6){
-  $('authMessage').textContent = 'পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে।';
-  return;
- }
-
- if(authMode === 'signup'){
-  if(p1 !== p2){
-   $('authMessage').textContent = 'দুটি পাসওয়ার্ড মিলেনি। আবার লিখুন।';
-   return;
+db.ref('deposits').on('value', snap => {
+  const data = snap.val();
+  const table = $('adminDepositTable');
+  if(!table) return;
+  table.innerHTML = '';
+  
+  if(data) {
+    Object.keys(data).forEach(key => {
+      const d = data[key];
+      if(d.status === 'Pending') {
+        table.innerHTML += `
+          <tr>
+            <td>${d.phone}<br><small style="color:var(--gold);">${d.trxId}</small></td>
+            <td>${d.method}</td>
+            <td>৳${d.amount}</td>
+            <td><button class="green" style="padding:4px 8px; font-size:11px;" onclick="approveDeposit('${key}', ${d.amount})">অ্যাপ্রুভ</button></td>
+          </tr>
+        `;
+      }
+    });
   }
-  if(localStorage.getItem('rifat_user_' + phone)){
-   $('authMessage').textContent = 'এই নম্বরে ইতিমধ্যে অ্যাকাউন্ট আছে। লগইন করুন।';
-   return;
-  }
-  const newUser = { phone, password: p1, balance: 500 };
-  localStorage.setItem('rifat_user_' + phone, JSON.stringify(newUser));
-  balance = 500;
- } else {
-  const saved = localStorage.getItem('rifat_user_' + phone);
-  if(!saved){
-   $('authMessage').textContent = 'এই নম্বরে কোনো অ্যাকাউন্ট পাওয়া যায়নি!';
-   return;
-  }
-  const user = JSON.parse(saved);
-  if(user.password !== p1){
-   $('authMessage').textContent = 'পাসওয়ার্ড ভুল হয়েছে!';
-   return;
-  }
-  balance = Number(user.balance) || 500;
- }
-
- currentPhone = phone;
- localStorage.setItem('rifat_active', phone);
- showMember();
- closeAuth();
+  if(table.innerHTML === '') table.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--muted);">কোনো ডিপোজিট পেন্ডিং নেই।</td></tr>';
 });
 
-function showMember(){
- $('authArea').style.display = 'none';
- $('memberArea').style.display = 'flex';
- $('memberPhone').textContent = '📞 ' + currentPhone;
- $('balance').textContent = balance.toFixed(2);
+db.ref('withdraws').on('value', snap => {
+  const data = snap.val();
+  const table = $('adminWithdrawTable');
+  if(!table) return;
+  table.innerHTML = '';
+  
+  if(data) {
+    Object.keys(data).forEach(key => {
+      const w = data[key];
+      if(!w.status || w.status === 'Pending') {
+        table.innerHTML += `
+          <tr>
+            <td>${w.phone || 'N/A'}<br><small style="color:var(--gold);">${w.account || ''}</small></td>
+            <td>${w.method || 'Bkash'}</td>
+            <td>৳${w.amount || 0}</td>
+            <td><button class="red" style="padding:4px 8px; font-size:11px;" onclick="approveWithdraw('${key}')">পেমেন্ট কমপ্লিট</button></td>
+          </tr>
+        `;
+      }
+    });
+  }
+  if(table.innerHTML === '') {
+    table.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--muted);">কোনো উইথড্র পেন্ডিং নেই।</td></tr>';
+  }
+});
+
+function approveDeposit(key, amt) {
+  db.ref('deposits/' + key).update({ status: 'Approved' });
+  balance += parseFloat(amt);
+  $('balance').textContent = balance.toFixed(2);
+  alert("ডিপোজিট সফলভাবে অ্যাপ্রুভ করা হয়েছে!");
 }
 
-function logout(){
- currentPhone = null;
- localStorage.removeItem('rifat_active');
- $('authArea').style.display = 'flex';
- $('memberArea').style.display = 'none';
- alert('সফলভাবে লগআউট করা হয়েছে।');
+function approveWithdraw(key) {
+  db.ref('withdraws/' + key).update({ status: 'Approved' })
+    .then(() => {
+      alert("উইথড্র রিকোয়েস্ট সফলভাবে সম্পন্ন করা হয়েছে!");
+    })
+    .catch(error => {
+      alert("সমস্যা হয়েছে: " + error.message);
+    });
 }
 
-function restoreSession(){
- const phone = localStorage.getItem('rifat_active');
- if(!phone) return;
- const raw = localStorage.getItem('rifat_user_' + phone);
- if(!raw) return;
- const u = JSON.parse(raw);
- currentPhone = phone;
- balance = Number(u.balance) || 500;
- showMember();
-}
+$('authForm').addEventListener('submit', e => {
+  e.preventDefault();
+  currentPhone = $('phone').value;
+  localStorage.setItem('rifat_active', currentPhone);
+  $('authArea').style.display = 'none';
+  $('memberArea').style.display = 'flex';
+  $('memberPhone').textContent = '📞 ' + currentPhone;
+  closeAuth();
+});
 
-restoreSession();
+function logout() { 
+  currentPhone = null; 
+  localStorage.removeItem('rifalt_active');
+  $('authArea').style.display = 'flex'; 
+  $('memberArea').style.display = 'none'; 
+}
 
 function requestAdminAccess(){
- const pass = prompt("দয়া করে এডমিন পাসওয়ার্ড দিন:");
- if(pass === ADMIN_PASS){
-  $('adminMainPanel').style.display = 'block';
-  populateAdminDropdown();
-  alert('এডমিন প্যানেল সফলভাবে আনলক করা হয়েছে!');
- } else if(pass !== null) {
-  alert('ভুল পাসওয়ার্ড! আপনার এডমিন অ্যাক্সেস নেই।');
- }
+  const p = prompt("এডমিন পাসওয়ার্ড দিন:");
+  if(p === ADMIN_PASS) $('adminMainPanel').style.display = 'block';
+  else if(p !== null) alert("ভুল পাসওয়ার্ড!");
 }
+function adminLogout(){ $('adminMainPanel').style.display = 'none'; }
 
-function adminLogout(){
- $('adminMainPanel').style.display = 'none';
- alert('এডমিন প্যানেল থেকে লগআউট করা হয়েছে।');
-}
-
-function populateAdminDropdown(){
- const select=$('adminMatchSelect');select.innerHTML='';
- const item=dataByCategory[activeCategory];
- const matches=findMatches(item?.data);
- if(!matches.length){select.innerHTML='<option>কোনো ম্যাচ পাওয়া যায়নি</option>';return;}
- matches.forEach((m,idx)=>{
-  const h=textVal(first(m,['home','homeTeam','home_team']))||'Team A';
-  const a=textVal(first(m,['away','awayTeam','away_team']))||'Team B';
-  const opt=document.createElement('option');opt.value=idx;opt.textContent=`ম্যাচ ${idx+1}: ${h} vs ${a}`;
-  select.appendChild(opt);
- });
- loadMatchToAdmin();
-}
-
-function loadMatchToAdmin(){
- const idx=$('adminMatchSelect').value;
- const item=dataByCategory[activeCategory];
- const matches=findMatches(item?.data);
- if(!matches[idx])return;
- const m=matches[idx];
- $('adminHomeTeam').value=textVal(first(m,['home','homeTeam','home_team']));
- $('adminAwayTeam').value=textVal(first(m,['away','awayTeam','away_team']));
- $('adminHomeOdds').value=m.odds?.home||'';
- $('adminDrawOdds').value=m.odds?.draw||'';
- $('adminAwayOdds').value=m.odds?.away||'';
- $('adminWinnerSelect').value=m.winner||'';
-}
-
-function saveMatchChanges(){
- const idx=$('adminMatchSelect').value;
- const item=dataByCategory[activeCategory];
- const matches=findMatches(item?.data);
- if(!matches[idx])return;
- 
- matches[idx].homeTeam=$('adminHomeTeam').value;
- matches[idx].awayTeam=$('adminAwayTeam').value;
- if(!matches[idx].odds)matches[idx].odds={};
- matches[idx].odds.home=parseFloat($('adminHomeOdds').value)||1.00;
- matches[idx].odds.draw=parseFloat($('adminDrawOdds').value)||1.00;
- matches[idx].odds.away=parseFloat($('adminAwayOdds').value)||1.00;
-
- const winner = $('adminWinnerSelect').value;
- matches[idx].winner = winner;
-
- renderData(activeCategory);
- alert('ম্যাচের তথ্য, অডস ও বিজয়ী রেজাল্ট সফলভাবে আপডেট করা হয়েছে!');
-
- db.ref('matches/' + idx).set(matches[idx]);
-
- if(winner) {
-   checkBetResults(idx, winner);
- }
-}
-
-function clearCurrent(){if(dataByCategory[activeCategory])delete dataByCategory[activeCategory];$('matchList').innerHTML='<div class="empty">এই বিভাগের ডেটা মুছে ফেলা হয়েছে।</div>';}
-
-db.ref('matches').on('value', (snapshot) => {
-  const serverMatches = snapshot.val();
-  if(serverMatches && activeCategory && dataByCategory[activeCategory]) {
-    dataByCategory[activeCategory].data = serverMatches;
-    renderData(activeCategory);
-    
-    if(Array.isArray(serverMatches)) {
-      serverMatches.forEach((m, idx) => {
-        if(m && m.winner) {
-          checkBetResults(idx, m.winner);
-        }
-      });
-    }
-  }
-});
-
+renderTiles();
 calculateBet();
 </script>
 </body>
