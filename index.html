@@ -62,6 +62,10 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
       <button class="red" onclick="logout()" style="padding:6px 10px; font-size:12px;">লগ আউট</button>
     </div>
     <div class="balance">ডেমো ব্যালেন্স: ৳<span id="balance">500.00</span></div>
+    
+    <!-- ডিপোজিট ও উইথড্র বাটন -->
+    <button class="green" onclick="openDepositModal()" style="padding: 7px 12px; font-size: 13px;">Deposit (+)</button>
+    <button class="red" onclick="openWithdrawModal()" style="padding: 7px 12px; font-size: 13px;">Withdraw (-)</button>
   </div>
 </header>
 
@@ -73,7 +77,7 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
       <button class="red" onclick="adminLogout()">এডমিন লগআউট</button>
     </div>
     <div id="adminControls">
-      <p class="hint">এখানে আপনি সরাসরি ম্যাচের পয়েন্ট ও ৩টি অডস পরিবর্তন করে রিয়েল-টাইমে পেজে লাইভ করতে পারবেন।</p>
+      <p class="hint">এখানে আপনি সরাসরি ম্যাচের পয়েন্ট, ৩টি অডস এবং বিজয়ী দল সিলেক্ট করে অটো-রেজাল্ট প্রকাশ করতে পারবেন।</p>
       <label>সম্পাদনার জন্য ম্যাচ সিলেক্ট করুন:</label>
       <select id="adminMatchSelect" onchange="loadMatchToAdmin()"></select>
       
@@ -103,7 +107,18 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
         </div>
       </div>
 
-      <button class="green" style="width:100%; margin-top:15px; padding:12px;" onclick="saveMatchChanges()">পরিবর্তন সেভ করুন ও লাইভ করুন</button>
+      <!-- অটোমেটিক বেট সেটেলমেন্ট ও বিজয়ী ডিক্লেয়ার অপশন -->
+      <div style="margin-top:12px; padding:10px; background:#0c1728; border-radius:8px; border:1px solid var(--line);">
+        <label style="color:var(--gold);">🏆 বিজয়ী টিম নির্ধারণ করুন (অটোমেটিক বেট ফিনিশ):</label>
+        <select id="adminWinnerSelect" style="margin-top:5px;">
+          <option value="">ম্যাচ এখনো চলমান (Pending)</option>
+          <option value="Home">হোম জয় (Home Win)</option>
+          <option value="Draw">ড্র (Draw)</option>
+          <option value="Away">অ্যাওয়ে জয় (Away Win)</option>
+        </select>
+      </div>
+
+      <button class="green" style="width:100%; margin-top:15px; padding:12px;" onclick="saveMatchChanges()">পরিবর্তন সেভ করুন ও রেজাল্ট প্রকাশ করুন</button>
     </div>
   </section>
 
@@ -197,8 +212,69 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
  </div>
 </div>
 
+<!-- ডিপোজিট পপ-আপ মোডাল -->
+<div class="modal" id="depositModal">
+  <div class="modal-box" style="background: #1a1a1a; color: #fff; border: 1px solid var(--line);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <h3 style="margin: 0; color: #28a745;">Deposit Money</h3>
+      <span onclick="closeDepositModal()" style="font-size: 24px; cursor: pointer; color: #aaa;">&times;</span>
+    </div>
+    
+    <div style="background: #2c2c2c; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-size: 14px; text-align: center;">
+      <p style="margin: 0 0 5px 0; color: #ffc107;">বিকাশ বা নগদে <b>Send Money</b> করুন:</p>
+      <p style="margin: 0; font-size: 18px; font-weight: bold; color: #fff;">📱 01791424381</p>
+      <p style="margin: 5px 0 0 0; font-size: 12px; color: #aaa;">(Personal Number)</p>
+    </div>
+
+    <form id="depositForm" onsubmit="submitDeposit(event)">
+      <label>Select Method:</label>
+      <select id="depMethod">
+        <option value="Bkash">Bkash</option>
+        <option value="Nagad">Nagad</option>
+      </select>
+
+      <label>Your Account Number:</label>
+      <input type="text" id="userAccNo" placeholder="যে নম্বর থেকে টাকা পাঠিয়েছেন" required>
+
+      <label>Amount (BDT):</label>
+      <input type="number" id="depAmount" placeholder="টাকার পরিমাণ লিখুন" required>
+
+      <label>Transaction ID (TrxID):</label>
+      <input type="text" id="depTrxId" placeholder="ট্রানজেকশন আইডি দিন" required>
+
+      <button type="submit" class="green" style="width: 100%; margin-top: 15px; padding: 12px;">Submit Request</button>
+    </form>
+  </div>
+</div>
+
+<!-- উইথড্র পপ-আপ মোডাল -->
+<div class="modal" id="withdrawModal">
+  <div class="modal-box" style="background: #1a1a1a; color: #fff; border: 1px solid var(--line);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <h3 style="margin: 0; color: #dc3545;">Withdraw Money</h3>
+      <span onclick="closeWithdrawModal()" style="font-size: 24px; cursor: pointer; color: #aaa;">&times;</span>
+    </div>
+
+    <form id="withdrawForm" onsubmit="submitWithdraw(event)">
+      <label>Select Method:</label>
+      <select id="witMethod">
+        <option value="Bkash">Bkash</option>
+        <option value="Nagad">Nagad</option>
+      </select>
+
+      <label>Receiver Account Number:</label>
+      <input type="text" id="witAccNo" placeholder="যে নম্বরে টাকা নিতে চান" required>
+
+      <label>Amount (BDT):</label>
+      <input type="number" id="witAmount" placeholder="উত্তোলনের পরিমাণ লিখুন" required>
+
+      <button type="submit" class="red" style="width: 100%; margin-top: 15px; padding: 12px;">Submit Withdraw Request</button>
+    </form>
+  </div>
+</div>
+
 <script>
-// --- ফায়ারবেস কনফিগারেশন (আপনার স্ক্রিনশট থেকে যুক্ত করা হলো) ---
+// --- ফায়ারবেস কনফিগারেশন ---
 const firebaseConfig = {
   apiKey: "AIzaSyAf2CLmxMf_eIzXuYqPbAlU_...",
   authDomain: "refat88.firebaseapp.com",
@@ -219,11 +295,80 @@ const sports=[
 ];
 const games=[['all-games','🎲','সকল গেম'],['crash','✈️','Crash'],['casino','🃏','ক্যাসিনো']];
 let dataByCategory={},activeCategory='all',balance=500,authMode='signup',currentPhone=null;
+let selectedOption = { label: 'হোম জয়', type: 'Home' };
 const ADMIN_PASS = "123456";
 
 const $=id=>document.getElementById(id);
 
-// --- বেট ক্যালকুলেটর ফাংশনালিটি ---
+// --- ডিপোজিট ও উইথড্র মডাল কন্ট্রোল ফাংশনালিটি ---
+function openDepositModal() {
+  if(!currentPhone) {
+    alert("অনুগ্রহ করে আগে লগইন বা অ্যাকাউন্ট খুলুন!");
+    openAuth('login');
+    return;
+  }
+  $('depositModal').classList.add('show');
+}
+function closeDepositModal() { $('depositModal').classList.remove('show'); }
+
+function openWithdrawModal() {
+  if(!currentPhone) {
+    alert("অনুগ্রহ করে আগে লগইন বা অ্যাকাউন্ট খুলুন!");
+    openAuth('login');
+    return;
+  }
+  $('withdrawModal').classList.add('show');
+}
+function closeWithdrawModal() { $('withdrawModal').classList.remove('show'); }
+
+function submitDeposit(event) {
+  event.preventDefault();
+  let method = $('depMethod').value;
+  let accNo = $('userAccNo').value;
+  let amount = parseFloat($('depAmount').value);
+  let trxId = $('depTrxId').value;
+
+  db.ref('depositRequests').push({
+      phone: currentPhone,
+      method: method,
+      accountNumber: accNo,
+      amount: amount,
+      trxId: trxId,
+      status: 'Pending',
+      timestamp: Date.now()
+  });
+
+  alert("আপনার ডিপোজিট রিকোয়েস্ট সফলভাবে জমা হয়েছে! অ্যাডমিন চেক করার পর ব্যালেন্স যোগ করে দেওয়া হবে।");
+  $('depositForm').reset();
+  closeDepositModal();
+}
+
+function submitWithdraw(event) {
+  event.preventDefault();
+  let method = $('witMethod').value;
+  let accNo = $('witAccNo').value;
+  let amount = parseFloat($('witAmount').value);
+
+  if(amount > balance) {
+    alert("আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!");
+    return;
+  }
+
+  db.ref('withdrawRequests').push({
+      phone: currentPhone,
+      method: method,
+      accountNumber: accNo,
+      amount: amount,
+      status: 'Pending',
+      timestamp: Date.now()
+  });
+
+  alert("আপনার উত্তোলনের রিকোয়েস্ট সফলভাবে জমা হয়েছে!");
+  $('withdrawForm').reset();
+  closeWithdrawModal();
+}
+
+// --- বেট ক্যালকুলেটর ও স্বয়ংক্রিয় বেটিং অ্যালগরিদম ---
 function calculateBet() {
   const odds = parseFloat($('calcOdds').value) || 0;
   const amount = parseFloat($('calcAmount').value) || 0;
@@ -242,10 +387,17 @@ function addAmount(val) {
   calculateBet();
 }
 
+// বাজি সেভ করার অ্যালগরিদম
 function placeCalculatedBet() {
+  if (!currentPhone) {
+    alert("বাজি ধরার জন্য অনুগ্রহ করে আগে লগইন করুন!");
+    openAuth('login');
+    return;
+  }
+
   const amount = parseFloat($('calcAmount').value) || 0;
   const odds = parseFloat($('calcOdds').value) || 0;
-
+  
   if (amount <= 0) {
     alert("অনুগ্রহ করে বাজির সঠিক পরিমাণ বসান!");
     return;
@@ -258,17 +410,34 @@ function placeCalculatedBet() {
   balance -= amount;
   $('balance').textContent = balance.toFixed(2);
   
-  if (currentPhone) {
-    const saved = localStorage.getItem('rifat_user_' + currentPhone);
-    if(saved) {
-      const u = JSON.parse(saved);
-      u.balance = balance;
-      localStorage.setItem('rifat_user_' + currentPhone, JSON.stringify(u));
-    }
+  const returnVal = (amount * odds);
+  const selectedMatchIdx = $('adminMatchSelect').value || 0;
+
+  // বেটের হিস্ট্রি সেভ করা
+  const betData = {
+    id: Date.now(),
+    phone: currentPhone,
+    matchIndex: selectedMatchIdx,
+    optionType: selectedOption.type, // Home, Draw, Away
+    optionLabel: selectedOption.label,
+    odds: odds,
+    amount: amount,
+    winAmount: returnVal,
+    status: 'Pending',
+    timestamp: Date.now()
+  };
+
+  db.ref('userBets').push(betData);
+
+  // লোকাল সেভ
+  const saved = localStorage.getItem('rifat_user_' + currentPhone);
+  if(saved) {
+    const u = JSON.parse(saved);
+    u.balance = balance;
+    localStorage.setItem('rifat_user_' + currentPhone, JSON.stringify(u));
   }
 
-  const returnVal = (amount * odds).toFixed(2);
-  $('successDetails').innerHTML = `আপনি <b>৳${amount}</b> দিয়ে <b>${odds}</b> অডসে বাজি ধরেছেন।<br>সম্ভাব্য জয়ী রিটার্ন: <b>৳${returnVal}</b>`;
+  $('successDetails').innerHTML = `আপনি <b>৳${amount}</b> দিয়ে (<b>${selectedOption.label}</b>) <b>${odds}</b> অডসে বাজি ধরেছেন。<br>সম্ভাব্য জয়ী রিটার্ন: <b>৳${returnVal.toFixed(2)}</b>`;
   $('successModal').classList.add('show');
 }
 
@@ -276,10 +445,68 @@ function closeSuccessModal() {
   $('successModal').classList.remove('show');
 }
 
-function selectOddsForCalc(label, oddsVal) {
+function selectOddsForCalc(label, type, oddsVal) {
+  selectedOption = { label: label, type: type };
   $('calcOdds').value = oddsVal;
   calculateBet();
   window.scrollTo({ top: $('calcOdds').offsetTop - 100, behavior: 'smooth' });
+}
+
+// --- স্বয়ংক্রিয়ভাবে বেট সেটেল করা ও বিজয়ী/বিজীত পপ-আপ মেসেজ দেখানো ---
+function checkBetResults(matchIndex, winnerType) {
+  if (!currentPhone || !winnerType) return;
+
+  db.ref('userBets').orderByChild('phone').equalTo(currentPhone).once('value', (snapshot) => {
+    const bets = snapshot.val();
+    if (!bets) return;
+
+    Object.keys(bets).forEach((key) => {
+      const b = bets[key];
+      if (b.matchIndex == matchIndex && b.status === 'Pending') {
+        let isWon = (b.optionType === winnerType);
+        let newStatus = isWon ? 'Won' : 'Lost';
+
+        // ডাটাবেস স্ট্যাটাস আপডেট
+        db.ref('userBets/' + key).update({ status: newStatus });
+
+        if (isWon) {
+          balance += b.winAmount;
+          $('balance').textContent = balance.toFixed(2);
+          
+          // লোকাল স্টোরেজ আপডেট
+          const saved = localStorage.getItem('rifat_user_' + currentPhone);
+          if(saved) {
+            const u = JSON.parse(saved);
+            u.balance = balance;
+            localStorage.setItem('rifat_user_' + currentPhone, JSON.stringify(u));
+          }
+          showWinLossAlert(true, b.winAmount, b.optionLabel);
+        } else {
+          showWinLossAlert(false, b.amount, b.optionLabel);
+        }
+      }
+    });
+  });
+}
+
+// জেতা বা হারার নোটিশ দেখানোর ফাংশন
+function showWinLossAlert(isWin, amount, label) {
+  const modalBox = document.createElement('div');
+  modalBox.className = 'modal show';
+  modalBox.innerHTML = `
+    <div class="modal-box" style="text-align: center; border: 2px solid ${isWin ? '#10b981' : '#ef4444'}; background: #111d30;">
+      <div style="font-size: 50px; margin-bottom: 8px;">${isWin ? '🏆' : '❌'}</div>
+      <h2 style="color: ${isWin ? '#10b981' : '#ef4444'}; margin-bottom: 8px;">
+        ${isWin ? 'অভিনন্দন! আপনি বাজি জিতেছেন!' : 'You Lost / আপনি হেরে গেছেন!'}
+      </h2>
+      <p class="hint" style="font-size: 15px; color: #fff; margin-bottom: 15px;">
+        বেটের ধরণ: <b>${label}</b><br>
+        ${isWin ? `অ্যাকাউন্টে যোগ হয়েছে: <b style="color:#10b981; font-size:18px;">৳${amount.toFixed(2)}</b>` : `কাটা গেছে: <b style="color:#ef4444; font-size:18px;">৳${amount.toFixed(2)}</b>`}
+      </p>
+      <button class="primary" onclick="this.closest('.modal').remove()" style="width: 100%; padding: 10px;">ঠিক আছে</button>
+    </div>
+  `;
+  document.body.appendChild(modalBox);
 }
 
 function makeTile(item,isGame=false){
@@ -340,9 +567,9 @@ function renderData(id){
   const dOdds=oddsObj.draw||1.00;
   const aOdds=oddsObj.away||1.00;
 
-  [['হোম জয়',hOdds],['ড্র',dOdds],['অ্যাওয়ে জয়',aOdds]].forEach(([label,val])=>{
+  [['হোম জয়','Home',hOdds],['ড্র','Draw',dOdds],['অ্যাওয়ে জয়','Away',aOdds]].forEach(([label,type,val])=>{
     const b=document.createElement('button');b.className='odd';b.textContent=`${label}: ${val}`;
-    b.onclick=()=>selectOddsForCalc(label, val);
+    b.onclick=()=>selectOddsForCalc(label, type, val);
     oddsBox.appendChild(b);
   });
   card.append(oddsBox);
@@ -494,6 +721,7 @@ function loadMatchToAdmin(){
  $('adminHomeOdds').value=m.odds?.home||'';
  $('adminDrawOdds').value=m.odds?.draw||'';
  $('adminAwayOdds').value=m.odds?.away||'';
+ $('adminWinnerSelect').value=m.winner||'';
 }
 
 function saveMatchChanges(){
@@ -509,21 +737,37 @@ function saveMatchChanges(){
  matches[idx].odds.draw=parseFloat($('adminDrawOdds').value)||1.00;
  matches[idx].odds.away=parseFloat($('adminAwayOdds').value)||1.00;
 
- renderData(activeCategory);
- alert('ম্যাচের তথ্য ও অডস সফলভাবে আপডেট করা হয়েছে!');
+ const winner = $('adminWinnerSelect').value;
+ matches[idx].winner = winner;
 
- // ফায়ারবেস রিয়েলটাইম ডাটাবেসে ডাটা সিঙ্ক করার অপশনাল কোড (প্রয়োজনে ব্যবহার করতে পারেন)
+ renderData(activeCategory);
+ alert('ম্যাচের তথ্য, অডস ও বিজয়ী রেজাল্ট সফলভাবে আপডেট করা হয়েছে!');
+
  db.ref('matches/' + idx).set(matches[idx]);
+
+ // বিজয়ী রেজাল্ট থাকলে স্বয়ংক্রিয়ভাবে ইউজারের বাজি মেটানো
+ if(winner) {
+   checkBetResults(idx, winner);
+ }
 }
 
 function clearCurrent(){if(dataByCategory[activeCategory])delete dataByCategory[activeCategory];$('matchList').innerHTML='<div class="empty">এই বিভাগের ডেটা মুছে ফেলা হয়েছে।</div>';}
 
-// ফায়ারবেস রিয়েলটাইম ডাটাবেس থেকে লাইভ ডাটা শোনার লিসেনার (সকল ইউজারের জন্য রিয়েলটাইম আপডেট দেখতে সাহায্য করবে)
+// ফায়ারবেস থেকে লাইভ চেকিং
 db.ref('matches').on('value', (snapshot) => {
   const serverMatches = snapshot.val();
   if(serverMatches && activeCategory && dataByCategory[activeCategory]) {
     dataByCategory[activeCategory].data = serverMatches;
     renderData(activeCategory);
+    
+    // রেজাল্ট লাইভ সেকশন চেকিং
+    if(Array.isArray(serverMatches)) {
+      serverMatches.forEach((m, idx) => {
+        if(m && m.winner) {
+          checkBetResults(idx, m.winner);
+        }
+      });
+    }
   }
 });
 
