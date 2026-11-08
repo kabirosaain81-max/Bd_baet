@@ -1,25 +1,10 @@
 <!DOCTYPE html>
 <html lang="bn">
-<head><meta name="google-site-verification" content="c8iKfJhKHpEeOFN5CZhJSoEJGerqkiyqKc7xWQZGo70" />
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
 <title>RIFAT88 Sports & Games</title>
-<meta name="description" content="Explore Rifat88 and kabir88 for live sports scoring, match simulations, bangladesh cricket updates, and interactive sports interfaces." />
-<meta name="keywords" content="Rifat88, kabir88, babul88, Rifat88 live score, bangladesh cricket live score, world cricket updates, live sports interface, online match simulator" />
-<!-- ফেসবুক ও সোশ্যাল মিডিয়া শেয়ার প্রিভিউ (Open Graph Meta Tags) -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://kabirosaain81-max.github.io/Bd_baet" />
-<meta property="og:title" content="RIFAT88 Sports & Games" />
-<meta property="og:description" content="প্রথম ডিপোজিট বোনাস ১৭০০০ টাকা! দ্রুত পেমেন্ট, নিরাপদ লেনদেন এবং সেরা অভিজ্ঞতা পেতে আজই যোগ দিন।" />
-<meta property="og:image" content="https://i.ibb.co/40855.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-
-<!-- ব্রাউজার ট্যাব লোগো বা ফেভিকন (Favicon) -->
-<link rel="icon" type="image/png" href="https://i.ibb.co/40855.png" sizes="32x32">
-<link rel="apple-touch-icon" href="https://i.ibb.co/40855.png">
-
 <style>
 :root{--bg:#0b1220;--panel:#172235;--panel2:#101a2b;--line:#2c3b52;--gold:#f5b942;--blue:#2563eb;--green:#10b981;--red:#ef4444;--muted:#a9b7ca}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font-family:Arial,"Noto Sans Bengali",sans-serif}
@@ -64,6 +49,11 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
 .calc-res-box .val { font-size:18px; font-weight:bold; color:var(--gold); }
 .quick-btn-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:8px; }
 .quick-btn { background:#1e2d42; border:1px solid var(--line); padding:6px; font-size:12px; border-radius:5px; }
+
+/* History Table Styling */
+.history-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+.history-table th, .history-table td { border: 1px solid var(--line); padding: 8px; text-align: left; }
+.history-table th { background: #101a2b; color: var(--gold); }
 
 /* Aviator UI CSS */
 .aviator-modal-box { max-width: 500px; width: 100%; padding: 0; background: #000; border: 1px solid #333; overflow: hidden; border-radius: 12px; }
@@ -121,7 +111,6 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
         <div class="stat-card"><small>⚽ ফুটবল বাজি</small><div class="amt" id="statFootballBets">৳0.00</div></div>
         <div class="stat-card"><small>🎰 স্লট গেম</small><div class="amt" id="statSlotBets">৳0.00</div></div>
         <div class="stat-card"><small>✈️ ক্র্যাশ গেম</small><div class="amt" id="statCrashBets">৳0.00</div></div>
-        <div class="stat-card"><small>🃏 ক্যাসিনো গেম</small><div class="amt" id="statCasinoBets">৳0.00</div></div>
       </div>
     </div>
     
@@ -132,7 +121,6 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
         <option value="football">ফুটবল (Football)</option>
         <option value="cricket">ক্রিকেট (Cricket)</option>
         <option value="tennis">টেনিস (Tennis)</option>
-        <option value="basketball">বাস্কেটবল (Basketball)</option>
       </select>
 
       <label style="margin-top:8px;">লিগ/টুর্নামেন্টের নাম:</label>
@@ -152,40 +140,39 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
       <button class="green" style="width:100%; margin-top:12px; padding:10px;" onclick="createNewMatch()">➕ ম্যাচ পাবলিশ করুন</button>
     </div>
 
+    <!-- অ্যাডমিন প্যানেলে HTML গেম যুক্ত করার নতুন বক্স -->
     <div class="admin-box">
-      <h3 style="color:var(--gold); margin-top:0;">🎰 ২. নতুন গেম যোগ করুন (Slot, Crash, Casino)</h3>
+      <h3 style="color:var(--gold); margin-top:0;">🎮 ২. HTML গেম যুক্ত করুন (Slot / Casino / Crash)</h3>
       <label>গেম ক্যাটাগরি নির্বাচন করুন:</label>
-      <select id="newGameCategory">
-        <option value="crash">ক্র্যাশ গেম (Crash)</option>
+      <select id="newHtmlGameCategory">
         <option value="slot">স্লট গেম (Slot)</option>
         <option value="casino">ক্যাসিনো গেম (Casino)</option>
+        <option value="crash">ক্র্যাশ গেম (Crash)</option>
       </select>
 
       <div class="admin-grid" style="margin-top:8px;">
-        <div><label>গেমের নাম:</label><input type="text" id="newGameName" placeholder="যেমন: Aviator Pro, Fortune Ox"></div>
-        <div><label>ইমোজি আইকন:</label><input type="text" id="newGameIco" placeholder="যেমন: 🚀, 🎰, 💎"></div>
+        <div><label>গেমের নাম:</label><input type="text" id="newHtmlGameName" placeholder="যেমন: Sweet Bonanza, Aviator"></div>
+        <div><label>ইমোজি আইকন:</label><input type="text" id="newHtmlGameIco" placeholder="যেমন: 🎰, 🃏, ✈️"></div>
       </div>
-      <button class="primary" style="width:100%; margin-top:12px; padding:10px;" onclick="createNewGame()">🎰 গেম যুক্ত করুন</button>
+
+      <label style="margin-top:10px;">গেমের HTML কোড বা ফাইল কোড এখানে পেস্ট করুন:</label>
+      <textarea id="newHtmlGameCode" rows="5" style="width:100%; padding:10px; border-radius:7px; border:1px solid #52627a; background:#0c1728; color:#fff; font-family:monospace;" placeholder="<html>...</html> অথবা <iframe>...</iframe> কোড পেস্ট করুন"></textarea>
+
+      <button class="primary" style="width:100%; margin-top:12px; padding:10px;" onclick="createNewHtmlGame()">🚀 গেম সেভ ও পাবলিশ করুন</button>
     </div>
 
     <div class="admin-box">
-      <h3 style="color:var(--gold); margin-top:0;">✏️ ৩. ম্যাচ এডিট ও রেজাল্ট ঘোষণা</h3>
+      <h3 style="color:var(--gold); margin-top:0;">✏️ ৩. ম্যাচ এডিট ও রেজাল্ট ঘোষণা (উইন কনফার্মেশন)</h3>
       <label>সম্পাদনার জন্য ম্যাচ সিলেক্ট করুন:</label>
       <select id="adminMatchSelect" onchange="loadMatchToAdmin()"></select>
       
       <div class="admin-grid" style="margin-top:10px;">
-        <div><label>হোম টিম</label><input type="text" id="adminHomeTeam"></div>
-        <div><label>অ্যাওয়ে টিম</label><input type="text" id="adminAwayTeam"></div>
-      </div>
-
-      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:8px; margin-top:10px;">
-        <div><label>হোম জয় অডস</label><input type="number" step="0.01" id="adminHomeOdds"></div>
-        <div><label>ড্র অডস</label><input type="number" step="0.01" id="adminDrawOdds"></div>
-        <div><label>অ্যাওয়ে জয় অডস</label><input type="number" step="0.01" id="adminAwayOdds"></div>
+        <div><label>হোম টিম</label><input type="text" id="adminHomeTeam" readonly></div>
+        <div><label>অ্যাওয়ে টিম</label><input type="text" id="adminAwayTeam" readonly></div>
       </div>
 
       <div style="margin-top:12px; padding:10px; background:#0c1728; border-radius:8px; border:1px solid var(--line);">
-        <label style="color:var(--gold);">🏆 বিজয়ী টিম নির্ধারণ:</label>
+        <label style="color:var(--gold);">🏆 বিজয়ী টিম নির্ধারণ (রেজাল্ট উইন হলে কনফার্ম করুন):</label>
         <select id="adminWinnerSelect">
           <option value="">ম্যাচ চলমান (Pending)</option>
           <option value="Home">হোম জয় (Home Win)</option>
@@ -194,25 +181,14 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
         </select>
       </div>
 
-      <div style="display:flex; gap:10px; margin-top:15px;">
-        <button class="green" style="flex:2; padding:12px;" onclick="saveMatchChanges()">পরিবর্তন সেভ করুন</button>
-        <button class="red" style="flex:1; padding:12px;" onclick="deleteSelectedMatch()">🗑️ ম্যাচটি মুছুন</button>
-      </div>
+      <button class="green" style="width:100%; margin-top:12px; padding:12px;" onclick="saveMatchChangesAndSettle()">✅ রেজাল্ট সেভ করুন ও উইনারদের পেমেন্ট দিন</button>
     </div>
 
     <div class="admin-box">
-      <h3 style="color:var(--green); margin-top:0;">📥 ৪. ইউজারের ডিপোজিট (Deposit) রিকোয়েস্ট</h3>
+      <h3 style="color:var(--green); margin-top:0;">📥 ইউজারের ডিপোজিট রিকোয়েস্ট</h3>
       <table class="req-table">
-        <thead><tr><th>নম্বর / TrxID</th><th>মেথড</th><th>টাকা</th><th>অ্যাকশন</th></tr></thead>
+        <thead><tr><th>নম্বর / TrxID</th><th>টাকা</th><th>অ্যাকশন</th></tr></thead>
         <tbody id="adminDepositTable"></tbody>
-      </table>
-    </div>
-
-    <div class="admin-box">
-      <h3 style="color:var(--red); margin-top:0;">📤 ৫. ইউজারের উত্তোলন (Withdraw) রিকোয়েস্ট</h3>
-      <table class="req-table">
-        <thead><tr><th>নম্বর / অ্যাকাউন্ট</th><th>মেথড</th><th>টাকা</th><th>অ্যাকশন</th></tr></thead>
-        <tbody id="adminWithdrawTable"></tbody>
       </table>
     </div>
   </section>
@@ -245,13 +221,49 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
     </button>
   </section>
 
+  <!-- হিস্ট্রি টগল বাটন -->
+  <div style="margin-bottom: 15px;">
+    <button class="primary" style="width: 100%; padding: 12px; font-size: 15px;" onclick="toggleHistoryPanel()">
+      📜 বেটিং হিস্ট্রি দেখুন / লুকান
+    </button>
+  </div>
+
+  <!-- ইউজার বেটিং হিস্ট্রি সেকশন (ডিফল্টভাবে হাইড থাকবে) -->
+  <section class="panel" id="historyPanel" style="display: none;">
+    <div class="section-head">
+      <h2>📜 ইউজারের বেটিং হিস্ট্রি (User History)</h2>
+      <button class="red" style="padding: 5px 10px; font-size: 12px;" onclick="toggleHistoryPanel()">✕ বন্ধ করুন</button>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>ম্যাচ / গেম</th>
+            <th>পিক / চয়েস</th>
+            <th>অ্যামাউন্ট</th>
+            <th>অডস</th>
+            <th>স্ট্যাটাস</th>
+          </tr>
+        </thead>
+        <tbody id="userHistoryTable">
+          <tr><td colspan="5" style="text-align:center; color:var(--muted);">লগইন করুন বা কোনো বাজি ধরা হয়নি।</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- পুরাতন সব হিস্ট্রি দেখানোর বাটন -->
+    <button id="showAllHistoryBtn" class="gold" style="width: 100%; margin-top: 12px; display: none;" onclick="showAllHistory()">
+      ⬇️ পুরাতন সব হিস্ট্রি দেখুন
+    </button>
+  </section>
+
   <section class="panel">
     <div class="section-head"><h2>খেলার বিভাগ (Sports)</h2></div>
     <div class="grid" id="sportsGrid"></div>
   </section>
 
+  <!-- গেম বিভাগ (Casino, Slot & Crash) -->
   <section class="panel">
-    <div class="section-head"><h2>গেম বিভাগ (Casino & Slots)</h2></div>
+    <div class="section-head"><h2>গেম বিভাগ (Casino, Slot & Crash)</h2></div>
     <div class="grid games" id="gamesGrid"></div>
   </section>
 
@@ -280,45 +292,14 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
 <div class="modal" id="depositModal">
   <div class="modal-box" style="background: #1a1a1a; color: #fff;">
     <h3>Deposit Money</h3>
-    
-    <div style="background: #253149; padding: 10px; border-radius: 6px; margin-bottom: 10px; font-size: 13px; border: 1px dashed var(--gold);">
-      <span style="color: var(--gold); font-weight: bold;">⚠️ নিয়মাবলী:</span><br>
-      আমাদের বিকাশ/নগদ (Personal) নাম্বারে টাকা **Send Money** করুন:<br>
-      <strong style="color: #6ee7b7; font-size: 15px;">📞 01791424381 (Bkash / Nagad)</strong><br>
-      টাকা পাঠিয়ে নিচের ছকে আপনার নাম্বার ও TrxID দিন।
-    </div>
-
     <form id="depositForm" onsubmit="submitDeposit(event)">
       <label>Method:</label>
-      <select id="depMethod">
-        <option value="Bkash">Bkash</option>
-        <option value="Nagad">Nagad</option>
-      </select>
-      
-      <label>Account Number:</label>
-      <input type="text" id="userAccNo" placeholder="01XXXXXXXXX" required>
-      
-      <label>Amount (BDT):</label>
-      <input type="number" id="depAmount" placeholder="যেমন: 500" required>
-      
-      <label>TrxID:</label>
-      <input type="text" id="depTrxId" placeholder="যেমন: 9N7X..." required>
-      
+      <select id="depMethod"><option value="Bkash">Bkash</option><option value="Nagad">Nagad</option></select>
+      <label>Account Number:</label><input type="text" id="userAccNo" placeholder="01XXXXXXXXX" required>
+      <label>Amount (BDT):</label><input type="number" id="depAmount" placeholder="যেমন: 500" required>
+      <label>TrxID:</label><input type="text" id="depTrxId" placeholder="যেমন: 9N7X..." required>
       <button type="submit" class="green" style="width: 100%; margin-top: 15px; padding: 12px;">Submit Deposit</button>
       <button type="button" onclick="closeDepositModal()" style="width: 100%; margin-top: 8px; background: #334155; padding: 8px;">বাতিল</button>
-    </form>
-  </div>
-</div>
-
-<div class="modal" id="withdrawModal">
-  <div class="modal-box" style="background: #1a1a1a; color: #fff;">
-    <h3>Withdraw Money</h3>
-    <form id="withdrawForm" onsubmit="submitWithdraw(event)">
-      <label>Method:</label><select id="witMethod"><option value="Bkash">Bkash</option><option value="Nagad">Nagad</option></select>
-      <label>Account Number:</label><input type="text" id="witAccNo" required>
-      <label>Amount (BDT):</label><input type="number" id="witAmount" required>
-      <button type="submit" class="red" style="width: 100%; margin-top: 15px; padding: 12px;">Submit Withdraw</button>
-      <button type="button" onclick="closeWithdrawModal()" style="width: 100%; margin-top: 8px; background: #334155; padding: 8px;">বাতিল</button>
     </form>
   </div>
 </div>
@@ -352,6 +333,17 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
   </div>
 </div>
 
+<!-- Custom HTML Game Modal (অ্যাডমিন থেকে পেস্ট করা গেম প্লে হওয়ার উইন্ডো) -->
+<div class="modal" id="customGameModal">
+  <div class="modal-box" style="max-width: 600px; width: 100%; padding: 0; background: #000; border: 1px solid var(--gold); overflow: hidden;">
+    <div style="display: flex; justify-content: space-between; align-items: center; background: #1e293b; padding: 10px 14px;">
+      <div id="customGameTitle" style="font-weight: bold; color: var(--gold); font-size: 16px;">🎮 Game</div>
+      <button class="red" onclick="closeCustomGameModal()" style="padding: 5px 10px; font-size: 12px;">✕ বন্ধ করুন</button>
+    </div>
+    <iframe id="customGameFrame" style="width: 100%; height: 75vh; border: 0; background: #000;" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+  </div>
+</div>
+
 <script>
 const firebaseConfig = {
   apiKey: "AIzaSyAf2CLmxMf_eIzXuYqPbAlU_...",
@@ -364,60 +356,12 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
-// আপনার এপিআই কি
-const ODDS_API_KEY = '937aa0a6c3c4b4b2fc52606049723146';
-// দ্য ওডস এপিআই থেকে লাইভ ম্যাচ ডাটা এনে ওয়েবসাইটে দেখানোর ফাংশন
-function fetchOddsApiMatches(sportKey = 'soccer_epl') {
-  const url = `https://api.the-odds-api.com/v4/sports/${sportKey}/odds/?regions=us&oddsFormat=decimal&apiKey=${ODDS_API_KEY}`;[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span)
 
-  fetch(url)
-    .then(response => {
-      const remaining = response.headers.get('x-requests-remaining');
-      console.log(`বাকি এপিআই রিকোয়েস্ট: ${remaining}`);
-      return response.json();
-    })
-    .then(apiMatches => {
-      console.log("এপিআই থেকে প্রাপ্ত লাইভ ম্যাচ ডাটা:", apiMatches);
-      
-      // এপিআই-এর ডাটাগুলোকে আপনার ক্যাশড ম্যাচের ফরম্যাটে রূপান্তর করা
-      cachedMatches = apiMatches.map(match => {
-        let homeOdds = 1.85;
-        let drawOdds = 3.20;
-        let awayOdds = 4.10;
-
-        if (match.bookmakers && match.bookmakers.length > 0) {
-          const markets = match.bookmakers[0].markets;
-          if (markets && markets.length > 0) {
-            const outcomes = markets[0].outcomes;
-            outcomes.forEach(out => {
-              if (out.name === match.home_team) homeOdds = out.price;
-              else if (out.name === match.away_team) awayOdds = out.price;
-              else if (out.name === 'Draw') drawOdds = out.price;
-            });
-          }
-        }
-
-        return {
-          category: 'football',
-          league: match.sport_title || 'Live Match',
-          homeTeam: match.home_team,
-          awayTeam: match.away_team,
-          odds: { home: homeOdds, draw: drawOdds, away: awayOdds },
-          winner: ""
-        };
-      });
-
-      // ডাটা পাওয়ার পর ম্যাচ লিস্ট রেন্ডার করা
-      filterAndRender();
-    })
-    .catch(error => console.error('এপিআই ডাটা ফেচ করতে সমস্যা হয়েছে:', error));
-}
 const sportsCats = [
   ['all', '📋', 'সবগুলো'],
   ['football', '⚽', 'ফুটবল'],
   ['cricket', '🏏', 'ক্রিকেট'],
-  ['tennis', '🎾', 'টেনিস'],
-  ['basketball', '🏀', 'বাস্কেটবল']
+  ['tennis', '🎾', 'টেনিস']
 ];
 
 const gamesCats = [
@@ -429,12 +373,18 @@ const gamesCats = [
 
 let cachedMatches = [];
 let cachedGames = [];
-let selectedMatchCategory = 'football';
 let currentFilter = 'all';
+let selectedMatchKey = '';
+let selectedPickType = '';
+let selectedMatchTitle = '';
+let selectedGameName = '';
 
 let balance = 0;
 let currentPhone = localStorage.getItem('rifat_active') || null;
 const ADMIN_PASS = "K.71?17426k$@:#";
+
+let allUserBets = [];
+let isShowingAllHistory = false;
 
 const $=id=>document.getElementById(id);
 
@@ -444,9 +394,7 @@ function fetchUserBalance() {
     $('balance').textContent = balance.toFixed(2);
     return;
   }
-  
   const userKey = currentPhone.replace(/[.#$[\]]/g, "_");
-  
   db.ref('users/' + userKey).on('value', snap => {
     const userData = snap.val();
     if (userData && userData.balance !== undefined) {
@@ -472,8 +420,7 @@ if(currentPhone) {
     $('memberPhone').textContent = '📞 ' + currentPhone;
   }, 500);
   fetchUserBalance();
-} else {
-  $('balance').textContent = "0.00";
+  loadUserHistory();
 }
 
 function renderTiles() {
@@ -486,14 +433,17 @@ function renderTiles() {
     sGrid.appendChild(b);
   });
 
-  const gGrid = $('gamesGrid'); gGrid.innerHTML = '';
-  gamesCats.forEach(([id, ico, name]) => {
-    const b = document.createElement('button');
-    b.className = 'tile' + (currentFilter === id ? ' active' : '');
-    b.innerHTML = `<span class="ico">${ico}</span><b>${name}</b><small>গেম দেখুন</small>`;
-    b.onclick = () => { currentFilter = id; renderTiles(); filterAndRender(); };
-    gGrid.appendChild(b);
-  });
+  const gGrid = $('gamesGrid'); 
+  if(gGrid) {
+    gGrid.innerHTML = '';
+    gamesCats.forEach(([id, ico, name]) => {
+      const b = document.createElement('button');
+      b.className = 'tile' + (currentFilter === id ? ' active' : '');
+      b.innerHTML = `<span class="ico">${ico}</span><b>${name}</b><small>গেম দেখুন</small>`;
+      b.onclick = () => { currentFilter = id; renderTiles(); filterAndRender(); };
+      gGrid.appendChild(b);
+    });
+  }
 }
 
 function createNewMatch() {
@@ -519,16 +469,29 @@ function createNewMatch() {
   $('newMatchLeague').value = ''; $('newHomeTeam').value = ''; $('newAwayTeam').value = '';
 }
 
-function createNewGame() {
-  const cat = $('newGameCategory').value;
-  const name = $('newGameName').value.trim();
-  const ico = $('newGameIco').value.trim() || '🎰';
+// অ্যাডমিন প্যানেল থেকে HTML গেম সেভ করার ফাংশন
+function createNewHtmlGame() {
+  const cat = $('newHtmlGameCategory').value;
+  const name = $('newHtmlGameName').value.trim();
+  const ico = $('newHtmlGameIco').value.trim() || '🎮';
+  const htmlCode = $('newHtmlGameCode').value.trim();
 
-  if(!name) { alert("গেমের নাম দিন!"); return; }
+  if(!name || !htmlCode) {
+    alert("গেমের নাম এবং HTML কোড অবশ্যই দিতে হবে!");
+    return;
+  }
 
-  db.ref('customGames').push({ category: cat, name: name, ico: ico });
-  alert("সফলভাবে গেম যুক্ত করা হয়েছে!");
-  $('newGameName').value = ''; $('newGameIco').value = '';
+  db.ref('customGames').push({
+    category: cat,
+    name: name,
+    ico: ico,
+    htmlCode: htmlCode
+  });
+
+  alert(`"${name}" গেমটি সফলভাবে যুক্ত হয়েছে!`);
+  $('newHtmlGameName').value = '';
+  $('newHtmlGameIco').value = '';
+  $('newHtmlGameCode').value = '';
 }
 
 db.ref('matches').on('value', snap => {
@@ -544,7 +507,7 @@ db.ref('matches').on('value', snap => {
       if(select) {
         const opt = document.createElement('option');
         opt.value = key;
-        opt.textContent = `${m.homeTeam} vs ${m.awayTeam}`;
+        opt.textContent = `${m.homeTeam} vs ${m.awayTeam} (${m.winner ? 'Completed' : 'Pending'})`;
         select.appendChild(opt);
       }
     });
@@ -552,6 +515,7 @@ db.ref('matches').on('value', snap => {
   filterAndRender();
 });
 
+// কাস্টম গেমসমূহ ডাটাবেজ থেকে লোড করা
 db.ref('customGames').on('value', snap => {
   const data = snap.val();
   cachedGames = [];
@@ -561,6 +525,10 @@ db.ref('customGames').on('value', snap => {
       g.firebaseKey = key;
       cachedGames.push(g);
     });
+  } else {
+    cachedGames = [
+      { name: 'Aviator Pro', category: 'crash', ico: '✈️' }
+    ];
   }
   filterAndRender();
 });
@@ -571,53 +539,43 @@ function loadMatchToAdmin() {
   if(match) {
     $('adminHomeTeam').value = match.homeTeam || '';
     $('adminAwayTeam').value = match.awayTeam || '';
-    $('adminHomeOdds').value = match.odds?.home || '';
-    $('adminDrawOdds').value = match.odds?.draw || '';
-    $('adminAwayOdds').value = match.odds?.away || '';
     $('adminWinnerSelect').value = match.winner || '';
   }
 }
 
-function saveMatchChanges() {
+function saveMatchChangesAndSettle() {
   const selectedKey = $('adminMatchSelect').value;
-  if(!selectedKey) { alert("সম্পাদনার জন্য কোনো ম্যাচ সিলেক্ট করা হয়নি!"); return; }
+  if(!selectedKey) { alert("কোনো ম্যাচ সিলেক্ট করা হয়নি!"); return; }
 
-  const home = $('adminHomeTeam').value.trim();
-  const away = $('adminAwayTeam').value.trim();
-  const hOdds = parseFloat($('adminHomeOdds').value) || 1.85;
-  const dOdds = parseFloat($('adminDrawOdds').value) || 3.20;
-  const aOdds = parseFloat($('adminAwayOdds').value) || 4.10;
   const winner = $('adminWinnerSelect').value;
+  if(!winner) { alert("বিজয়ী টিম সিলেক্ট করুন!"); return; }
 
-  db.ref('matches/' + selectedKey).update({
-    homeTeam: home,
-    awayTeam: away,
-    odds: { home: hOdds, draw: dOdds, away: aOdds },
-    winner: winner
-  });
-  alert("ম্যাচের তথ্য সফলভাবে আপডেট করা হয়েছে!");
-}
+  db.ref('matches/' + selectedKey).update({ winner: winner });
 
-function deleteSelectedMatch() {
-  const selectedKey = $('adminMatchSelect').value;
-  if(!selectedKey) { alert("ডিলিট করার জন্য কোনো ম্যাচ সিলেক্ট করা হয়নি!"); return; }
+  db.ref('bets').once('value', snap => {
+    const betsData = snap.val();
+    if(betsData) {
+      Object.keys(betsData).forEach(betKey => {
+        const bet = betsData[betKey];
+        if(bet.matchKey === selectedKey && bet.status === 'Pending') {
+          if(bet.pick === winner) {
+            const winAmount = bet.amount * bet.odds;
+            db.ref('bets/' + betKey).update({ status: 'Won', winAmount: winAmount });
 
-  if(confirm("আপনি কি নিশ্চিতভাবে এই ম্যাচটি মুছে ফেলতে চান?")) {
-    db.ref('matches/' + selectedKey).remove()
-      .then(() => {
-        alert("ম্যাচটি সফলভাবে মুছে ফেলা হয়েছে!");
-        $('adminMatchSelect').value = '';
-        $('adminHomeTeam').value = '';
-        $('adminAwayTeam').value = '';
-        $('adminHomeOdds').value = '';
-        $('adminDrawOdds').value = '';
-        $('adminAwayOdds').value = '';
-        $('adminWinnerSelect').value = '';
-      })
-      .catch(error => {
-        alert("ম্যাচ ডিলিট করতে সমস্যা হয়েছে: " + error.message);
+            const uKey = bet.phone.replace(/[.#$[\]]/g, "_");
+            db.ref('users/' + uKey).once('value', uSnap => {
+              let curBal = uSnap.exists() ? (parseFloat(uSnap.val().balance) || 0) : 0;
+              db.ref('users/' + uKey).update({ balance: curBal + winAmount });
+            });
+          } else {
+            db.ref('bets/' + betKey).update({ status: 'Lost', winAmount: 0 });
+          }
+        }
       });
-  }
+    }
+  });
+
+  alert("রেজাল্ট সফলভাবে সেভ করা হয়েছে এবং বিজয়ী ইউজারদের অ্যাকাউন্টে টাকা যোগ করা হয়েছে!");
 }
 
 function filterAndRender() {
@@ -626,8 +584,7 @@ function filterAndRender() {
   let htmlContent = '';
 
   const currentStake = parseFloat($('calcAmount').value) || 100;
-
-  let filteredMatches = cachedMatches.filter(m => currentFilter === 'all' || m.category === currentFilter);
+  let filteredMatches = cachedMatches.filter(m => (currentFilter === 'all' || m.category === currentFilter) && !m.winner);
   
   if(filteredMatches.length > 0 && currentFilter !== 'crash' && currentFilter !== 'slot' && currentFilter !== 'casino' && currentFilter !== 'all-games') {
     filteredMatches.forEach((m) => {
@@ -644,16 +601,16 @@ function filterAndRender() {
           <div class="match-head">${m.league || 'Sports Match'}</div>
           <div class="teams">${m.homeTeam} VS ${m.awayTeam}</div>
           <div class="odds">
-            <button class="odd" onclick="selectOddsForCalc('হোম জয়', 'Home', ${hOdds}, '${m.category}')">
-              <span>হোম: ${hOdds}</span>
+            <button class="odd" onclick="selectMatchBet('${m.firebaseKey}', 'Home', '${m.homeTeam}', ${hOdds})">
+              <span>হোম (${m.homeTeam}): ${hOdds}</span>
               <small style="color:#6ee7b7">+৳${hProf}</small>
             </button>
-            <button class="odd" onclick="selectOddsForCalc('ড্র', 'Draw', ${dOdds}, '${m.category}')">
+            <button class="odd" onclick="selectMatchBet('${m.firebaseKey}', 'Draw', 'ড্র', ${dOdds})">
               <span>ড্র: ${dOdds}</span>
               <small style="color:#6ee7b7">+৳${dProf}</small>
             </button>
-            <button class="odd" onclick="selectOddsForCalc('অ্যাওয়ে জয়', 'Away', ${aOdds}, '${m.category}')">
-              <span>অ্যাওয়ে: ${aOdds}</span>
+            <button class="odd" onclick="selectMatchBet('${m.firebaseKey}', 'Away', '${m.awayTeam}', ${aOdds})">
+              <span>অ্যাওয়ে (${m.awayTeam}): ${aOdds}</span>
               <small style="color:#6ee7b7">+৳${aProf}</small>
             </button>
           </div>
@@ -662,8 +619,8 @@ function filterAndRender() {
     });
   }
 
+  // ক্যাসিনো, স্লট ও ক্র্যাশ গেম রেন্ডারিং
   let filteredGames = cachedGames.filter(g => currentFilter === 'all-games' || g.category === currentFilter);
-  
   if((filteredGames.length > 0 && (currentFilter === 'crash' || currentFilter === 'slot' || currentFilter === 'casino' || currentFilter === 'all-games')) || (filteredGames.length > 0 && currentFilter === 'all')) {
     filteredGames.forEach(g => {
       htmlContent += `
@@ -675,7 +632,7 @@ function filterAndRender() {
               <div style="font-size:12px; color:var(--muted); text-transform:uppercase;">ক্যাটাগরি: ${g.category}</div>
             </div>
           </div>
-          <button class="green" onclick="playGameDirectly('${g.name}', '${g.category}')">খেলুন</button>
+          <button class="green" onclick="playGameDirectly('${g.name}', '${g.category}', '${g.firebaseKey || ''}')">খেলুন</button>
         </div>
       `;
     });
@@ -688,13 +645,51 @@ function filterAndRender() {
   }
 }
 
-function playGameDirectly(gName, gCat) {
+function playGameDirectly(gName, gCat, gKey = '') {
+  const foundGame = cachedGames.find(g => (gKey && g.firebaseKey === gKey) || g.name === gName);
+
+  if (foundGame && foundGame.htmlCode) {
+    if(!currentPhone) {
+      alert("গেম খেলতে প্রথমে অ্যাকাউন্ট লগইন করুন!");
+      openAuth('login');
+      return;
+    }
+    $('customGameTitle').textContent = `${foundGame.ico || '🎮'} ${foundGame.name}`;
+    $('customGameFrame').srcdoc = foundGame.htmlCode;
+    $('customGameModal').classList.add('show');
+    return;
+  }
+
   if (gName.toLowerCase().includes('aviator') || gCat === 'crash') {
     openAviatorModal();
   } else {
-    selectOddsForCalc(gName, 'Game', 1.95, gCat);
-    alert(`${gName} গেমের বেটিং বেট ক্যালকুলেটরে লোড করা হয়েছে!`);
+    selectedGameName = gName;
+    selectedMatchKey = '';
+    selectedPickType = 'Game';
+    selectedMatchTitle = gName;
+    $('calcOdds').value = 1.95;
+    calculateBet();
+    alert(`${gName} গেমের বেটিং ক্যালকুলেটরে লোড করা হয়েছে! নিচে থেকে বাজি ধরুন।`);
+    const calcCard = document.querySelector('.calc-card');
+    if (calcCard) calcCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
+}
+
+function closeCustomGameModal() {
+  $('customGameModal').classList.remove('show');
+  $('customGameFrame').srcdoc = '';
+}
+
+function selectMatchBet(mKey, pickType, pickName, oddsVal) {
+  selectedMatchKey = mKey;
+  selectedPickType = pickType;
+  selectedMatchTitle = pickName;
+  selectedGameName = '';
+  $('calcOdds').value = oddsVal;
+  calculateBet();
+  
+  const calcCard = document.querySelector('.calc-card');
+  if (calcCard) calcCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function calculateBet() {
@@ -706,8 +701,6 @@ function calculateBet() {
   $('resReturn').textContent = '৳' + (returnVal > 0 ? returnVal.toFixed(2) : '0.00');
   $('resProfit').textContent = '৳' + (profitVal > 0 ? profitVal.toFixed(2) : '0.00');
   $('btnAmountText').textContent = amount;
-
-  filterAndRender();
 }
 
 function addAmount(val) {
@@ -716,19 +709,10 @@ function addAmount(val) {
   calculateBet();
 }
 
-function selectOddsForCalc(label, type, oddsVal, cat = 'football') {
-  $('calcOdds').value = oddsVal;
-  selectedMatchCategory = cat;
-  calculateBet();
-  
-  const calcCard = document.querySelector('.calc-card');
-  if (calcCard) {
-    calcCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-}
-
 function placeCalculatedBet() {
   if (!currentPhone) { alert("প্রথমে লগইন করুন!"); openAuth('login'); return; }
+  if (!selectedMatchKey && !selectedGameName) { alert("দয়া করে যেকোনো একটি ম্যাচ বা গেম সিলেক্ট করুন!"); return; }
+
   const amount = parseFloat($('calcAmount').value) || 0;
   if (amount > balance) { alert("অপর্যাপ্ত ব্যালেন্স!"); return; }
 
@@ -736,20 +720,118 @@ function placeCalculatedBet() {
   $('balance').textContent = balance.toFixed(2);
   updateFirebaseBalance(balance);
 
-  db.ref('bets').push({
+  const betData = {
     phone: currentPhone,
+    pick: selectedPickType,
+    pickName: selectedMatchTitle || selectedGameName,
     amount: amount,
-    category: selectedMatchCategory,
     odds: parseFloat($('calcOdds').value) || 1.85,
+    status: 'Pending',
     timestamp: Date.now()
+  };
+
+  if(selectedMatchKey) {
+    betData.matchKey = selectedMatchKey;
+    betData.category = 'sports';
+  } else {
+    betData.category = 'game';
+    betData.status = 'Won';
+    betData.winAmount = amount * betData.odds;
+    balance += betData.winAmount;
+    $('balance').textContent = balance.toFixed(2);
+    updateFirebaseBalance(balance);
+  }
+
+  db.ref('bets').push(betData);
+
+  alert("সফলভাবে বাজি ধরা হয়েছে! ভালো খেলেছেন, আপনার হিস্টরিতে এটি যোগ করা হয়েছে।");
+  selectedMatchKey = '';
+  selectedGameName = '';
+  loadUserHistory();
+}
+
+// হিস্ট্রি প্যানেল ওপেন বা হাইড করার ফাংশন
+function toggleHistoryPanel() {
+  const panel = $('historyPanel');
+  if (panel.style.display === 'none' || panel.style.display === '') {
+    panel.style.display = 'block';
+    isShowingAllHistory = false;
+    renderHistoryTable();
+  } else {
+    panel.style.display = 'none';
+  }
+}
+
+function showAllHistory() {
+  isShowingAllHistory = true;
+  renderHistoryTable();
+}
+
+function loadUserHistory() {
+  if (!currentPhone) return;
+  db.ref('bets').on('value', snap => {
+    const data = snap.val();
+    allUserBets = [];
+
+    if (data) {
+      Object.keys(data).forEach(key => {
+        const b = data[key];
+        if (b.phone === currentPhone) {
+          allUserBets.push(b);
+        }
+      });
+    }
+    allUserBets.reverse();
+    renderHistoryTable();
+  });
+}
+
+function renderHistoryTable() {
+  const table = $('userHistoryTable');
+  const showAllBtn = $('showAllHistoryBtn');
+  if (!table) return;
+  table.innerHTML = '';
+
+  if (allUserBets.length === 0) {
+    table.innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--muted);">কোনো বেটিং হিস্ট্রি পাওয়া যায়নি।</td></tr>';
+    if (showAllBtn) showAllBtn.style.display = 'none';
+    return;
+  }
+
+  const betsToShow = isShowingAllHistory ? allUserBets : allUserBets.slice(0, 20);
+
+  betsToShow.forEach(b => {
+    let statusBadge = '<span style="color:#eab308;">Pending</span>';
+    if (b.status === 'Won') {
+      statusBadge = `<span style="color:#10b981; font-weight:bold;">Win (+৳${(b.winAmount || 0).toFixed(2)})</span>`;
+    } else if (b.status === 'Lost') {
+      statusBadge = '<span style="color:#ef4444;">Lost</span>';
+    }
+
+    table.innerHTML += `
+      <tr>
+        <td>${b.category === 'game' ? 'গেম বাজি' : 'ম্যাচ বাজি'}</td>
+        <td>${b.pickName || b.pick}</td>
+        <td>৳${b.amount}</td>
+        <td>${b.odds}</td>
+        <td>${statusBadge}</td>
+      </tr>
+    `;
   });
 
-  alert("বাজি সফলভাবে প্লে করা হয়েছে!");
+  if (showAllBtn) {
+    if (!isShowingAllHistory && allUserBets.length > 20) {
+      showAllBtn.style.display = 'block';
+      showAllBtn.textContent = `⬇️ পুরাতন সব হিস্ট্রি দেখুন (মোট ${allUserBets.length}টি)`;
+    } else {
+      showAllBtn.style.display = 'none';
+    }
+  }
 }
 
 db.ref('bets').on('value', snap => {
   const data = snap.val();
-  let total = 0, cricket = 0, football = 0, slot = 0, crash = 0, casino = 0;
+  let total = 0, cricket = 0, football = 0, slot = 0, crash = 0;
 
   if(data) {
     Object.keys(data).forEach(key => {
@@ -758,42 +840,27 @@ db.ref('bets').on('value', snap => {
       total += amt;
       if(b.category === 'cricket') cricket += amt;
       else if(b.category === 'football') football += amt;
-      else if(b.category === 'slot') slot += amt;
-      else if(b.category === 'crash') crash += amt;
-      else if(b.category === 'casino') casino += amt;
+      else if(b.pickName?.toLowerCase().includes('slot')) slot += amt;
+      else if(b.pickName?.toLowerCase().includes('aviator')) crash += amt;
     });
   }
-
-  $('statTotalBets').textContent = '৳' + total.toFixed(2);
-  $('statCricketBets').textContent = '৳' + cricket.toFixed(2);
-  $('statFootballBets').textContent = '৳' + football.toFixed(2);
-  $('statSlotBets').textContent = '৳' + slot.toFixed(2);
-  $('statCrashBets').textContent = '৳' + crash.toFixed(2);
-  $('statCasinoBets').textContent = '৳' + casino.toFixed(2);
+  if($('statTotalBets')) {
+    $('statTotalBets').textContent = '৳' + total.toFixed(2);
+    $('statCricketBets').textContent = '৳' + cricket.toFixed(2);
+    $('statFootballBets').textContent = '৳' + football.toFixed(2);
+    if($('statSlotBets')) $('statSlotBets').textContent = '৳' + slot.toFixed(2);
+    if($('statCrashBets')) $('statCrashBets').textContent = '৳' + crash.toFixed(2);
+  }
 });
 
 function openAuth(m){ $('authModal').classList.add('show'); }
 function closeAuth(){ $('authModal').classList.remove('show'); }
 
 function openDepositModal(){ 
-  if(!currentPhone) {
-    const saved = localStorage.getItem('rifat_active');
-    if(saved) currentPhone = saved;
-    else { alert("প্রথমে লগইন করুন!"); openAuth('login'); return; }
-  }
+  if(!currentPhone) { alert("প্রথমে লগইন করুন!"); openAuth('login'); return; }
   $('depositModal').classList.add('show'); 
 }
 function closeDepositModal(){ $('depositModal').classList.remove('show'); }
-
-function openWithdrawModal(){ 
-  if(!currentPhone) {
-    const saved = localStorage.getItem('rifat_active');
-    if(saved) currentPhone = saved;
-    else { alert("প্রথমে লগইন করুন!"); openAuth('login'); return; }
-  }
-  $('withdrawModal').classList.add('show'); 
-}
-function closeWithdrawModal(){ $('withdrawModal').classList.remove('show'); }
 
 function submitDeposit(e) {
   e.preventDefault();
@@ -802,48 +869,10 @@ function submitDeposit(e) {
   const amt = $('depAmount').value;
   const trx = $('depTrxId').value;
   
-  if(!acc || !amt || !trx) { alert("সব তথ্য পূরণ করুন!"); return; }
-  
-  db.ref('deposits').push({
-    phone: currentPhone,
-    method: method,
-    account: acc,
-    amount: amt,
-    trxId: trx,
-    status: 'Pending'
-  });
+  db.ref('deposits').push({ phone: currentPhone, method, account: acc, amount: amt, trxId: trx, status: 'Pending' });
   alert("ডিপোজিট রিকোয়েস্ট সফলভাবে জমা হয়েছে!");
   closeDepositModal();
   $('depositForm').reset();
-}
-
-function submitWithdraw(e) {
-  e.preventDefault();
-  const method = $('witMethod').value;
-  const acc = $('witAccNo').value;
-  const amt = parseFloat($('witAmount').value) || 0;
-  
-  if(!acc || !amt) { alert("সব তথ্য পূরণ করুন!"); return; }
-  
-  if(amt > balance) {
-    alert("আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!");
-    return;
-  }
-  
-  balance -= amt;
-  $('balance').textContent = balance.toFixed(2);
-  updateFirebaseBalance(balance);
-  
-  db.ref('withdraws').push({
-    phone: currentPhone,
-    method: method,
-    account: acc,
-    amount: amt,
-    status: 'Pending'
-  });
-  alert("উইথড্র রিকোয়েস্ট জমা হয়েছে এবং আপনার মেইন ব্যালেন্স থেকে টাকা কেটে নেওয়া হয়েছে!");
-  closeWithdrawModal();
-  $('withdrawForm').reset();
 }
 
 db.ref('deposits').on('value', snap => {
@@ -859,7 +888,6 @@ db.ref('deposits').on('value', snap => {
         table.innerHTML += `
           <tr>
             <td>${d.phone}<br><small style="color:var(--gold);">${d.trxId}</small></td>
-            <td>${d.method}</td>
             <td>৳${d.amount}</td>
             <td><button class="green" style="padding:4px 8px; font-size:11px;" onclick="approveDeposit('${key}', '${d.phone}', ${d.amount})">অ্যাপ্রুভ</button></td>
           </tr>
@@ -867,59 +895,17 @@ db.ref('deposits').on('value', snap => {
       }
     });
   }
-  if(table.innerHTML === '') table.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--muted);">কোনো ডিপোজিট পেন্ডিং নেই।</td></tr>';
-});
-
-db.ref('withdraws').on('value', snap => {
-  const data = snap.val();
-  const table = $('adminWithdrawTable');
-  if(!table) return;
-  table.innerHTML = '';
-  
-  if(data) {
-    Object.keys(data).forEach(key => {
-      const w = data[key];
-      if(!w.status || w.status === 'Pending') {
-        table.innerHTML += `
-          <tr>
-            <td>${w.phone || 'N/A'}<br><small style="color:var(--gold);">${w.account || ''}</small></td>
-            <td>${w.method || 'Bkash'}</td>
-            <td>৳${w.amount || 0}</td>
-            <td><button class="red" style="padding:4px 8px; font-size:11px;" onclick="approveWithdraw('${key}')">পেমেন্ট কমপ্লিট</button></td>
-          </tr>
-        `;
-      }
-    });
-  }
-  if(table.innerHTML === '') {
-    table.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--muted);">কোনো উইথড্র পেন্ডিং নেই।</td></tr>';
-  }
+  if(table.innerHTML === '') table.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--muted);">কোনো ডিপোজিট পেন্ডিং নেই।</td></tr>';
 });
 
 function approveDeposit(key, uPhone, amt) {
   db.ref('deposits/' + key).update({ status: 'Approved' });
-  
   const userKey = uPhone.replace(/[.#$[\]]/g, "_");
   db.ref('users/' + userKey).once('value').then(snap => {
-    let currentUsrBal = 0;
-    if(snap.exists() && snap.val().balance !== undefined) {
-      currentUsrBal = parseFloat(snap.val().balance);
-    }
-    const newBal = currentUsrBal + parseFloat(amt);
-    db.ref('users/' + userKey).update({ balance: newBal });
+    let curBal = snap.exists() ? (parseFloat(snap.val().balance) || 0) : 0;
+    db.ref('users/' + userKey).update({ balance: curBal + parseFloat(amt) });
   });
-
-  alert("ডিপোজিট সফলভাবে অ্যাপ্রুভ করা হয়েছে!");
-}
-
-function approveWithdraw(key) {
-  db.ref('withdraws/' + key).update({ status: 'Approved' })
-    .then(() => {
-      alert("উইথড্র রিকোয়েস্ট সফলভাবে সম্পন্ন করা হয়েছে!");
-    })
-    .catch(error => {
-      alert("সমস্যা হয়েছে: " + error.message);
-    });
+  alert("ডিপোজিট অ্যাপ্রুভ করা হয়েছে!");
 }
 
 $('authForm').addEventListener('submit', e => {
@@ -931,8 +917,8 @@ $('authForm').addEventListener('submit', e => {
   $('memberArea').style.display = 'flex';
   $('memberPhone').textContent = '📞 ' + currentPhone;
   closeAuth();
-  
   fetchUserBalance();
+  loadUserHistory();
 });
 
 function logout() { 
@@ -942,6 +928,8 @@ function logout() {
   $('balance').textContent = "0.00";
   $('authArea').style.display = 'flex'; 
   $('memberArea').style.display = 'none'; 
+  $('userHistoryTable').innerHTML = '<tr><td colspan="5" style="text-align:center; color:var(--muted);">লগইন করুন।</td></tr>';
+  $('historyPanel').style.display = 'none';
 }
 
 function requestAdminAccess(){
@@ -951,8 +939,8 @@ function requestAdminAccess(){
 }
 function adminLogout(){ $('adminMainPanel').style.display = 'none'; }
 
-// Aviator Engine Logic
-let avState = "WAIT"; // WAIT, FLYING, CRASHED
+// Aviator / Crash Game Logic
+let avState = "WAIT";
 let avMultiplier = 1.00;
 let avCrashPoint = 2.00;
 let avUserBet = 0;
@@ -962,7 +950,6 @@ let avAudioMuted = true;
 let avAnimFrame = null;
 let avStateTimer = null;
 let avStartTime = 0;
-
 let audioCtx = null;
 let engineOsc = null;
 let engineGain = null;
@@ -1067,10 +1054,8 @@ function startAviatorLoop() {
   if (avBetPlacedNextRound) {
     avIsBetActiveThisRound = true;
     avBetPlacedNextRound = false;
-    updateAvBetBtnUI();
-  } else {
-    updateAvBetBtnUI();
   }
+  updateAvBetBtnUI();
 
   const cdInterval = setInterval(() => {
     countdown--;
@@ -1096,16 +1081,13 @@ function launchAviatorFlight() {
 
   $('avStatusText').textContent = "";
   updateAvBetBtnUI();
-  
   runAvCanvasAnimation();
 }
 
 function runAvCanvasAnimation() {
   if (avState !== "FLYING") return;
-
   const elapsed = (Date.now() - avStartTime) / 1000;
   avMultiplier = 1.00 + Math.pow(elapsed, 1.4) * 0.3;
-
   playEngineSound(avMultiplier);
 
   if (avMultiplier >= avCrashPoint) {
@@ -1116,7 +1098,6 @@ function runAvCanvasAnimation() {
 
   $('avMultText').textContent = avMultiplier.toFixed(2) + "x";
   drawAvCanvas(avMultiplier, false);
-
   avAnimFrame = requestAnimationFrame(runAvCanvasAnimation);
 }
 
@@ -1130,39 +1111,27 @@ function triggerAvCrash() {
   $('avStatusText').textContent = "FLEW AWAY!";
 
   drawAvCanvas(avMultiplier, true);
-
-  if (avIsBetActiveThisRound) {
-    avIsBetActiveThisRound = false;
-  }
+  if (avIsBetActiveThisRound) avIsBetActiveThisRound = false;
   updateAvBetBtnUI();
 
-  avStateTimer = setTimeout(() => {
-    startAviatorLoop();
-  }, 3000);
+  avStateTimer = setTimeout(() => { startAviatorLoop(); }, 3000);
 }
 
 function drawAvCanvas(mult, isCrashed) {
   const canvas = $('aviatorCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  const w = canvas.width;
-  const h = canvas.height;
-
+  const w = canvas.width, h = canvas.height;
   ctx.clearRect(0, 0, w, h);
 
   ctx.strokeStyle = '#334155';
   ctx.lineWidth = 1;
-  for(let x=0; x<w; x+=40) {
-    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
-  }
-  for(let y=0; y<h; y+=40) {
-    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
-  }
+  for(let x=0; x<w; x+=40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
+  for(let y=0; y<h; y+=40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
 
   if (avState === "FLYING" || avState === "CRASHED") {
     const progress = Math.min((mult - 1) / 5, 1);
-    const startX = 20;
-    const startY = h - 20;
+    const startX = 20, startY = h - 20;
     const targetX = startX + (w - 100) * Math.min(progress * 1.2, 1);
     const targetY = startY - (h - 80) * Math.min(progress, 1);
 
@@ -1173,19 +1142,14 @@ function drawAvCanvas(mult, isCrashed) {
     ctx.lineWidth = 4;
     ctx.stroke();
 
-    ctx.lineTo(targetX, startY);
-    ctx.lineTo(startX, startY);
+    ctx.lineTo(targetX, startY); ctx.lineTo(startX, startY);
     ctx.fillStyle = isCrashed ? 'rgba(239, 68, 68, 0.15)' : 'rgba(234, 179, 8, 0.15)';
     ctx.fill();
 
     if (!isCrashed) {
       ctx.fillStyle = '#ef4444';
-      ctx.beginPath();
-      ctx.arc(targetX, targetY, 8, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 12px sans-serif';
+      ctx.beginPath(); ctx.arc(targetX, targetY, 8, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffffff'; ctx.font = 'bold 12px sans-serif';
       ctx.fillText('✈️', targetX - 8, targetY + 4);
     }
   }
@@ -1233,6 +1197,7 @@ function handleAvBetClick() {
     
     avIsBetActiveThisRound = false;
     updateAvBetBtnUI();
+    loadUserHistory();
     return;
   }
 
@@ -1253,19 +1218,21 @@ function handleAvBetClick() {
 
   db.ref('bets').push({
     phone: currentPhone,
+    pick: 'Crash',
+    pickName: 'Aviator Pro',
     amount: betAmt,
-    category: 'crash',
-    odds: 1.00,
+    odds: parseFloat(avMultiplier.toFixed(2)),
+    status: 'Pending',
+    category: 'game',
     timestamp: Date.now()
   });
 
   updateAvBetBtnUI();
+  loadUserHistory();
 }
 
 renderTiles();
 calculateBet();
-// পেজ লোড হওয়ার সাথে সাথে এপিআই থেকে ম্যাচগুলো লোড করতে এটি কল করুন
-fetchOddsApiMatches('soccer_epl');
 </script>
 </body>
 </html>
