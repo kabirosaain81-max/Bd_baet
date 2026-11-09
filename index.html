@@ -80,6 +80,11 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
 <header>
   <div class="logo"><b>RIFAT</b><strong>88</strong></div>
   <div class="header-right">
+    <!-- অ্যাপ ডাউনলোড বাটন এখানে যুক্ত করা হয়েছে -->
+    <a href="your-app-file-link.apk" download style="text-decoration: none;">
+      <button class="gold" style="padding: 7px 12px; font-size: 13px; background: #f5b942; color: #111;">📥 Download App</button>
+    </a>
+
     <div id="authArea" style="display:flex; gap:7px;">
       <button class="gold" onclick="openAuth('signup')">অ্যাকাউন্ট খুলুন</button>
       <button class="primary" onclick="openAuth('login')">লগ ইন</button>
@@ -156,7 +161,7 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
       </div>
 
       <label style="margin-top:10px;">গেমের HTML কোড বা ফাইল কোড এখানে পেস্ট করুন:</label>
-      <textarea id="newHtmlGameCode" rows="5" style="width:100%; padding:10px; border-radius:7px; border:1px solid #52627a; background:#0c1728; color:#fff; font-family:monospace;" placeholder="<html>...</html> অথবা <iframe>...</iframe> কোড পেস্ট করুন"></textarea>
+      <textarea id="newHtmlGameCode" rows="5" style="width:100%; padding:10px; border-radius:7px; border:1px solid #52627a; background:#0c1728; color:#fff; font-family:monospace;" placeholder="<html>...</html> অথবা <iframe>...</html> কোড পেস্ট করুন"></textarea>
 
       <button class="primary" style="width:100%; margin-top:12px; padding:10px;" onclick="createNewHtmlGame()">🚀 গেম সেভ ও পাবলিশ করুন</button>
     </div>
@@ -304,7 +309,7 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
     <!-- ডিপোজিট নিয়মাবলী ও কপি বাটন সহ নম্বর নির্দেশিকা -->
     <div style="background: #0c1728; border: 1px dashed var(--gold); padding: 12px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; line-height: 1.6;">
       <strong style="color: var(--gold);">⚠️ ডিপোজিট করার নিয়মাবলী:</strong><br>
-      আমাদের নিচে দেওয়া নাম্বারে বিকাশ অথবা নগদ-এ ক্যাশ আউট বা সেন্ড মানি করুন。<br>
+      আমাদের নিচে দেওয়া নাম্বারে বিকাশ অথবা নগদ-এ ক্যাশ আউট বা সেন্ড মানি করুন।<br>
       <div style="display: flex; align-items: center; justify-content: space-between; background: #16243b; padding: 8px 12px; border-radius: 6px; margin-top: 8px; border: 1px solid var(--line);">
         <span id="agentNumber" style="font-size: 15px; font-weight: bold; color: #00ffcc; letter-spacing: 1px;">01791424381</span>
         <button type="button" id="copyBtn" onclick="copyDepositNumber()" style="background: var(--blue); color: #fff; border: none; padding: 5px 12px; border-radius: 5px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.3s;">কপি করুন</button>
