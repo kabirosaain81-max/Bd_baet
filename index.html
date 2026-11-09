@@ -191,6 +191,14 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
         <tbody id="adminDepositTable"></tbody>
       </table>
     </div>
+    
+    <div class="admin-box">
+      <h3 style="color:var(--red); margin-top:0;">📤 ইউজারের উত্তোলন (Withdraw) রিকোয়েস্ট</h3>
+      <table class="req-table">
+        <thead><tr><th>নম্বর / অ্যাকাউন্ট</th><th>টাকা</th><th>অ্যাকশন</th></tr></thead>
+        <tbody id="adminWithdrawTable"></tbody>
+      </table>
+    </div>
   </section>
 
   <div style="text-align: right; margin-bottom: 10px;">
@@ -292,6 +300,18 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
 <div class="modal" id="depositModal">
   <div class="modal-box" style="background: #1a1a1a; color: #fff;">
     <h3>Deposit Money</h3>
+    
+    <!-- ডিপোজিট নিয়মাবলী ও কপি বাটন সহ নম্বর নির্দেশিকা -->
+    <div style="background: #0c1728; border: 1px dashed var(--gold); padding: 12px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; line-height: 1.6;">
+      <strong style="color: var(--gold);">⚠️ ডিপোজিট করার নিয়মাবলী:</strong><br>
+      আমাদের নিচে দেওয়া নাম্বারে বিকাশ অথবা নগদ-এ ক্যাশ আউট বা সেন্ড মানি করুন。<br>
+      <div style="display: flex; align-items: center; justify-content: space-between; background: #16243b; padding: 8px 12px; border-radius: 6px; margin-top: 8px; border: 1px solid var(--line);">
+        <span id="agentNumber" style="font-size: 15px; font-weight: bold; color: #00ffcc; letter-spacing: 1px;">01791424381</span>
+        <button type="button" id="copyBtn" onclick="copyDepositNumber()" style="background: var(--blue); color: #fff; border: none; padding: 5px 12px; border-radius: 5px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.3s;">কপি করুন</button>
+      </div>
+      <small style="color: var(--muted); display: block; margin-top: 5px;">টাকা পাঠানোর পর নিচের ফর্মটি পূরণ করুন।</small>
+    </div>
+
     <form id="depositForm" onsubmit="submitDeposit(event)">
       <label>Method:</label>
       <select id="depMethod"><option value="Bkash">Bkash</option><option value="Nagad">Nagad</option></select>
@@ -303,6 +323,41 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
     </form>
   </div>
 </div>
+
+<!-- Withdraw Modal (উইথড্র মডাল যোগ করা হয়েছে) -->
+<div class="modal" id="withdrawModal">
+  <div class="modal-box" style="background: #1a1a1a; color: #fff;">
+    <h3>Withdraw Money</h3>
+    <form id="withdrawForm" onsubmit="submitWithdraw(event)">
+      <label>Method:</label>
+      <select id="wdMethod"><option value="Bkash">Bkash</option><option value="Nagad">Nagad</option></select>
+      <label>Account Number:</label><input type="text" id="wdAccNo" placeholder="01XXXXXXXXX" required>
+      <label>Amount (BDT):</label><input type="number" id="wdAmount" placeholder="যেমন: 500" required>
+      <button type="submit" class="red" style="width: 100%; margin-top: 15px; padding: 12px;">Submit Withdraw</button>
+      <button type="button" onclick="closeWithdrawModal()" style="width: 100%; margin-top: 8px; background: #334155; padding: 8px;">বাতিল</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// কপি করার ফাংশন ও কালার চেঞ্জ লজিক
+function copyDepositNumber() {
+    const numText = document.getElementById('agentNumber').textContent;
+    const btn = document.getElementById('copyBtn');
+
+    navigator.clipboard.writeText(numText).then(() => {
+        btn.textContent = "Copied!";
+        btn.style.background = "#10b981"; // সবুজ রঙ
+
+        setTimeout(() => {
+            btn.textContent = "কপি করুন";
+            btn.style.background = "#2563eb"; // পূর্বের নীল রঙ
+        }, 2000);
+    }).catch(err => {
+        alert("কপি করা হয়েছে !");
+    });
+}
+</script>
 
 <!-- Aviator Modal Game -->
 <div class="modal" id="aviatorModal">
@@ -862,6 +917,13 @@ function openDepositModal(){
 }
 function closeDepositModal(){ $('depositModal').classList.remove('show'); }
 
+// উইথড্র মডাল ওপেন ও ক্লোজ ফাংশন
+function openWithdrawModal(){ 
+  if(!currentPhone) { alert("প্রথমে লগইন করুন!"); openAuth('login'); return; }
+  $('withdrawModal').classList.add('show'); 
+}
+function closeWithdrawModal(){ $('withdrawModal').classList.remove('show'); }
+
 function submitDeposit(e) {
   e.preventDefault();
   const method = $('depMethod').value;
@@ -875,6 +937,33 @@ function submitDeposit(e) {
   $('depositForm').reset();
 }
 
+// উইথড্র রিকোয়েস্ট সাবমিট ফাংশন (ব্যালেন্স চেক সহ)
+function submitWithdraw(e) {
+  e.preventDefault();
+  const method = $('wdMethod').value;
+  const acc = $('wdAccNo').value;
+  const amt = parseFloat($('wdAmount').value) || 0;
+
+  if (amt > balance) {
+    alert("আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!");
+    return;
+  }
+
+  db.ref('withdraws').push({ 
+    phone: currentPhone, 
+    method: method, 
+    account: acc, 
+    amount: amt, 
+    status: 'Pending',
+    timestamp: Date.now() 
+  });
+
+  alert("উত্তোলন (Withdraw) রিকোয়েস্ট সফলভাবে জমা হয়েছে!");
+  closeWithdrawModal();
+  $('withdrawForm').reset();
+}
+
+// ডিপোজিট রিকোয়েস্ট রিয়েল-টাইম লোড ও টেবিল রেন্ডার
 db.ref('deposits').on('value', snap => {
   const data = snap.val();
   const table = $('adminDepositTable');
@@ -897,6 +986,47 @@ db.ref('deposits').on('value', snap => {
   }
   if(table.innerHTML === '') table.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--muted);">কোনো ডিপোজিট পেন্ডিং নেই।</td></tr>';
 });
+
+// উইথড্র রিকোয়েস্ট রিয়েল-টাইম লোড ও টেবিল রেন্ডার
+db.ref('withdraws').on('value', snap => {
+  const data = snap.val();
+  const table = $('adminWithdrawTable');
+  if(!table) return;
+  table.innerHTML = '';
+  
+  if(data) {
+    Object.keys(data).forEach(key => {
+      const w = data[key];
+      if(!w.status || w.status === 'Pending') {
+        table.innerHTML += `
+          <tr>
+            <td>${w.phone || 'N/A'}<br><small style="color:var(--gold);">${w.account || ''} (${w.method || 'Bkash'})</small></td>
+            <td>৳${w.amount || 0}</td>
+            <td><button class="red" style="padding:4px 8px; font-size:11px;" onclick="approveWithdraw('${key}', '${w.phone}', ${w.amount})">পেমেন্ট কমপ্লিট</button></td>
+          </tr>
+        `;
+      }
+    });
+  }
+  if(table.innerHTML === '') {
+    table.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--muted);">কোনো উইথড্র পেন্ডিং নেই।</td></tr>';
+  }
+});
+
+// উইথড্র অ্যাপ্রুভ ও ইউজারের ব্যালেন্স থেকে টাকা কাটার ফাংশন
+function approveWithdraw(key, uPhone, amt) {
+  db.ref('withdraws/' + key).update({ status: 'Approved' });
+  const userKey = uPhone.replace(/[.#$[\]]/g, "_");
+  
+  db.ref('users/' + userKey).once('value').then(snap => {
+    let curBal = snap.exists() ? (parseFloat(snap.val().balance) || 0) : 0;
+    if(curBal >= amt) {
+      db.ref('users/' + userKey).update({ balance: curBal - parseFloat(amt) });
+    }
+  });
+  
+  alert("উইথড্র রিকোয়েস্ট সফলভাবে সম্পন্ন করা হয়েছে!");
+}
 
 function approveDeposit(key, uPhone, amt) {
   db.ref('deposits/' + key).update({ status: 'Approved' });
