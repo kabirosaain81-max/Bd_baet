@@ -20,9 +20,10 @@ h2,h3{margin:0 0 12px;color:var(--gold)}
 .tile .ico{font-size:25px}.tile small{color:#b8c6d8;font-size:11px}
 .tile.active{border-color:var(--gold);background:#253149}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.match{background:#0d192a;border:1px solid var(--line);border-radius:9px;padding:12px;margin:9px 0}
+.match{background:#0d192a;border:1px solid var(--line);border-radius:9px;padding:12px;margin:9px 0;cursor:pointer;transition:border-color 0.2s}
+.match:hover{border-color:var(--gold)}
 .match-head{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:12px;margin-bottom:8px}
-.teams{font-size:16px;font-weight:bold;margin-bottom:10px}
+.teams{font-size:16px;font-weight:bold;margin-bottom:6px}
 .odds{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
 .odd{background:#29374c;border:1px solid #d99d28;color:#fff;padding:8px 4px;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;border-radius:6px}
 .odd:hover{background:#3b4d68}
@@ -68,6 +69,81 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
 .aviator-btn-cashout { background: #eab308; color: #000; }
 .aviator-btn-disabled { background: #475569 !important; cursor: not-allowed; opacity: 0.6; }
 
+/* ফুল-স্ক্রিন কালারফুল ম্যাচ ডিসপ্লে পপ-আপ স্টাইল */
+#matchFullscreenOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+#matchFullscreenContent {
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: 20px;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  animation: popIn 0.25s ease-out;
+}
+@keyframes popIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.fs-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.fs-league { color: var(--gold); font-size: 13px; margin-bottom: 8px; padding-right: 70px; }
+.fs-teams { font-size: 20px; font-weight: bold; margin-bottom: 8px; }
+.fs-score {
+  background: #0c1728;
+  color: #6ee7b7;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+  border: 1px dashed var(--line);
+}
+.fs-market-title { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+.fs-market-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.fs-bet-btn {
+  background: #172235;
+  border: 1px solid var(--gold);
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.fs-bet-btn:active, .fs-bet-btn:hover { background: var(--gold); color: #111; }
+.fs-odd-val { color: var(--gold); font-weight: bold; }
+.fs-bet-btn:hover .fs-odd-val { color: #111; }
+
 @media(min-width:700px){.grid{grid-template-columns:repeat(6,minmax(0,1fr))}.games{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style>
 
@@ -80,7 +156,6 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
 <header>
   <div class="logo"><b>RIFAT</b><strong>88</strong></div>
   <div class="header-right">
-    <!-- অ্যাপ ডাউনলোড বাটন এখানে যুক্ত করা হয়েছে -->
     <a href="your-app-file-link.apk" download style="text-decoration: none;">
       <button class="gold" style="padding: 7px 12px; font-size: 13px; background: #f5b942; color: #111;">📥 Download App</button>
     </a>
@@ -131,6 +206,9 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
       <label style="margin-top:8px;">লিগ/টুর্নামেন্টের নাম:</label>
       <input type="text" id="newMatchLeague" placeholder="যেমন: Premier League, IPL 2026">
       
+      <label style="margin-top:8px;">লাইভ স্কোর (ঐচ্ছিক):</label>
+      <input type="text" id="newMatchScore" placeholder="যেমন: বাংলাদেশ ১১১/২ (১০.৪ ওভার)">
+
       <div class="admin-grid" style="margin-top:10px;">
         <div><label>হোম টিম:</label><input type="text" id="newHomeTeam" placeholder="Team A"></div>
         <div><label>অ্যাওয়ে টিম:</label><input type="text" id="newAwayTeam" placeholder="Team B"></div>
@@ -145,7 +223,6 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
       <button class="green" style="width:100%; margin-top:12px; padding:10px;" onclick="createNewMatch()">➕ ম্যাচ পাবলিশ করুন</button>
     </div>
 
-    <!-- অ্যাডমিন প্যানেলে HTML গেম যুক্ত করার নতুন বক্স -->
     <div class="admin-box">
       <h3 style="color:var(--gold); margin-top:0;">🎮 ২. HTML গেম যুক্ত করুন (Slot / Casino / Crash)</h3>
       <label>গেম ক্যাটাগরি নির্বাচন করুন:</label>
@@ -167,13 +244,21 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
     </div>
 
     <div class="admin-box">
-      <h3 style="color:var(--gold); margin-top:0;">✏️ ৩. ম্যাচ এডিট ও রেজাল্ট ঘোষণা (উইন কনফার্মেশন)</h3>
+      <h3 style="color:var(--gold); margin-top:0;">✏️ ৩. ম্যাচ এডিট, স্কোর আপডেট ও রেজাল্ট ঘোষণা</h3>
       <label>সম্পাদনার জন্য ম্যাচ সিলেক্ট করুন:</label>
       <select id="adminMatchSelect" onchange="loadMatchToAdmin()"></select>
       
       <div class="admin-grid" style="margin-top:10px;">
         <div><label>হোম টিম</label><input type="text" id="adminHomeTeam" readonly></div>
         <div><label>অ্যাওয়ে টিম</label><input type="text" id="adminAwayTeam" readonly></div>
+      </div>
+
+      <div style="margin-top:10px;">
+        <label>লাইভ স্কোর আপডেট করুন (যেমন: রান ও ওভার):</label>
+        <div style="display:flex; gap:8px;">
+          <input type="text" id="adminMatchScore" placeholder="যেমন: ১৫০/৪ (১৮.২ ওভার)">
+          <button class="primary" type="button" onclick="updateLiveScoreOnly()" style="white-space:nowrap;">স্কোর সেভ</button>
+        </div>
       </div>
 
       <div style="margin-top:12px; padding:10px; background:#0c1728; border-radius:8px; border:1px solid var(--line);">
@@ -241,7 +326,7 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
     </button>
   </div>
 
-  <!-- ইউজার বেটিং হিস্ট্রি সেকশন (ডিফল্টভাবে হাইড থাকবে) -->
+  <!-- ইউজার বেটিং হিস্ট্রি সেকশন -->
   <section class="panel" id="historyPanel" style="display: none;">
     <div class="section-head">
       <h2>📜 ইউজারের বেটিং হিস্ট্রি (User History)</h2>
@@ -263,7 +348,6 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
         </tbody>
       </table>
     </div>
-    <!-- পুরাতন সব হিস্ট্রি দেখানোর বাটন -->
     <button id="showAllHistoryBtn" class="gold" style="width: 100%; margin-top: 12px; display: none;" onclick="showAllHistory()">
       ⬇️ পুরাতন সব হিস্ট্রি দেখুন
     </button>
@@ -274,7 +358,7 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
     <div class="grid" id="sportsGrid"></div>
   </section>
 
-  <!-- গেম বিভাগ (Casino, Slot & Crash) -->
+  <!-- গেম বিভাগ -->
   <section class="panel">
     <div class="section-head"><h2>গেম বিভাগ (Casino, Slot & Crash)</h2></div>
     <div class="grid games" id="gamesGrid"></div>
@@ -305,11 +389,9 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
 <div class="modal" id="depositModal">
   <div class="modal-box" style="background: #1a1a1a; color: #fff;">
     <h3>Deposit Money</h3>
-    
-    <!-- ডিপোজিট নিয়মাবলী ও কপি বাটন সহ নম্বর নির্দেশিকা -->
     <div style="background: #0c1728; border: 1px dashed var(--gold); padding: 12px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; line-height: 1.6;">
       <strong style="color: var(--gold);">⚠️ ডিপোজিট করার নিয়মাবলী:</strong><br>
-      আমাদের নিচে দেওয়া নাম্বারে বিকাশ অথবা নগদ-এ ক্যাশ আউট বা সেন্ড মানি করুন।<br>
+      আমাদের নিচে দেওয়া নাম্বারে বিকাশ অথবা নগদ-এ ক্যাশ আউট বা সেন্ড মানি করুন。<br>
       <div style="display: flex; align-items: center; justify-content: space-between; background: #16243b; padding: 8px 12px; border-radius: 6px; margin-top: 8px; border: 1px solid var(--line);">
         <span id="agentNumber" style="font-size: 15px; font-weight: bold; color: #00ffcc; letter-spacing: 1px;">01791424381</span>
         <button type="button" id="copyBtn" onclick="copyDepositNumber()" style="background: var(--blue); color: #fff; border: none; padding: 5px 12px; border-radius: 5px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.3s;">কপি করুন</button>
@@ -329,7 +411,6 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
   </div>
 </div>
 
-<!-- Withdraw Modal (উইথড্র মডাল যোগ করা হয়েছে) -->
 <div class="modal" id="withdrawModal">
   <div class="modal-box" style="background: #1a1a1a; color: #fff;">
     <h3>Withdraw Money</h3>
@@ -344,19 +425,44 @@ footer{text-align:center;color:var(--muted);padding:20px;font-size:12px}
   </div>
 </div>
 
+<!-- ফুল-স্ক্রিন কালারফুল ম্যাচ পপ-আপ মডাল (স্কোর সহ) -->
+<div id="matchFullscreenOverlay" onclick="closeMatchModalOutside(event)">
+  <div id="matchFullscreenContent">
+    <button class="fs-close-btn" onclick="closeMatchModal()">✕ বন্ধ</button>
+    <div class="fs-league" id="fsLeague"></div>
+    <div class="fs-teams" id="fsTeams"></div>
+    <div class="fs-score" id="fsScore">লাইভ স্কোর: 0/0</div>
+
+    <div class="fs-market-title">টিমের জয় (Match Winner & Draw)</div>
+    <div class="fs-market-grid">
+      <button class="fs-bet-btn" onclick="selectModalBet('Home')">
+        <span id="fsHomeName">হোম</span>
+        <span class="fs-odd-val" id="fsHomeOdds"></span>
+      </button>
+      <button class="fs-bet-btn" onclick="selectModalBet('Draw')">
+        <span>ড্র</span>
+        <span class="fs-odd-val" id="fsDrawOdds"></span>
+      </button>
+      <button class="fs-bet-btn" onclick="selectModalBet('Away')">
+        <span id="fsAwayName">অ্যাওয়ে</span>
+        <span class="fs-odd-val" id="fsAwayOdds"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
-// কপি করার ফাংশন ও কালার চেঞ্জ লজিক
 function copyDepositNumber() {
     const numText = document.getElementById('agentNumber').textContent;
     const btn = document.getElementById('copyBtn');
 
     navigator.clipboard.writeText(numText).then(() => {
         btn.textContent = "Copied!";
-        btn.style.background = "#10b981"; // সবুজ রঙ
+        btn.style.background = "#10b981";
 
         setTimeout(() => {
             btn.textContent = "কপি করুন";
-            btn.style.background = "#2563eb"; // পূর্বের নীল রঙ
+            btn.style.background = "#2563eb";
         }, 2000);
     }).catch(err => {
         alert("কপি করা হয়েছে !");
@@ -393,7 +499,7 @@ function copyDepositNumber() {
   </div>
 </div>
 
-<!-- Custom HTML Game Modal (অ্যাডমিন থেকে পেস্ট করা গেম প্লে হওয়ার উইন্ডো) -->
+<!-- Custom HTML Game Modal -->
 <div class="modal" id="customGameModal">
   <div class="modal-box" style="max-width: 600px; width: 100%; padding: 0; background: #000; border: 1px solid var(--gold); overflow: hidden;">
     <div style="display: flex; justify-content: space-between; align-items: center; background: #1e293b; padding: 10px 14px;">
@@ -511,6 +617,7 @@ function createNewMatch() {
   const league = $('newMatchLeague').value.trim();
   const home = $('newHomeTeam').value.trim();
   const away = $('newAwayTeam').value.trim();
+  const score = $('newMatchScore').value.trim() || 'লাইভ / আসন্ন';
   const hOdds = parseFloat($('newHomeOdds').value) || 1.85;
   const dOdds = parseFloat($('newDrawOdds').value) || 3.20;
   const aOdds = parseFloat($('newAwayOdds').value) || 4.10;
@@ -522,14 +629,22 @@ function createNewMatch() {
     league: league,
     homeTeam: home,
     awayTeam: away,
+    score: score,
     odds: { home: hOdds, draw: dOdds, away: aOdds },
     winner: ""
   });
   alert("সফলভাবে ম্যাচ যোগ করা হয়েছে!");
-  $('newMatchLeague').value = ''; $('newHomeTeam').value = ''; $('newAwayTeam').value = '';
+  $('newMatchLeague').value = ''; $('newHomeTeam').value = ''; $('newAwayTeam').value = ''; $('newMatchScore').value = '';
 }
 
-// অ্যাডমিন প্যানেল থেকে HTML গেম সেভ করার ফাংশন
+function updateLiveScoreOnly() {
+  const selectedKey = $('adminMatchSelect').value;
+  if(!selectedKey) { alert("কোনো ম্যাচ সিলেক্ট করা হয়নি!"); return; }
+  const newScore = $('adminMatchScore').value.trim();
+  db.ref('matches/' + selectedKey).update({ score: newScore });
+  alert("লাইভ স্কোর সফলভাবে আপডেট হয়েছে!");
+}
+
 function createNewHtmlGame() {
   const cat = $('newHtmlGameCategory').value;
   const name = $('newHtmlGameName').value.trim();
@@ -575,7 +690,6 @@ db.ref('matches').on('value', snap => {
   filterAndRender();
 });
 
-// কাস্টম গেমসমূহ ডাটাবেজ থেকে লোড করা
 db.ref('customGames').on('value', snap => {
   const data = snap.val();
   cachedGames = [];
@@ -599,6 +713,7 @@ function loadMatchToAdmin() {
   if(match) {
     $('adminHomeTeam').value = match.homeTeam || '';
     $('adminAwayTeam').value = match.awayTeam || '';
+    $('adminMatchScore').value = match.score || '';
     $('adminWinnerSelect').value = match.winner || '';
   }
 }
@@ -656,11 +771,16 @@ function filterAndRender() {
       const dProf = (currentStake * dOdds - currentStake).toFixed(1);
       const aProf = (currentStake * aOdds - currentStake).toFixed(1);
 
+      // ম্যাচ কার্ডে টাচ করলেই পপ-আপ ওপেন হবে এবং স্কোর দৃশ্যমান থাকবে
       htmlContent += `
-        <div class="match">
-          <div class="match-head">${m.league || 'Sports Match'}</div>
+        <div class="match" onclick="openMatchFullscreen('${m.firebaseKey}')">
+          <div class="match-head">
+            <span>🏏 ${m.league || 'Sports Match'}</span>
+            <span style="background:#ef4444; color:#fff; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:bold;">লাইভ</span>
+          </div>
           <div class="teams">${m.homeTeam} VS ${m.awayTeam}</div>
-          <div class="odds">
+          <div style="color:#6ee7b7; font-size:13px; margin-bottom:10px;">স্কোর: ${m.score || 'লাইভ / আসন্ন'}</div>
+          <div class="odds" onclick="event.stopPropagation()">
             <button class="odd" onclick="selectMatchBet('${m.firebaseKey}', 'Home', '${m.homeTeam}', ${hOdds})">
               <span>হোম (${m.homeTeam}): ${hOdds}</span>
               <small style="color:#6ee7b7">+৳${hProf}</small>
@@ -679,7 +799,6 @@ function filterAndRender() {
     });
   }
 
-  // ক্যাসিনো, স্লট ও ক্র্যাশ গেম রেন্ডারিং
   let filteredGames = cachedGames.filter(g => currentFilter === 'all-games' || g.category === currentFilter);
   if((filteredGames.length > 0 && (currentFilter === 'crash' || currentFilter === 'slot' || currentFilter === 'casino' || currentFilter === 'all-games')) || (filteredGames.length > 0 && currentFilter === 'all')) {
     filteredGames.forEach(g => {
@@ -703,6 +822,53 @@ function filterAndRender() {
   } else {
     box.innerHTML = htmlContent;
   }
+}
+
+// ফুল-স্ক্রিন ম্যাচ পপ-আপ ওপেন ও ক্লোজ করার লজিক
+let activePopupMatch = null;
+
+function openMatchFullscreen(mKey) {
+  const m = cachedMatches.find(item => item.firebaseKey === mKey);
+  if(!m) return;
+  activePopupMatch = m;
+
+  $('fsLeague').textContent = m.league || 'ক্রিকেট ম্যাচ';
+  $('fsTeams').textContent = `${m.homeTeam} VS ${m.awayTeam}`;
+  $('fsScore').textContent = `লাইভ স্কোর: ${m.score || 'চলমান'}`;
+  $('fsHomeName').textContent = m.homeTeam;
+  $('fsAwayName').textContent = m.awayTeam;
+  $('fsHomeOdds').textContent = m.odds?.home || 1.00;
+  $('fsDrawOdds').textContent = m.odds?.draw || 1.00;
+  $('fsAwayOdds').textContent = m.odds?.away || 1.00;
+
+  $('matchFullscreenOverlay').style.display = 'flex';
+}
+
+function closeMatchModal() {
+  $('matchFullscreenOverlay').style.display = 'none';
+}
+
+function closeMatchModalOutside(e) {
+  if (e.target.id === 'matchFullscreenOverlay') {
+    closeMatchModal();
+  }
+}
+
+function selectModalBet(pickType) {
+  if(!activePopupMatch) return;
+  let pickName = activePopupMatch.homeTeam;
+  let oddsVal = activePopupMatch.odds?.home || 1.00;
+
+  if(pickType === 'Draw') {
+    pickName = 'ড্র';
+    oddsVal = activePopupMatch.odds?.draw || 1.00;
+  } else if(pickType === 'Away') {
+    pickName = activePopupMatch.awayTeam;
+    oddsVal = activePopupMatch.odds?.away || 1.00;
+  }
+
+  selectMatchBet(activePopupMatch.firebaseKey, pickType, pickName, oddsVal);
+  closeMatchModal();
 }
 
 function playGameDirectly(gName, gCat, gKey = '') {
@@ -810,7 +976,6 @@ function placeCalculatedBet() {
   loadUserHistory();
 }
 
-// হিস্ট্রি প্যানেল ওপেন বা হাইড করার ফাংশন
 function toggleHistoryPanel() {
   const panel = $('historyPanel');
   if (panel.style.display === 'none' || panel.style.display === '') {
@@ -922,7 +1087,6 @@ function openDepositModal(){
 }
 function closeDepositModal(){ $('depositModal').classList.remove('show'); }
 
-// উইথড্র মডাল ওপেন ও ক্লোজ ফাংশন
 function openWithdrawModal(){ 
   if(!currentPhone) { alert("প্রথমে লগইন করুন!"); openAuth('login'); return; }
   $('withdrawModal').classList.add('show'); 
@@ -942,7 +1106,6 @@ function submitDeposit(e) {
   $('depositForm').reset();
 }
 
-// উইথড্র রিকোয়েস্ট সাবমিট ফাংশন (ব্যালেন্স চেক সহ)
 function submitWithdraw(e) {
   e.preventDefault();
   const method = $('wdMethod').value;
@@ -968,7 +1131,6 @@ function submitWithdraw(e) {
   $('withdrawForm').reset();
 }
 
-// ডিপোজিট রিকোয়েস্ট রিয়েল-টাইম লোড ও টেবিল রেন্ডার
 db.ref('deposits').on('value', snap => {
   const data = snap.val();
   const table = $('adminDepositTable');
@@ -992,7 +1154,6 @@ db.ref('deposits').on('value', snap => {
   if(table.innerHTML === '') table.innerHTML = '<tr><td colspan="3" style="text-align:center; color:var(--muted);">কোনো ডিপোজিট পেন্ডিং নেই।</td></tr>';
 });
 
-// উইথড্র রিকোয়েস্ট রিয়েল-টাইম লোড ও টেবিল রেন্ডার
 db.ref('withdraws').on('value', snap => {
   const data = snap.val();
   const table = $('adminWithdrawTable');
@@ -1018,7 +1179,6 @@ db.ref('withdraws').on('value', snap => {
   }
 });
 
-// উইথড্র অ্যাপ্রুভ ও ইউজারের ব্যালেন্স থেকে টাকা কাটার ফাংশন
 function approveWithdraw(key, uPhone, amt) {
   db.ref('withdraws/' + key).update({ status: 'Approved' });
   const userKey = uPhone.replace(/[.#$[\]]/g, "_");
