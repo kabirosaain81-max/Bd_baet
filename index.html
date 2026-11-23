@@ -127,25 +127,23 @@
                 <button onclick="adminLogout()" class="bg-red-600 text-white text-xs px-2.5 py-1 rounded-lg font-bold">বন্ধ করুন</button>
             </div>
 
+            <!-- আলাদা অডসসহ ম্যাচ তৈরির বক্স -->
             <div class="admin-box">
-                <h3 class="text-[#195e98] font-bold text-xs mb-2">➕ নতুন ম্যাচ ও লাইভ ভিডিও যুক্ত করুন</h3>
+                <h3 class="text-[#195e98] font-bold text-xs mb-2">➕ আলাদা অডসসহ নতুন ম্যাচ যুক্ত করুন</h3>
                 <div class="grid grid-cols-2 gap-2 mb-2">
-                    <select id="newMatchCategory" class="bg-slate-50 border border-slate-300 p-2 rounded-lg text-xs">
-                        <option value="cricket">ক্রিকেট (Cricket)</option>
-                        <option value="football">ফুটবল (Football)</option>
-                        <option value="tennis">টেনিস (Tennis)</option>
-                    </select>
-                    <input type="text" id="newMatchLeague" placeholder="লিগ (যেমন: UEFA / IPL)" class="bg-slate-50 border border-slate-300 p-2 rounded-lg text-xs">
+                    <input type="text" id="newMatchLeague" placeholder="লিগ (যেমন: IPL / BPL)" class="bg-slate-50 border border-slate-300 p-2 rounded-lg text-xs">
+                    <input type="text" id="newMatchScore" placeholder="স্কোর" class="bg-slate-50 border border-slate-300 p-2 rounded-lg text-xs">
                 </div>
                 <div class="grid grid-cols-2 gap-2 mb-2">
                     <input type="text" id="newHomeTeam" placeholder="টিম ১ (Home)" class="bg-slate-50 border border-slate-300 p-2 rounded-lg text-xs">
                     <input type="text" id="newAwayTeam" placeholder="টিম ২ (Away)" class="bg-slate-50 border border-slate-300 p-2 rounded-lg text-xs">
                 </div>
-                <div class="grid grid-cols-2 gap-2 mb-2">
-                    <input type="text" id="newMatchScore" placeholder="স্কোর (যেমন: 154/4)" class="bg-slate-50 border border-slate-300 p-2 rounded-lg text-xs">
-                    <input type="text" id="newVideoLink" placeholder="ভিডিও এমবেড লিঙ্ক (URL)" class="bg-slate-50 border border-slate-300 p-2 rounded-lg text-xs">
+                <div class="grid grid-cols-3 gap-2 mb-2">
+                    <input type="number" step="0.01" id="newOddHome" placeholder="W1 অডস" value="1.66" class="bg-slate-50 border border-slate-300 p-2 rounded-lg text-xs font-bold">
+                    <input type="number" step="0.01" id="newOddDraw" placeholder="ড্র অডস" value="25.0" class="bg-slate-50 border border-slate-300 p-2 rounded-lg text-xs font-bold">
+                    <input type="number" step="0.01" id="newOddAway" placeholder="W2 অডস" value="2.21" class="bg-slate-50 border border-slate-300 p-2 rounded-lg text-xs font-bold">
                 </div>
-                <button onclick="createNewMatchWithVideo()" class="w-full xbet-green-btn text-white font-bold py-2 rounded-lg text-xs">ম্যাচ পাবলিশ করুন</button>
+                <button onclick="createNewCustomMatch()" class="w-full xbet-green-btn text-white font-bold py-2 rounded-lg text-xs">এই অডসসহ ম্যাচ পাবলিশ করুন</button>
             </div>
 
             <div class="admin-box">
@@ -154,6 +152,7 @@
                 <select id="adminWinnerSelect" class="w-full bg-slate-50 border border-slate-300 p-2 rounded-lg text-xs mb-2">
                     <option value="">-- বিজয়ী টিম সিলেক্ট করুন --</option>
                     <option value="Home">হোম টিম জয় (W1)</option>
+                    <option value="Draw">ড্র (X)</option>
                     <option value="Away">অ্যাওয়ে টিম জয় (W2)</option>
                 </select>
                 <button onclick="settleMatchAndPayWinners()" class="w-full bg-[#195e98] text-white font-bold py-2 rounded-lg text-xs">✅ রেজাল্ট সেভ ও টাকা প্রদান করুন</button>
@@ -174,6 +173,22 @@
                         <tbody id="adminWithdrawTable"><tr><td colspan="3" class="text-center text-slate-400">কোনো রিকোয়েস্ট নেই</td></tr></tbody>
                     </table>
                 </div>
+            </div>
+
+            <!-- ক্যাসিনো ও গেম যুক্ত করার অ্যাডমিন বক্স -->
+            <div class="admin-box bg-slate-900 text-white">
+                <h3 class="text-amber-400 font-bold text-xs mb-2">🎰 ক্যাসিনো ও গেম ম্যানেজার (লিংক বা কোড)</h3>
+                <div class="space-y-2 mb-2">
+                    <div>
+                        <label class="text-[10px] text-slate-300">গেমের নাম (যেমন: Aviator / 3D Dice)</label>
+                        <input type="text" id="adminGameName" placeholder="গেমের নাম লিখুন" class="w-full bg-slate-800 border border-slate-700 p-2 rounded-lg text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="text-[10px] text-slate-300">গেমের লিংক বা Iframe এমবেড কোড</label>
+                        <textarea id="adminGameCode" rows="3" placeholder="https://... অথবা <iframe src=...></iframe>" class="w-full bg-slate-800 border border-slate-700 p-2 rounded-lg text-xs text-white"></textarea>
+                    </div>
+                </div>
+                <button onclick="saveAdminGameLink()" class="w-full xbet-green-btn text-white font-bold py-2 rounded-lg text-xs">গেম পাবলিশ বা সেভ করুন</button>
             </div>
         </section>
 
@@ -203,13 +218,13 @@
             </div>
 
             <div class="grid grid-cols-3 gap-2">
-                <div onclick="selectSportCategory('cricket')" class="cursor-pointer group">
+                <div onclick="launchGameByUrl('Aviator', 'https://kabirosaain81-max.github.io/RIFAT88-Sports/avatar7-final.html')" class="cursor-pointer group">
                     <div class="aspect-square rounded-2xl bg-gradient-to-br from-[#0f2c59] via-[#1d5b9e] to-[#081b38] p-2.5 flex flex-col justify-between relative overflow-hidden shadow-sm">
-                        <span class="bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded w-fit">T10</span>
-                        <div class="text-center my-auto"><i class="fa-solid fa-cricket-bat-ball text-3xl text-cyan-300 drop-shadow"></i></div>
-                        <div class="text-[10px] font-black text-yellow-300 text-center">20% BONUS</div>
+                        <span class="bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 rounded w-fit">LIVE</span>
+                        <div class="text-center my-auto"><i class="fa-solid fa-plane-up text-3xl text-rose-400 drop-shadow"></i></div>
+                        <div class="text-[10px] font-black text-yellow-300 text-center">AVIATOR</div>
                     </div>
-                    <p class="text-[11px] font-semibold text-slate-800 mt-1 leading-tight line-clamp-2">T10-এ বাজি ধরে পেয়ে যান 20% ...</p>
+                    <p class="text-[11px] font-semibold text-slate-800 mt-1 leading-tight text-center">Aviator Crash Game</p>
                 </div>
                 <div onclick="selectSportCategory('cricket')" class="cursor-pointer group">
                     <div class="aspect-square rounded-2xl bg-gradient-to-br from-[#8b182b] via-[#1c3d72] to-[#0d1f3c] p-2.5 flex flex-col justify-between relative overflow-hidden shadow-sm">
@@ -230,6 +245,18 @@
                     </div>
                     <p class="text-[11px] font-semibold text-slate-800 mt-1 leading-tight text-center">Crypto Freebet</p>
                 </div>
+            </div>
+
+            <!-- নতুন গেম বক্স (সহজে গেম এড ও খেলার জন্য) -->
+            <div id="gamesBoxSection" class="bg-white rounded-2xl p-3.5 shadow-xs border border-slate-100 space-y-2.5">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <i class="fa-solid fa-gamepad text-[#195e98] text-sm"></i>
+                        <h3 class="text-sm font-black text-[#12263a]">গেম বক্স (Games)</h3>
+                    </div>
+                    <span class="text-[10px] bg-blue-50 text-[#195e98] font-bold px-2 py-0.5 rounded-full">Instant Play</span>
+                </div>
+                <div id="gamesListContainer" class="grid grid-cols-2 gap-2.5"></div>
             </div>
 
             <div class="space-y-2 pt-1">
@@ -314,22 +341,29 @@
 
     <!-- ==================== MODALS ==================== -->
 
-    <!-- VIDEO-STYLE QUICK BET POPUP MODAL (যেটি অডসে ক্লিক করলে ভিডিওর মতো পপ-আপ হয়ে আসবে) -->
+    <!-- GAME PLAYER MODAL -->
+    <div id="gamePlayerModal" class="fixed inset-0 bg-slate-950/90 z-50 flex flex-col hidden">
+        <div class="bg-slate-900 text-white px-3.5 py-2.5 flex items-center justify-between border-b border-slate-800">
+            <span id="gamePlayerTitle" class="text-xs font-black text-amber-400">গেম চালু হচ্ছে...</span>
+            <button onclick="closeGamePlayerModal()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-3 py-1 rounded-lg">বন্ধ করুন</button>
+        </div>
+        <div id="gamePlayerBody" class="flex-1 w-full h-full flex items-center justify-center bg-black"></div>
+    </div>
+
     <div id="quickBetModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-end justify-center hidden">
         <div class="bg-white rounded-t-3xl max-w-xl w-full p-4 shadow-2xl space-y-3 animate-slide-up">
             <div class="flex items-center justify-between border-b border-slate-200 pb-2">
                 <div class="flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center text-[10px] font-bold pulse-live">●</span>
-                    <span id="quickBetTitle" class="font-extrabold text-xs text-slate-800">ব্যক্তিগত মোট ২ জোড়: না (Odds: 1.87)</span>
+                    <span id="quickBetTitle" class="font-extrabold text-xs text-slate-800">অডস বাজি</span>
                 </div>
                 <button onclick="closeQuickBetModal()" class="text-slate-400 hover:text-slate-700 text-base"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <!-- Balance & Stake Controls -->
             <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2.5">
                 <div class="flex items-center justify-between text-xs">
                     <span class="text-slate-500">ব্যালেন্স: <b id="qbBalance" class="text-slate-800">৳ 0.00</b></span>
-                    <span class="text-slate-500">সম্ভাব্য জয়: <b id="qbPotentialWin" class="text-emerald-600 font-black">৳ 37.4৳</b></span>
+                    <span class="text-slate-500">সম্ভাব্য জয়: <b id="qbPotentialWin" class="text-emerald-600 font-black">৳ 0.00</b></span>
                 </div>
 
                 <div class="flex items-center gap-2">
@@ -338,7 +372,6 @@
                     <button onclick="adjustStake(10)" class="w-10 h-10 bg-white border border-slate-300 rounded-xl font-bold text-lg flex items-center justify-center text-slate-700 shadow-xs">+</button>
                 </div>
 
-                <!-- Quick Stake Amount Buttons (15, 40, 80 ৳ - As in Video) -->
                 <div class="grid grid-cols-3 gap-2 pt-1">
                     <button onclick="setStake(15)" class="bg-white hover:bg-slate-100 border border-slate-300 py-1.5 rounded-xl font-bold text-xs text-slate-700 shadow-xs">১৫ ৳</button>
                     <button onclick="setStake(40)" class="bg-white hover:bg-slate-100 border border-slate-300 py-1.5 rounded-xl font-bold text-xs text-slate-700 shadow-xs">৪০ ৳</button>
@@ -346,14 +379,12 @@
                 </div>
             </div>
 
-            <!-- Place Bet Button -->
             <button onclick="confirmQuickBet()" class="w-full xbet-green-btn hover:opacity-95 text-white font-black py-3 rounded-2xl text-sm uppercase shadow-md">
                 বেট করুন
             </button>
         </div>
     </div>
 
-    <!-- SUCCESS POPUP MODAL (When Bet is Successful - Video Style) -->
     <div id="successBetModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center space-y-4">
             <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner">
@@ -373,55 +404,37 @@
 
             <div class="grid grid-cols-2 gap-2 pt-2">
                 <button onclick="closeSuccessModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs">চালিয়ে যান</button>
-                <button onclick="showToast('বেট স্লিপ শেয়ার করা হয়েছে!')" class="bg-[#195e98] hover:opacity-90 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1">
-                    <i class="fa-solid fa-share-nodes"></i> শেয়ার করুন
-                </button>
+                <button onclick="showToast('শেয়ার করা হয়েছে!')" class="bg-[#195e98] text-white font-bold py-2.5 rounded-xl text-xs">শেয়ার</button>
             </div>
         </div>
     </div>
 
-    <!-- BET SLIP MODAL -->
     <div id="betSlipModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center hidden">
         <div class="bg-white rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 shadow-2xl">
             <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-3">
-                <div class="flex items-center gap-2">
-                    <span class="w-7 h-7 rounded-full bg-[#3699e8] text-white flex items-center justify-center text-xs"><i class="fa-solid fa-ticket"></i></span>
-                    <h3 class="font-black text-base text-slate-800">বেট স্লিপ (Bet Slip)</h3>
-                </div>
+                <h3 class="font-black text-base text-slate-800">বেট স্লিপ</h3>
                 <button onclick="closeBetSlipModal()" class="text-slate-400 hover:text-slate-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div id="betSlipItems" class="space-y-2 min-h-[80px] text-xs text-slate-500 text-center py-4">কোনো বাজি সিলেক্ট করা হয়নি।</div>
-            <div id="betSlipControls" class="hidden space-y-3 border-t border-slate-200 pt-3">
-                <div class="flex items-center justify-between text-xs font-bold text-slate-600">
-                    <span>বাজির পরিমাণ (BDT):</span>
-                    <span id="potentialWinDisplay" class="text-[#4caf50]">সম্ভাব্য জয়: ৳ 0.00</span>
-                </div>
-                <input type="number" id="stakeInput" value="500" class="w-full bg-slate-100 border border-slate-300 rounded-xl p-2.5 text-sm text-slate-900 font-black">
-                <button onclick="placeBetFromSlip()" class="w-full xbet-green-btn text-white font-black py-3 rounded-xl text-sm uppercase shadow">PLACE A BET</button>
-            </div>
+            <div id="betSlipItems" class="space-y-2 min-h-[80px] text-xs text-slate-500 text-center py-4">কোনো বাজি নেই।</div>
         </div>
     </div>
 
-    <!-- HISTORY MODAL -->
     <div id="historyModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center hidden">
         <div class="bg-white rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 shadow-2xl max-h-[80vh] flex flex-col">
             <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-3">
-                <h3 class="font-black text-base text-[#145388] flex items-center gap-2">
-                    <i class="fa-solid fa-clock-rotate-left"></i> বেট ইতিহাস (Bet History)
-                </h3>
+                <h3 class="font-black text-base text-[#145388]"><i class="fa-solid fa-clock-rotate-left"></i> বেট ইতিহাস</h3>
                 <button onclick="closeHistoryModal()" class="text-slate-400 hover:text-slate-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="betHistoryContainer" class="space-y-2.5 overflow-y-auto flex-1 text-xs">
-                <div class="text-center text-slate-400 py-8">কোনো বেট ইতিহাস পাওয়া যায়নি।</div>
+                <div class="text-center text-slate-400 py-8">কোনো ইতিহাস নেই।</div>
             </div>
         </div>
     </div>
 
-    <!-- MENU MODAL -->
     <div id="menuModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-end sm:items-center justify-center hidden">
         <div class="bg-[#eef3f8] rounded-t-3xl sm:rounded-2xl max-w-md w-full p-4 shadow-2xl max-h-[85vh] overflow-y-auto">
             <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200">
-                <span class="font-black italic text-xl"><span class="text-[#143d66]">3X</span><span class="text-[#3699e8]">BET</span> <span class="not-italic text-xs font-bold text-slate-500">MENU</span></span>
+                <span class="font-black italic text-xl"><span class="text-[#143d66]">3X</span><span class="text-[#3699e8]">BET</span></span>
                 <button onclick="closeMenuModal()" class="w-8 h-8 rounded-full bg-white text-slate-600 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="menuAccountBox" class="bg-white rounded-2xl p-3.5 mb-3 shadow-xs">
@@ -438,46 +451,27 @@
                             <div class="text-[10px] text-slate-400 font-bold">USER ID / PHONE</div>
                             <div id="menuUserPhone" class="text-sm font-black text-slate-800">017XXXXXXXX</div>
                         </div>
-                        <button onclick="closeMenuModal(); handleLogout()" class="text-red-500 bg-red-50 px-2.5 py-1 rounded-lg text-xs font-bold">
-                            <i class="fa-solid fa-right-from-bracket mr-1"></i> লগআউট
-                        </button>
+                        <button onclick="closeMenuModal(); handleLogout()" class="text-red-500 bg-red-50 px-2.5 py-1 rounded-lg text-xs font-bold">লগআউট</button>
                     </div>
                     <div class="grid grid-cols-2 gap-2 pt-1">
-                        <button onclick="closeMenuModal(); openDepositModal()" class="xbet-green-btn text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1"><i class="fa-solid fa-plus-circle"></i> ডিপোজিট</button>
-                        <button onclick="closeMenuModal(); openWithdrawModal()" class="bg-[#195e98] text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1"><i class="fa-solid fa-wallet"></i> উইথড্র</button>
+                        <button onclick="closeMenuModal(); openDepositModal()" class="xbet-green-btn text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1">ডিপোজিট</button>
+                        <button onclick="closeMenuModal(); openWithdrawModal()" class="bg-[#195e98] text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-1">উইথড্র</button>
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-2 text-xs font-bold text-slate-700">
-                <button onclick="closeMenuModal(); openHistoryModal()" class="bg-white p-3 rounded-xl flex items-center gap-2.5 shadow-xs"><i class="fa-solid fa-clock-rotate-left text-[#2a85d4] text-base"></i> বেট ইতিহাস</button>
-                <button onclick="closeMenuModal(); downloadAppAction()" class="bg-white p-3 rounded-xl flex items-center gap-2.5 shadow-xs"><i class="fa-solid fa-download text-[#4caf50] text-base"></i> App ডাউনলোড</button>
-                <button onclick="closeMenuModal(); selectSportCategory('cricket')" class="bg-white p-3 rounded-xl flex items-center gap-2.5 shadow-xs"><i class="fa-solid fa-baseball-bat-ball text-amber-500 text-base"></i> লাইভ ক্রিকেট</button>
-                <button onclick="closeMenuModal(); selectSportCategory('football')" class="bg-white p-3 rounded-xl flex items-center gap-2.5 shadow-xs"><i class="fa-solid fa-futbol text-emerald-600 text-base"></i> লাইভ ফুটবল</button>
-                <button onclick="closeMenuModal(); requestAdminAccess()" class="col-span-2 bg-slate-800 text-white p-3 rounded-xl flex items-center justify-center gap-2 shadow-xs mt-1">
-                    <span class="w-2 h-2 rounded-full bg-red-500 pulse-live"></span> অ্যাডমিন কন্ট্রোল প্যানেল (লাইভ)
-                </button>
-            </div>
+            <button onclick="closeMenuModal(); requestAdminAccess()" class="w-full bg-slate-800 text-white p-3 rounded-xl flex items-center justify-center gap-2 shadow-xs mt-1 font-bold text-xs">
+                <span class="w-2 h-2 rounded-full bg-red-500 pulse-live"></span> অ্যাডমিন কন্ট্রোল প্যানেল (K.71 পাসওয়ার্ড)
+            </button>
         </div>
     </div>
 
-    <!-- AUTH, DEPOSIT, WITHDRAW & TOAST MODALS -->
     <div id="authModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl relative">
             <button onclick="closeAuthModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
-            <div class="flex items-center gap-4 border-b border-slate-200 pb-3 mb-4">
-                <button id="modalTabLogin" onclick="switchAuthTab('login')" class="font-extrabold text-sm text-[#195e98] border-b-2 border-[#195e98] pb-1">Log in</button>
-                <button id="modalTabRegister" onclick="switchAuthTab('register')" class="font-extrabold text-sm text-slate-400 pb-1">Registration</button>
-            </div>
-            <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-3">
-                <div><label class="block text-xs font-bold text-slate-500 mb-1">মোবাইল নম্বর</label><input type="tel" id="loginPhone" required placeholder="017xxxxxxxx" class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-sm text-slate-900"></div>
-                <div><label class="block text-xs font-bold text-slate-500 mb-1">পাসওয়ার্ড</label><input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-sm text-slate-900"></div>
+            <form onsubmit="handleLoginSubmit(event)" class="space-y-3">
+                <div><label class="block text-xs font-bold text-slate-500 mb-1">নম্বর</label><input type="tel" id="loginPhone" required placeholder="017xxxxxxxx" class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-sm"></div>
+                <div><label class="block text-xs font-bold text-slate-500 mb-1">পাসওয়ার্ড</label><input type="password" id="loginPassword" required placeholder="••••••••" class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-sm"></div>
                 <button type="submit" class="w-full bg-[#2369a3] text-white font-extrabold py-3 rounded-xl text-sm">Log in</button>
-            </form>
-            <form id="registerForm" onsubmit="handleRegisterSubmit(event)" class="space-y-3 hidden">
-                <div><label class="block text-xs font-bold text-slate-500 mb-1">মোবাইল নম্বর (বিকাশ/নগদ)</label><input type="tel" id="regPhone" required placeholder="017xxxxxxxx" class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-sm text-slate-900"></div>
-                <div><label class="block text-xs font-bold text-slate-500 mb-1">পাসওয়ার্ড</label><input type="password" id="regPassword" required placeholder="পাসওয়ার্ড দিন" class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-sm text-slate-900"></div>
-                <div><label class="block text-xs font-bold text-slate-500 mb-1">কনফার্ম পাসওয়ার্ড</label><input type="password" id="regConfirmPassword" required placeholder="পুনরায় পাসওয়ার্ড দিন" class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-sm text-slate-900"></div>
-                <button type="submit" class="w-full xbet-green-btn text-white font-extrabold py-3 rounded-xl text-sm">Register</button>
             </form>
         </div>
     </div>
@@ -485,16 +479,12 @@
     <div id="depositModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl relative">
             <button onclick="closeDepositModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="font-black text-base text-[#145388] mb-2 flex items-center gap-2"><i class="fa-solid fa-circle-plus text-[#4caf50]"></i> অ্যাকাউন্ট ডিপোজিট</h3>
-            <div class="bg-amber-50 border border-dashed border-amber-400 p-2.5 rounded-xl text-xs mb-3 text-slate-700">
-                অফিসিয়াল এজেন্ট নম্বর: <b class="text-[#145388]">01791424381</b> (বিকাশ/নগদ সেন্ড মানি করুন)
-            </div>
+            <h3 class="font-black text-base text-[#145388] mb-2">ডিপোজিট</h3>
             <form onsubmit="handleDepositSubmit(event)" class="space-y-2.5">
-                <select id="depMethod" class="w-full bg-slate-100 border border-slate-300 rounded-xl p-2.5 text-xs font-bold"><option value="Bkash">bKash (বিকাশ)</option><option value="Nagad">Nagad (নগদ)</option></select>
-                <input type="text" id="userAccNo" placeholder="আপনার নম্বর (017xxxxxxxx)" required class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-xs">
-                <input type="number" id="depAmount" min="100" value="500" required class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-xs font-extrabold text-emerald-700">
-                <input type="text" id="depTrxId" placeholder="TrxID (লেনদেন আইডি)" required class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-xs">
-                <button type="submit" class="w-full xbet-green-btn text-white font-extrabold py-3 rounded-xl text-xs">ডিপোজিট কনফার্ম করুন</button>
+                <input type="text" id="userAccNo" placeholder="আপনার নম্বর" required class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-xs">
+                <input type="number" id="depAmount" min="100" value="500" required class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-xs">
+                <input type="text" id="depTrxId" placeholder="TrxID" required class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-xs">
+                <button type="submit" class="w-full xbet-green-btn text-white font-extrabold py-3 rounded-xl text-xs">কনফার্ম</button>
             </form>
         </div>
     </div>
@@ -502,12 +492,11 @@
     <div id="withdrawModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl relative">
             <button onclick="closeWithdrawModal()" class="absolute right-4 top-4 text-slate-400 hover:text-slate-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
-            <h3 class="font-black text-base text-[#145388] mb-3 flex items-center gap-2"><i class="fa-solid fa-wallet text-amber-500"></i> টাকা উত্তোলন (Withdraw)</h3>
+            <h3 class="font-black text-base text-[#145388] mb-3">উইথড্র</h3>
             <form onsubmit="handleWithdrawSubmit(event)" class="space-y-2.5">
-                <select id="wdMethod" class="w-full bg-slate-100 border border-slate-300 rounded-xl p-2.5 text-xs font-bold"><option value="Bkash">bKash (বিকাশ)</option><option value="Nagad">Nagad (নগদ)</option></select>
-                <input type="tel" id="wdAccNo" placeholder="আপনার বিকাশ/নগদ নম্বর" required class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-xs">
-                <input type="number" id="wdAmount" min="500" value="500" required class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-xs font-extrabold text-[#145388]">
-                <button type="submit" class="w-full bg-[#195e98] text-white font-extrabold py-3 rounded-xl text-xs">উইথড্র রিকোয়েস্ট পাঠান</button>
+                <input type="tel" id="wdAccNo" placeholder="বিকাশ/নগদ নম্বর" required class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-xs">
+                <input type="number" id="wdAmount" min="500" value="500" required class="w-full bg-slate-100 border border-slate-300 rounded-xl px-3 py-2.5 text-xs">
+                <button type="submit" class="w-full bg-[#195e98] text-white font-extrabold py-3 rounded-xl text-xs">উইথড্র পাঠান</button>
             </form>
         </div>
     </div>
@@ -529,9 +518,12 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        const AVIATOR_GAME_URL = "https://kabirosaain81-max.github.io/RIFAT88-Sports/avatar7-final.html";
+
         let currentPhone = localStorage.getItem('rifat_active') || null;
         let userBalance = 0.00;
         let cachedMatches = [];
+        let cachedGames = [];
         let activeMatch = null;
         let currentSelectedCategory = 'all';
         let currentQuickBet = null;
@@ -580,6 +572,80 @@
 
         updateAuthUI();
 
+        // Load Admin Games from Firebase & Render Game Box
+        db.ref('adminGames').on('value', snap => {
+            const data = snap.val();
+            cachedGames = [];
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    cachedGames.push({ id: key, ...data[key] });
+                });
+            }
+            renderGamesBox();
+        });
+
+        function renderGamesBox() {
+            const container = document.getElementById('gamesListContainer');
+            if (!container) return;
+
+            const defaultGames = [
+                { id: 'aviator-live', name: 'Aviator', code: AVIATOR_GAME_URL }
+            ];
+            const allGames = [...defaultGames, ...cachedGames];
+
+            container.innerHTML = allGames.map((g, idx) => `
+                <button onclick="openGameFromList(${idx})" class="bg-[#eef3f8] hover:bg-[#dce7f2] border border-slate-200 rounded-xl p-3 flex items-center justify-between text-left transition active:scale-95">
+                    <div>
+                        <div class="text-xs font-black text-[#145388]">${g.name}</div>
+                        <div class="text-[10px] text-slate-500 mt-0.5">ট্যাপ করে খেলুন</div>
+                    </div>
+                    <span class="w-7 h-7 rounded-full bg-[#195e98] text-white flex items-center justify-center text-xs">
+                        <i class="fa-solid fa-play"></i>
+                    </span>
+                </button>
+            `).join('');
+
+            window.__renderedGamesList = allGames;
+        }
+
+        function openGameFromList(index) {
+            const list = window.__renderedGamesList || [];
+            const g = list[index];
+            if (!g || !g.code) return;
+            launchGameByCode(g.name, g.code);
+        }
+
+        function launchGameByUrl(name, url) {
+            launchGameByCode(name, url);
+        }
+
+        function launchGameByCode(name, codeOrUrl) {
+            const modal = document.getElementById('gamePlayerModal');
+            const title = document.getElementById('gamePlayerTitle');
+            const body = document.getElementById('gamePlayerBody');
+
+            title.innerText = name || 'গেম';
+            const trimmed = (codeOrUrl || '').trim();
+
+            if (trimmed.toLowerCase().startsWith('<iframe')) {
+                body.innerHTML = trimmed;
+                const iframe = body.querySelector('iframe');
+                if (iframe) {
+                    iframe.className = 'w-full h-full border-0';
+                }
+            } else {
+                body.innerHTML = `<iframe src="${trimmed}" class="w-full h-full border-0" allowfullscreen></iframe>`;
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function closeGamePlayerModal() {
+            const modal = document.getElementById('gamePlayerModal');
+            const body = document.getElementById('gamePlayerBody');
+            body.innerHTML = '';
+            modal.classList.add('hidden');
+        }
+
         // Load Matches from Firebase
         db.ref('matches').on('value', snap => {
             const data = snap.val();
@@ -615,9 +681,6 @@
                 }
             }
             renderHomeLiveMatches();
-            if (!document.getElementById('sportsView').classList.contains('hidden')) {
-                renderMatchList(currentSelectedCategory);
-            }
         });
 
         function renderHomeLiveMatches() {
@@ -643,39 +706,30 @@
                             </div>
                         </div>
                         
-                        <!-- 1X2 Odds Buttons (যেমন ভিডিওতে দেখানো হয়েছে) -->
                         <div class="space-y-1.5">
-                            <div class="text-[11px] font-bold text-slate-500">1X2</div>
+                            <div class="text-[11px] font-bold text-slate-500">1X2 (আলাদা তিন অপশন ও ড্র সহ)</div>
                             <div class="grid grid-cols-3 gap-2">
-                                <button onclick="openQuickBet('${m.firebaseKey}', 'W1 (${m.homeTeam})', ${hOdds})" class="bg-[#eef3f8] hover:bg-[#dce7f2] rounded-xl p-2 flex items-center justify-between shadow-2xs transition">
-                                    <span class="text-xs font-bold text-slate-700">W1</span>
+                                <button onclick="openQuickBet('${m.firebaseKey}', 'W1 (${m.homeTeam})', ${hOdds})" class="bg-[#eef3f8] hover:bg-[#dce7f2] rounded-xl p-2 flex flex-col items-center justify-center shadow-2xs transition">
+                                    <span class="text-[10px] font-bold text-slate-500">W1</span>
                                     <span class="text-xs font-black text-[#195e98]">${hOdds}</span>
                                 </button>
-                                <button onclick="openQuickBet('${m.firebaseKey}', 'Draw (X)', ${dOdds})" class="bg-[#eef3f8] hover:bg-[#dce7f2] rounded-xl p-2 flex items-center justify-between shadow-2xs transition">
-                                    <span class="text-xs font-bold text-slate-700">X</span>
+                                
+                                <button onclick="openQuickBet('${m.firebaseKey}', 'Draw (X)', ${dOdds})" class="bg-[#eef3f8] hover:bg-[#dce7f2] rounded-xl p-2 flex flex-col items-center justify-center shadow-2xs transition">
+                                    <span class="text-[10px] font-bold text-slate-500">ড্র (X)</span>
                                     <span class="text-xs font-black text-[#195e98]">${dOdds}</span>
                                 </button>
-                                <button onclick="openQuickBet('${m.firebaseKey}', 'W2 (${m.awayTeam})', ${aOdds})" class="bg-[#eef3f8] hover:bg-[#dce7f2] rounded-xl p-2 flex items-center justify-between shadow-2xs transition">
-                                    <span class="text-xs font-bold text-slate-700">W2</span>
+                                
+                                <button onclick="openQuickBet('${m.firebaseKey}', 'W2 (${m.awayTeam})', ${aOdds})" class="bg-[#eef3f8] hover:bg-[#dce7f2] rounded-xl p-2 flex flex-col items-center justify-center shadow-2xs transition">
+                                    <span class="text-[10px] font-bold text-slate-500">W2</span>
                                     <span class="text-xs font-black text-[#195e98]">${aOdds}</span>
                                 </button>
                             </div>
-                        </div>
-
-                        <!-- অতিরিক্ত মার্কেট (ভিডিওর মতো ১.৮৭ অডস বাটন) -->
-                        <div class="space-y-1">
-                            <div class="text-[11px] font-bold text-slate-500">ব্যক্তিগত মোট ২ জোড়: না</div>
-                            <button onclick="openQuickBet('${m.firebaseKey}', 'ব্যক্তিগত মোট ২ জোড়: না', 1.87)" class="w-full bg-[#eef3f8] hover:bg-[#dce7f2] rounded-xl p-2.5 flex items-center justify-between shadow-2xs transition">
-                                <span class="text-xs font-bold text-slate-700">না</span>
-                                <span class="text-xs font-black text-emerald-600 font-mono">1.87</span>
-                            </button>
                         </div>
                     </div>
                 `;
             });
         }
 
-        // ==================== VIDEO-STYLE QUICK BET FUNCTIONS ====================
         function openQuickBet(matchKey, pickName, odds) {
             currentQuickBet = { matchKey, pickName, odds };
             document.getElementById('quickBetTitle').innerText = `${pickName} (Odds: ${odds})`;
@@ -728,7 +782,6 @@
             let potentialWin = stake * currentQuickBet.odds;
             let randomTxId = '#N' + Math.floor(1000000000 + Math.random() * 9000000000);
 
-            // Save to Firebase bets
             db.ref('bets').push({
                 phone: currentPhone,
                 matchKey: currentQuickBet.matchKey,
@@ -742,7 +795,6 @@
 
             closeQuickBetModal();
 
-            // Show Success Modal (ভিডিওর মতো হুবহু পপ-আপ)
             document.getElementById('successBetIdText').innerText = `নিবন্ধন কোড: ${randomTxId}`;
             document.getElementById('succPickName').innerText = currentQuickBet.pickName;
             document.getElementById('succOdds').innerText = currentQuickBet.odds;
@@ -754,7 +806,6 @@
         function closeSuccessModal() {
             document.getElementById('successBetModal').classList.add('hidden');
         }
-        // =========================================================================
 
         function selectTopTab(tab, el) {
             document.querySelectorAll('.top-nav-tab').forEach(btn => {
@@ -766,6 +817,10 @@
 
             if (tab === 'best') goBackToHome();
             else if (tab === 'sports') selectSportCategory('all');
+            else if (tab === 'games') {
+                goBackToHome();
+                document.getElementById('gamesBoxSection')?.scrollIntoView({ behavior: 'smooth' });
+            }
             else showToast(tab.toUpperCase() + ' সেকশন লোড হচ্ছে...');
         }
 
@@ -776,14 +831,9 @@
             document.getElementById('sportsView').classList.remove('hidden');
             document.getElementById('backHomeBtn').classList.remove('hidden');
             document.getElementById('selectedCategoryTitle').innerText = (cat === 'all' ? 'ALL SPORTS' : cat.toUpperCase()) + ' MATCHES';
-            renderMatchList(cat);
         }
 
         function backToCategories() { goBackToHome(); }
-
-        function renderMatchList(cat) {
-            renderHomeLiveMatches();
-        }
 
         function openMatchDetail(key) {
             const m = cachedMatches.find(item => item.firebaseKey === key);
@@ -806,13 +856,17 @@
                 vidBox.innerHTML = `<div class="text-xs text-slate-300">কোনো ভিডিও লিঙ্ক নেই</div>`;
             }
 
+            const hOdds = m.odds?.home || 1.66;
+            const dOdds = m.odds?.draw || 25.0;
+            const aOdds = m.odds?.away || 2.21;
+
             document.getElementById('matchMarketsContainer').innerHTML = `
                 <div class="bg-white rounded-2xl p-3.5 shadow-xs border border-slate-200 space-y-2">
                     <div class="text-xs font-extrabold text-[#145388]">1X2 মার্কেট</div>
                     <div class="grid grid-cols-3 gap-2">
-                        <button onclick="openQuickBet('${m.firebaseKey}', 'W1 (${m.homeTeam})', 1.66)" class="bg-[#eef3f8] p-2.5 rounded-xl text-center"><span class="text-[10px] text-slate-500 font-bold block">W1</span><span class="text-xs font-black text-[#195e98]">1.66</span></button>
-                        <button onclick="openQuickBet('${m.firebaseKey}', 'Draw', 25.0)" class="bg-[#eef3f8] p-2.5 rounded-xl text-center"><span class="text-[10px] text-slate-500 font-bold block">X</span><span class="text-xs font-black text-[#195e98]">25.0</span></button>
-                        <button onclick="openQuickBet('${m.firebaseKey}', 'W2 (${m.awayTeam})', 2.21)" class="bg-[#eef3f8] p-2.5 rounded-xl text-center"><span class="text-[10px] text-slate-500 font-bold block">W2</span><span class="text-xs font-black text-[#195e98]">2.21</span></button>
+                        <button onclick="openQuickBet('${m.firebaseKey}', 'W1 (${m.homeTeam})', ${hOdds})" class="bg-[#eef3f8] p-2.5 rounded-xl text-center"><span class="text-[10px] text-slate-500 font-bold block">W1</span><span class="text-xs font-black text-[#195e98]">${hOdds}</span></button>
+                        <button onclick="openQuickBet('${m.firebaseKey}', 'Draw (X)', ${dOdds})" class="bg-[#eef3f8] p-2.5 rounded-xl text-center"><span class="text-[10px] text-slate-500 font-bold block">X</span><span class="text-xs font-black text-[#195e98]">${dOdds}</span></button>
+                        <button onclick="openQuickBet('${m.firebaseKey}', 'W2 (${m.awayTeam})', ${aOdds})" class="bg-[#eef3f8] p-2.5 rounded-xl text-center"><span class="text-[10px] text-slate-500 font-bold block">W2</span><span class="text-xs font-black text-[#195e98]">${aOdds}</span></button>
                     </div>
                 </div>
             `;
@@ -847,7 +901,6 @@
         function openBetSlipModal() { document.getElementById('betSlipModal').classList.remove('hidden'); }
         function closeBetSlipModal() { document.getElementById('betSlipModal').classList.add('hidden'); }
 
-        // HISTORY MODAL
         function openHistoryModal() {
             document.getElementById('historyModal').classList.remove('hidden');
             const container = document.getElementById('betHistoryContainer');
@@ -886,41 +939,16 @@
         function openMenuModal() { document.getElementById('menuModal').classList.remove('hidden'); }
         function closeMenuModal() { document.getElementById('menuModal').classList.add('hidden'); }
         function downloadAppAction() { showToast("3xBet Android App (.apk) ডাউনলোড শুরু হচ্ছে..."); }
-        function toggleSearchModal() { selectSportCategory('all'); showToast("সব ম্যাচ নিচে দেখানো হচ্ছে"); }
+        function toggleSearchModal() { selectSportCategory('all'); }
 
-        function openAuthModal(tab) { document.getElementById('authModal').classList.remove('hidden'); switchAuthTab(tab); }
+        function openAuthModal(tab) { document.getElementById('authModal').classList.remove('hidden'); }
         function closeAuthModal() { document.getElementById('authModal').classList.add('hidden'); }
-        function switchAuthTab(tab) {
-            if (tab === 'login') {
-                document.getElementById('loginForm').classList.remove('hidden');
-                document.getElementById('registerForm').classList.add('hidden');
-                document.getElementById('modalTabLogin').className = "font-extrabold text-sm text-[#195e98] border-b-2 border-[#195e98] pb-1";
-                document.getElementById('modalTabRegister').className = "font-extrabold text-sm text-slate-400 pb-1";
-            } else {
-                document.getElementById('loginForm').classList.add('hidden');
-                document.getElementById('registerForm').classList.remove('hidden');
-                document.getElementById('modalTabRegister').className = "font-extrabold text-sm text-[#4caf50] border-b-2 border-[#4caf50] pb-1";
-                document.getElementById('modalTabLogin').className = "font-extrabold text-sm text-slate-400 pb-1";
-            }
-        }
         function handleLoginSubmit(e) {
             e.preventDefault();
             currentPhone = document.getElementById('loginPhone').value.trim();
             localStorage.setItem('rifat_active', currentPhone);
             closeAuthModal();
             showToast("সফলভাবে লগইন হয়েছে!");
-            updateAuthUI();
-        }
-        function handleRegisterSubmit(e) {
-            e.preventDefault();
-            let phone = document.getElementById('regPhone').value.trim();
-            let pass1 = document.getElementById('regPassword').value;
-            let pass2 = document.getElementById('regConfirmPassword').value;
-            if (pass1 !== pass2) { alert("দুটি পাসওয়ার্ড একরকম হয়নি!"); return; }
-            currentPhone = phone;
-            localStorage.setItem('rifat_active', currentPhone);
-            closeAuthModal();
-            showToast("অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!");
             updateAuthUI();
         }
         function handleLogout() {
@@ -939,7 +967,7 @@
         function handleDepositSubmit(e) {
             e.preventDefault();
             db.ref('deposits').push({
-                phone: currentPhone, method: document.getElementById('depMethod').value,
+                phone: currentPhone,
                 account: document.getElementById('userAccNo').value,
                 amount: parseFloat(document.getElementById('depAmount').value),
                 trxId: document.getElementById('depTrxId').value, status: 'Pending'
@@ -958,14 +986,14 @@
             let amt = parseFloat(document.getElementById('wdAmount').value);
             if(amt > userBalance) { showToast("অপর্যাপ্ত ব্যালেন্স!"); return; }
             db.ref('withdraws').push({
-                phone: currentPhone, method: document.getElementById('wdMethod').value,
+                phone: currentPhone,
                 account: document.getElementById('wdAccNo').value, amount: amt, status: 'Pending'
             });
             closeWithdrawModal();
             showToast("উইথড্র রিকোয়েস্ট জমা হয়েছে!");
         }
 
-        // ADMIN FUNCTIONS
+        // ADMIN FUNCTIONS & MATCH CREATION WITH CUSTOM ODDS
         function requestAdminAccess() {
             let p = prompt("এডমিন পাসওয়ার্ড দিন:");
             if(p === ADMIN_PASS) { document.getElementById('adminMainPanel').style.display = 'block'; loadAdminData(); }
@@ -973,20 +1001,25 @@
         }
         function adminLogout() { document.getElementById('adminMainPanel').style.display = 'none'; }
 
-        function createNewMatchWithVideo() {
-            let category = document.getElementById('newMatchCategory').value;
+        function createNewCustomMatch() {
             let league = document.getElementById('newMatchLeague').value;
             let home = document.getElementById('newHomeTeam').value;
             let away = document.getElementById('newAwayTeam').value;
             let score = document.getElementById('newMatchScore').value || '0/0';
-            let videoUrl = document.getElementById('newVideoLink').value;
-            if(!home || !away) { alert("টিমের নাম দিন!"); return; }
+            let homeOdds = parseFloat(document.getElementById('newOddHome').value) || 1.66;
+            let drawOdds = parseFloat(document.getElementById('newOddDraw').value) || 25.0;
+            let awayOdds = parseFloat(document.getElementById('newOddAway').value) || 2.21;
+            
+            if(!home || !away) { alert("দয়া করে টিমের নাম দিন!"); return; }
 
             db.ref('matches').push({
-                category, league, homeTeam: home, awayTeam: away, score, videoUrl,
-                odds: { home: 1.66, draw: 25.0, away: 2.21 }
+                league: league || 'লাইভ ম্যাচ',
+                homeTeam: home,
+                awayTeam: away,
+                score: score,
+                odds: { home: homeOdds, draw: drawOdds, away: awayOdds }
             });
-            alert("ম্যাচ সফলভাবে যুক্ত হয়েছে!");
+            alert("প্রতিটি খেলার আলাদা অডস ও ড্র অপশনসহ ম্যাচ সফলভাবে পাবলিশ হয়েছে!");
         }
 
         function settleMatchAndPayWinners() {
@@ -1001,7 +1034,12 @@
                 Object.keys(bets).forEach(betId => {
                     let bet = bets[betId];
                     if(bet.matchKey === matchKey && bet.status === 'Pending') {
-                        if(bet.pickName.includes(winner) || (winner === 'Home' && bet.pickName.includes('W1')) || (winner === 'Away' && bet.pickName.includes('W2'))) {
+                        let isWin = false;
+                        if(winner === 'Home' && bet.pickName.includes('W1')) isWin = true;
+                        if(winner === 'Draw' && bet.pickName.includes('Draw')) isWin = true;
+                        if(winner === 'Away' && bet.pickName.includes('W2')) isWin = true;
+
+                        if(isWin) {
                             let userKey = bet.phone.replace(/[.#$[\]]/g, "_");
                             db.ref('users/' + userKey).once('value', uSnap => {
                                 let curBal = uSnap.exists() ? (parseFloat(uSnap.val().balance) || 0) : 0;
@@ -1075,6 +1113,30 @@
             document.getElementById('toastMessage').innerText = msg;
             t.classList.remove('hidden');
             setTimeout(() => t.classList.add('hidden'), 2500);
+        }
+
+        function saveAdminGameLink() {
+            let gameName = document.getElementById('adminGameName').value.trim();
+            let gameCode = document.getElementById('adminGameCode').value.trim();
+
+            if (!gameName || !gameCode) {
+                alert("দয়া করে গেমের নাম এবং লিংক/কোড উভয়ই দিন!");
+                return;
+            }
+
+            db.ref('adminGames').push({
+                name: gameName,
+                code: gameCode,
+                timestamp: Date.now()
+            }, (error) => {
+                if (error) {
+                    alert("সংরক্ষণ করতে সমস্যা হয়েছে!");
+                } else {
+                    alert("গেমের লিংক সফলভাবে সেভ হয়েছে!");
+                    document.getElementById('adminGameName').value = '';
+                    document.getElementById('adminGameCode').value = '';
+                }
+            });
         }
     </script>
 </body>
